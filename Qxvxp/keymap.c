@@ -490,8 +490,8 @@ static tap dance_state[5];
 
 uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
         switch (keycode) {
-            case KC_P: return KC_O;  // Ctrl + Y reverses to Ctrl + Z.
-            case KC_Z: return KC_Y;  // Ctrl + Z reverses to Ctrl + Y.
+            case KC_P: return KC_O; 
+            case KC_SPACE: return OSM(MOD_LSFT); // Ctrl + Z reverses to Ctrl + Y.
     }
 
     return KC_TRNS;  // Defer to default definitions.
