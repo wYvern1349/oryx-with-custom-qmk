@@ -6,6 +6,7 @@
 
 enum custom_keycodes {
   RGB_SLD = ML_SAFE_RANGE,
+  M_OSM_LSFT,
   ST_MACRO_0,
   ST_MACRO_1,
   ST_MACRO_2,
@@ -241,7 +242,7 @@ bool rgb_matrix_indicators_user(void) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case M_OSM-LSFT: 
+    case M_OSM_LSFT: 
       set_oneshot_mods(MOD_BIT(KC_LSFT));
     break;    
     case ST_MACRO_0:
@@ -494,7 +495,7 @@ static tap dance_state[5];
 uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
         switch (keycode) {
             case KC_P: return KC_O; 
-            case KC_SPACE: return M_OSM-LSFT; // Ctrl + Z reverses to Ctrl + Y.
+            case KC_SPACE: return M_OSM_LSFT; // Ctrl + Z reverses to Ctrl + Y.
     }
 
     return KC_TRNS;  // Defer to default definitions.
