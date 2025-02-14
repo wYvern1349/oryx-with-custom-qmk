@@ -241,6 +241,9 @@ bool rgb_matrix_indicators_user(void) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+    case M_OSM-LSFT: 
+      set_oneshot_mods(MOD_BIT(KC_LSFT));
+    break;    
     case ST_MACRO_0:
     if (record->event.pressed) {
       SEND_STRING(SS_TAP(X_QUOTE) SS_DELAY(100) SS_TAP(X_SPACE));
@@ -491,7 +494,7 @@ static tap dance_state[5];
 uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
         switch (keycode) {
             case KC_P: return KC_O; 
-            case KC_SPACE: return set_oneshot_mods(MOD_BIT(KC_LSFT)); // Ctrl + Z reverses to Ctrl + Y.
+            case KC_SPACE: return M_OSM-LSFT; // Ctrl + Z reverses to Ctrl + Y.
     }
 
     return KC_TRNS;  // Defer to default definitions.
