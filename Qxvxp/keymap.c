@@ -77,7 +77,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRANSPARENT, KC_B,           KC_L,           KC_D,           KC_M,           KC_V,                                           KC_Y,           KC_P,           KC_O,           KC_U,           KC_Z,           KC_TRANSPARENT, 
     KC_ENTER,       KC_N,           KC_R,           KC_T,           KC_S,           KC_C,                                           KC_F,           KC_H,           KC_E,           KC_I,           KC_A,           RCTL(KC_BSPC),  
     TO(1),          KC_X,           KC_J,           MT(MOD_LSFT, KC_MINUS),KC_G,           KC_W,                                           ST_MACRO_0,     KC_K,           MT(MOD_RSFT, KC_SCLN),KC_COMMA,       KC_DOT,         KC_TRANSPARENT, 
-    KC_TRANSPARENT, KC_TRANSPARENT, TO(2),          OSL(7),         OSL(3),         ARCANE_SFT,                                 KC_SPACE,       ARCANE_RIGHT, OSL(5),         TO(2),          KC_TRANSPARENT, KC_TRANSPARENT, 
+    KC_TRANSPARENT, KC_TRANSPARENT, TO(2),          OSL(7),         OSL(3),         OSM(MOD_LSFT),                                 KC_SPACE,       KC_TRANSPARENT, OSL(5),         TO(2),          KC_TRANSPARENT, KC_TRANSPARENT, 
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
   [1] = LAYOUT_voyager(
@@ -263,6 +263,17 @@ bool remember_last_key_user(uint16_t keycode, keyrecord_t* record,
 static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
     switch (keycode) {
         case KC_SPACE: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
+        case KC_BSPC: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
+        case KC_ENT: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
+        case KC_ESCAPE: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
+        case KC_TAB: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
+        case KC_QUOTE: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
+        case KC_RIGHT: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
+        case KC_LEFT: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
+        case KC_DOWN: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
+        case KC_UP: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
+        case KC_DELETE: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
+        case KC_END: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
         case KC_A: SEND_STRING(/*a*/"tion"); break;
         case KC_I: SEND_STRING(/*i*/"tion"); break;
         case KC_S: SEND_STRING(/*s*/"sion"); break;
