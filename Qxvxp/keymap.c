@@ -6,6 +6,8 @@
 
 enum custom_keycodes {
   RGB_SLD = ML_SAFE_RANGE,
+  ARCANE_SFT,
+  ARCANE_RIGHT,
   M_OSM_LSFT,
   ST_MACRO_0,
   ST_MACRO_1,
@@ -63,10 +65,10 @@ enum tap_dance_codes {
   DANCE_4,
 };
 
-const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
+const key_override_t fullstop_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_DOT, KC_1);
 
 const key_override_t **key_overrides = (const key_override_t *[]){
-	&delete_key_override,
+	&fullstop_key_override,
 	NULL // Null terminate the array of overrides!
 };
 
@@ -75,7 +77,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRANSPARENT, KC_B,           KC_L,           KC_D,           KC_M,           KC_V,                                           KC_Y,           KC_P,           KC_O,           KC_U,           KC_Z,           KC_TRANSPARENT, 
     KC_ENTER,       KC_N,           KC_R,           KC_T,           KC_S,           KC_C,                                           KC_F,           KC_H,           KC_E,           KC_I,           KC_A,           RCTL(KC_BSPC),  
     TO(1),          KC_X,           KC_J,           MT(MOD_LSFT, KC_MINUS),KC_G,           KC_W,                                           ST_MACRO_0,     KC_K,           MT(MOD_RSFT, KC_SCLN),KC_COMMA,       KC_DOT,         KC_TRANSPARENT, 
-    KC_TRANSPARENT, KC_TRANSPARENT, TO(2),          OSL(7),         OSL(3),         KC_TRANSPARENT,                                 KC_SPACE,       KC_TRANSPARENT, OSL(5),         TO(2),          KC_TRANSPARENT, KC_TRANSPARENT, 
+    KC_TRANSPARENT, KC_TRANSPARENT, TO(2),          OSL(7),         OSL(3),         ARCANE_SFT,                                 KC_SPACE,       ARCANE_RIGHT, OSL(5),         TO(2),          KC_TRANSPARENT, KC_TRANSPARENT, 
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
   [1] = LAYOUT_voyager(
@@ -247,8 +249,51 @@ bool rgb_matrix_indicators_user(void) {
   return true;
 }
 
+bool remember_last_key_user(uint16_t keycode, keyrecord_t* record,
+                            uint8_t* remembered_mods) {
+    switch (keycode) {
+        case ARCANE_SFT:
+        case ARCANE_RIGHT:
+            return false;  // Ignore ALTREP keys.
+    }
+
+    return true;  // Other keys can be repeated.
+}
+
+static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
+    switch (keycode) {
+        case KC_SPACE: return M_OSM_LSFT;
+        case KC_A: SEND_STRING(/*a*/"tion"); break;
+        case KC_I: SEND_STRING(/*i*/"tion"); break;
+        case KC_S: SEND_STRING(/*s*/"sion"); break;
+        case KC_T: SEND_STRING(/*t*/"heir"); break;
+        case KC_W: SEND_STRING(/*w*/"hich"); break;
+    }
+}
+
+static void process_arcane_right(uint16_t keycode, uint8_t mods) {
+    switch (keycode) {
+        case KC_A: SEND_STRING(/*a*/"bout"); break;
+        case KC_I: SEND_STRING(/*i*/"nter"); break;
+        case KC_S: SEND_STRING(/*s*/"tate"); break;
+        case KC_T: SEND_STRING(/*t*/"here"); break;
+        case KC_W: SEND_STRING(/*w*/"ould"); break;
+    }
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+  case ARCANE_SFT: 
+            if (record->event.pressed) {
+                process_arcane_sft(get_last_keycode(), get_last_mods());
+            }
+            return false;
+
+        case ARCANE_RIGHT:
+            if (record->event.pressed) {
+                process_arcane_right(get_last_keycode(), get_last_mods());
+            }
+            return false;
     case M_OSM_LSFT: 
       set_oneshot_mods(MOD_BIT(KC_LSFT));
     break;    
