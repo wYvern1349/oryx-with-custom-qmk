@@ -10,7 +10,7 @@
 #define COMBO_TERM 25
 
 #define USB_SUSPEND_WAKEUP_DELAY 0
-#define SERIAL_NUMBER "Qxvxp/dPPnPg"
+#define SERIAL_NUMBER "Qxvxp/Vqq6qJ"
 #define LAYER_STATE_16BIT
 
 #define RGB_MATRIX_STARTUP_SPD 60
