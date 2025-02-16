@@ -7,6 +7,7 @@
 enum custom_keycodes {
   RGB_SLD = ML_SAFE_RANGE,
   ARCANE_SFT,
+  M_OSM_LSFT,
   ST_MACRO_0,
   ST_MACRO_1,
   ST_MACRO_2,
@@ -72,7 +73,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     TO(1),          KC_B,           KC_L,           KC_D,           KC_M,           KC_V,                                           KC_Y,           KC_P,           KC_O,           KC_U,           KC_Z,           KC_TRANSPARENT, 
     KC_ENTER,       KC_N,           KC_R,           KC_T,           KC_S,           KC_C,                                           KC_F,           KC_H,           KC_E,           KC_I,           KC_A,           RCTL(KC_BSPC),  
     OSL(7),         KC_X,           KC_J,           KC_MINUS,       KC_G,           KC_W,                                           ST_MACRO_0,     KC_K,           KC_SCLN,        KC_COMMA,       KC_DOT,         KC_TRANSPARENT, 
-                                                    ARCANE_SFT,     OSL(3),                                         OSL(5),         KC_SPACE
+                                                    QK_AREP,     OSL(3),                                         OSL(5),         KC_SPACE
   ),
   [1] = LAYOUT_voyager(
     KC_GRAVE,       KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                           KC_TRANSPARENT, KC_TRANSPARENT, KC_F11,         KC_F12,         KC_F5,          KC_F8,          
@@ -243,9 +244,24 @@ bool rgb_matrix_indicators_user(void) {
   return true;
 }
 
+uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
+    switch (keycode) {
+        case KC_E: return KC_D;  // For "ED" bigram.
+        case KC_D: return KC_E;  // For "DE" bigram.
+        case KC_C: return KC_E;  // For "CE" bigram.
+        case KC_L: return KC_O;  // For "LO" bigram.
+        case KC_U: return KC_N;  // For "UN" bigram.
+    }
+
+    return M_OSM_LSFT;
+}
+
 bool remember_last_key_user(uint16_t keycode, keyrecord_t* record,
                             uint8_t* remembered_mods) {
-
+    switch (keycode) {
+        case ARCANE_SFT:
+            return false;  // Ignore ALTREP keys.
+    }
     return true;  // All keys can be remembered and taken into account for arcane key
 }
 
@@ -267,6 +283,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 process_arcane_sft(get_last_keycode(), get_last_mods());
             }
             return false;
+    case M_OSM_LSFT: 
+      set_oneshot_mods(MOD_BIT(KC_LSFT));
+    break; 
     case ST_MACRO_0:
     if (record->event.pressed) {
       SEND_STRING(SS_TAP(X_QUOTE) SS_DELAY(100) SS_TAP(X_SPACE));
