@@ -272,7 +272,7 @@ static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case ARCANE_SFT: 
-            if (mod_state & MOD_MASK_SHIFT) {
+            if (get_mods() & MOD_MASK_SHIFT) {
                if (record->event.pressed) {
                    register_code(KC_A);
                } else {
