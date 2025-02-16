@@ -268,23 +268,12 @@ bool remember_last_key_user(uint16_t keycode, keyrecord_t* record,
 
 static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
     switch (keycode) {
-        case KC_SPACE: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
-        case KC_BSPC: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
-        case KC_ENT: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
-        case KC_ESCAPE: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
-        case KC_TAB: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
-        case KC_QUOTE: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
-        case KC_RIGHT: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
-        case KC_LEFT: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
-        case KC_DOWN: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
-        case KC_UP: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
-        case KC_DELETE: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
-        case KC_END: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
         case KC_A: SEND_STRING(/*a*/"tion"); break;
         case KC_I: SEND_STRING(/*i*/"tion"); break;
         case KC_S: SEND_STRING(/*s*/"sion"); break;
         case KC_T: SEND_STRING(/*t*/"heir"); break;
         case KC_W: SEND_STRING(/*w*/"hich"); break;
+      default: set_oneshot_mods(MOD_BIT(KC_LSFT));
     }
 }
 
