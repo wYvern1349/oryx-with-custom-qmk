@@ -248,7 +248,7 @@ bool rgb_matrix_indicators_user(void) {
 
 static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
     switch (keycode) {
-        case KC_A: return KC_Z;
+        case KC_A: SEND_STRING("z"); break;
       default: set_oneshot_mods(MOD_BIT(KC_LSFT));
     }
 }
