@@ -280,7 +280,15 @@ static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case ARCANE_SFT: 
-            if (record->event.pressed) {
+            if (get_mods() == MOD_BIT(KC_LSFT)) {
+               if (record->event.pressed) {
+                   register_code(KC_A);
+               } else {
+                   unregister_code(KC_A);
+               }
+           return false;
+            }
+           if (record->event.pressed) {
                 process_arcane_sft(get_last_keycode(), get_last_mods());
             }
             return false;
