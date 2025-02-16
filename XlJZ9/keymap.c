@@ -10,7 +10,6 @@ uint16_t arcane_timer = 0;     // we will be using them soon.
 enum custom_keycodes {
   RGB_SLD = ML_SAFE_RANGE,
   ARCANE_SFT,
-  M_OSM_LSFT,
   ST_MACRO_0,
   ST_MACRO_1,
   ST_MACRO_2,
@@ -249,11 +248,7 @@ bool rgb_matrix_indicators_user(void) {
 
 static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
     switch (keycode) {
-        case KC_A: SEND_STRING(/*a*/"tion"); break;
-        case KC_I: SEND_STRING(/*i*/"tion"); break;
-        case KC_S: SEND_STRING(/*s*/"sion"); break;
-        case KC_T: SEND_STRING(/*t*/"heir"); break;
-        case KC_W: SEND_STRING(/*w*/"hich"); break;
+        case KC_A: return KC_Z;
       default: set_oneshot_mods(MOD_BIT(KC_LSFT));
     }
 }
