@@ -4,6 +4,9 @@
 #define MOON_LED_LEVEL LED_LEVEL
 #define ML_SAFE_RANGE SAFE_RANGE
 
+bool alpha_pressed = false; // ADD this near the beginning of keymap.c
+uint16_t arcane_timer = 0;     // we will be using them soon.
+
 enum custom_keycodes {
   RGB_SLD = ML_SAFE_RANGE,
   ARCANE_SFT,
@@ -244,20 +247,6 @@ bool rgb_matrix_indicators_user(void) {
   return true;
 }
 
-uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
-    switch (keycode) {
-        case KC_E: return KC_D;  // For "ED" bigram.
-        case KC_D: return KC_E;  // For "DE" bigram.
-        case KC_C: return KC_E;  // For "CE" bigram.
-        case KC_L: return KC_O;  // For "LO" bigram.
-        case KC_U: return KC_N;  // For "UN" bigram.
-    }
-
-    return M_OSM_LSFT;
-}
-
-
-
 static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
     switch (keycode) {
         case KC_A: SEND_STRING(/*a*/"tion"); break;
@@ -271,6 +260,17 @@ static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+    case KC_A ... KC_Z:
+    if (record->event.pressed) {
+        if (!alpha_pressed) {
+          alpha_pressed = true;
+        }
+        arcane_timer = timer_read();
+      }
+      break;
+  }
+  return true;
+  }
     case ARCANE_SFT: 
                if (record->event.pressed) {
                  if (get_oneshot_mods() & MOD_MASK_SHIFT) {
@@ -278,11 +278,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                } else if (get_mods() & MOD_MASK_SHIFT) {
                    unregister_code(KC_LSFT);
                } else {
-                   process_arcane_sft(get_last_keycode(), get_last_mods());
-                 }}
+                   if (alpha_pressed) {
+                      process_arcane_sft(get_last_keycode(), get_last_mods());
+                   } else {
+                      set_oneshot_mods(MOD_BIT(KC_LSFT));
+                   }
+                 }
+               }
            return false;
-    case M_OSM_LSFT: 
-      set_oneshot_mods(MOD_BIT(KC_LSFT));
     break; 
     case ST_MACRO_0:
     if (record->event.pressed) {
@@ -512,6 +515,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
   }
   return true;
+}
+
+void matrix_scan_user(void) { // The very important timer.
+  if (alpha_pressed) {
+    if (timer_elapsed(arcane_timer) > 1000) {
+      alpha pressed = false;
+    }
+  }
 }
 
 bool remember_last_key_user(uint16_t keycode, keyrecord_t* record,
