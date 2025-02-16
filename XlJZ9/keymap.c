@@ -256,15 +256,7 @@ uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
     return M_OSM_LSFT;
 }
 
-bool remember_last_key_user(uint16_t keycode, keyrecord_t* record,
-                            uint8_t* remembered_mods) {
-    switch (keycode) {
-        case ARCANE_SFT:
-            return false;  // Ignore ALTREP keys. If this is not here, only default action will be done, since the process stuff is apparently run after the remember last key stuff, so that the key is only ever trying to repeat itself.
-    }
 
-    return true;  // Other keys can be repeated.
-}
 
 static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
     switch (keycode) {
@@ -525,6 +517,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
+bool remember_last_key_user(uint16_t keycode, keyrecord_t* record,
+                            uint8_t* remembered_mods) {
+    switch (keycode) {
+        case ARCANE_SFT:
+            return false;  // Ignore ALTREP keys. If this is not here, only default action will be done, since the process stuff is apparently run after the remember last key stuff, so that the key is only ever trying to repeat itself.
+    }
+
+    return true;  // Other keys can be repeated.
+}
 
 typedef struct {
     bool is_press_action;
