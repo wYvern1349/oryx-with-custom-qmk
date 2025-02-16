@@ -256,7 +256,7 @@ static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
         case KC_S: SEND_STRING(/*s*/"sion"); break;
         case KC_T: SEND_STRING(/*t*/"heir"); break;
         case KC_W: SEND_STRING(/*w*/"hich"); break;
-        default: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
+        //default: set_oneshot_mods(MOD_BIT(KC_LSFT)); break;
     }
 }
 
