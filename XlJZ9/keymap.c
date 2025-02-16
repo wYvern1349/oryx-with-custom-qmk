@@ -268,9 +268,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         arcane_timer = timer_read();
       }
       break;
-  }
-  return true;
-  }
     case ARCANE_SFT: 
                if (record->event.pressed) {
                  if (get_oneshot_mods() & MOD_MASK_SHIFT) {
@@ -285,8 +282,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                    }
                  }
                }
-           return false;
-    break; 
+       break; 
     case ST_MACRO_0:
     if (record->event.pressed) {
       SEND_STRING(SS_TAP(X_QUOTE) SS_DELAY(100) SS_TAP(X_SPACE));
@@ -520,7 +516,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 void matrix_scan_user(void) { // The very important timer.
   if (alpha_pressed) {
     if (timer_elapsed(arcane_timer) > 1000) {
-      alpha pressed = false;
+      alpha_pressed = false;
     }
   }
 }
