@@ -276,7 +276,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                  if (get_oneshot_mods() & MOD_MASK_SHIFT) {
                    register_code(KC_LSFT);
                } else if (get_mods() & MOD_MASK_SHIFT) {
-                   unregister_come(KC_LSFT);
+                   unregister_code(KC_LSFT);
                } else {
                    process_arcane_sft(get_last_keycode(), get_last_mods());
                  }}
