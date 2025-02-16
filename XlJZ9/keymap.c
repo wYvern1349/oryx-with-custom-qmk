@@ -262,11 +262,11 @@ static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case ARCANE_SFT:
-    if (record->event.pressed) {
-      process_arcane_sft(get_last_keycode(), get_last_mods());
-    }
-    break;
+    case ARCANE_SFT: 
+            if (record->event.pressed) {
+                process_arcane_sft(get_last_keycode(), get_last_mods());
+            }
+            return false;
     case ST_MACRO_0:
     if (record->event.pressed) {
       SEND_STRING(SS_TAP(X_QUOTE) SS_DELAY(100) SS_TAP(X_SPACE));
