@@ -279,7 +279,7 @@ bool remember_last_key_user(uint16_t keycode, keyrecord_t* record,
 
 static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
     switch (keycode) {
-        case KC_A: SEND_STRING("z"); break;
+        case KC_A: KC_Z; break;
       default: set_oneshot_mods(MOD_BIT(KC_LSFT));
     }
 }
