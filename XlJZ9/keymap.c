@@ -8,8 +8,8 @@ bool alpha_pressed = false; // ADD this near the beginning of keymap.c
 uint16_t arcane_timer = 0;     // we will be using them soon.
 
 enum custom_keycodes {
-  RGB_SLD = SAFE_RANGE,
-  ARCANE_SFT = SAFE_RANGE,
+  RGB_SLD = ML_SAFE_RANGE,
+  ARCANE_SFT,
   ST_MACRO_0,
   ST_MACRO_1,
   ST_MACRO_2,
