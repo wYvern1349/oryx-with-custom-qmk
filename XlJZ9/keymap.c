@@ -246,13 +246,6 @@ bool rgb_matrix_indicators_user(void) {
   return true;
 }
 
-static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
-    switch (keycode) {
-        case KC_A: SEND_STRING("z"); break;
-      default: set_oneshot_mods(MOD_BIT(KC_LSFT));
-    }
-}
-
 bool caps_word_press_user(uint16_t keycode) {
     switch (keycode) {
         // Keycodes that continue Caps Word, with shift applied.
@@ -273,6 +266,32 @@ bool caps_word_press_user(uint16_t keycode) {
             return false;  // Deactivate Caps Word.
     }
 }
+
+bool remember_last_key_user(uint16_t keycode, keyrecord_t* record,
+                            uint8_t* remembered_mods) {
+    switch (keycode) {
+        case ARCANE_SFT:
+            return false;  // Ignore ALTREP keys. If this is not here, only default action will be done, since the process stuff is apparently run after the remember last key stuff, so that the key is only ever trying to repeat itself.
+    }
+
+    return true;  // Other keys can be repeated.
+}
+
+static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
+    switch (keycode) {
+        case KC_A: SEND_STRING("z"); break;
+      default: set_oneshot_mods(MOD_BIT(KC_LSFT));
+    }
+}
+
+void matrix_scan_user(void) { // The very important timer.
+  if (alpha_pressed) {
+    if (timer_elapsed(arcane_timer) > 1000) {
+      alpha_pressed = false;
+    }
+  }
+}
+
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
