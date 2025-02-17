@@ -353,11 +353,11 @@ static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
          break;
         case KC_I:
           if (is_caps_word_on()) { //checks for caps word status
-              send_string("CH");
+              send_string("Z");
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("ch");
+              send_string("z");
           } else { //unshifted previous key
-              send_string("ch");
+              send_string("z");
           }
          break;
         case KC_J:
@@ -498,11 +498,11 @@ static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
          break;
         case KC_Z:
           if (is_caps_word_on()) { //checks for caps word status
-              send_string("EI");
+              send_string("A");
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("ei");
+              send_string("a");
           } else { //unshifted previous key
-              send_string("ei");
+              send_string("a");
           }
          break;
       default: set_oneshot_mods(MOD_BIT(KC_LSFT));
