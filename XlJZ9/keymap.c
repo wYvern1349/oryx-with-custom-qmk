@@ -280,11 +280,38 @@ bool remember_last_key_user(uint16_t keycode, keyrecord_t* record,
 static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
     switch (keycode) {
         case KC_A:
-          if (is_caps_word_on()) {
+          if (is_caps_word_on()) { //checks for caps word status
               send_string("Z");
-          } else if (mods & MOD_MASK_SHIFT) {
-              send_string("ndorra");
-          } else {
+          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
+              send_string("u");
+          } else { //unshifted previous key
+              send_string("z");
+          }
+         break;
+        case KC_B:
+          if (is_caps_word_on()) { //checks for caps word status
+              send_string("B");
+          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
+              send_string("e");
+          } else { //unshifted previous key
+              send_string("b");
+          }
+         break;
+        case KC_C:
+          if (is_caps_word_on()) { //checks for caps word status
+              send_string("HT");
+          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
+              send_string("on");
+          } else { //unshifted previous key
+              send_string("ht");
+          }
+         break;
+        case KC_D:
+          if (is_caps_word_on()) { //checks for caps word status
+              send_string("Z");
+          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
+              send_string("u");
+          } else { //unshifted previous key
               send_string("z");
           }
          break;
@@ -314,13 +341,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case ARCANE_SFT: 
                if (record->event.pressed) {
                  if (get_oneshot_mods() & MOD_MASK_SHIFT) {
-                    caps_word_toggle(); //     register_code(KC_LSFT); //tap_code16(QK_CAPS_WORD_TOGGLE);
-              // } else if (get_mods() & MOD_MASK_SHIFT) {
-              //     unregister_code(KC_LSFT);
+                    caps_word_toggle(); //toggles on caps word if one shot shift is already active (e.g. through double-tapping the key
                } else {
-                   if (alpha_pressed) {
+                   if (alpha_pressed) {// letter was pressed within timer limits
                       process_arcane_sft(get_last_keycode(), get_last_mods());
-                   } else {
+                   } else {//alpha timer timed out, so key functions just as a OSM shift
                       set_oneshot_mods(MOD_BIT(KC_LSFT));
                    }
                  }
