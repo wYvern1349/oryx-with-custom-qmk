@@ -306,9 +306,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case ARCANE_SFT: 
                if (record->event.pressed) {
                  if (get_oneshot_mods() & MOD_MASK_SHIFT) {
-                   tap_code16(QK_CAPS_WORD_TOGGLE);//register_code(KC_LSFT);
-               //} else if (get_mods() & MOD_MASK_SHIFT) {
-                 //  unregister_code(KC_LSFT);
+                   register_code(KC_LSFT); //tap_code16(QK_CAPS_WORD_TOGGLE);
+               } else if (get_mods() & MOD_MASK_SHIFT) {
+                   unregister_code(KC_LSFT);
                } else {
                    if (alpha_pressed) {
                       process_arcane_sft(get_last_keycode(), get_last_mods());
