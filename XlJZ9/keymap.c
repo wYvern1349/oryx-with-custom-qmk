@@ -280,10 +280,10 @@ bool remember_last_key_user(uint16_t keycode, keyrecord_t* record,
 static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
     switch (keycode) {
         case KC_A:
-          if (get_oneshot_mods() & MOD_MASK_SHIFT) {
-              send_string("ndorra");
-          } else if (is_caps_word_on()) {
+          if (is_caps_word_on()) {
               send_string("Z");
+          } else if (mods & MOD_MASK_SHIFT) {
+              send_string("ndorra");
           } else {
               send_string("z");
           }
