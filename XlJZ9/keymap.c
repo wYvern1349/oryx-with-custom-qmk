@@ -9,7 +9,7 @@ uint16_t arcane_timer = 0;     // we will be using them soon.
 
 enum custom_keycodes {
   RGB_SLD = ML_SAFE_RANGE,
-  ARCANE_SFT,
+  ARCANE_SFT = SAFE_RANGE,
   ST_MACRO_0,
   ST_MACRO_1,
   ST_MACRO_2,
@@ -546,24 +546,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
   }
   return true;
-}
-
-void matrix_scan_user(void) { // The very important timer.
-  if (alpha_pressed) {
-    if (timer_elapsed(arcane_timer) > 1000) {
-      alpha_pressed = false;
-    }
-  }
-}
-
-bool remember_last_key_user(uint16_t keycode, keyrecord_t* record,
-                            uint8_t* remembered_mods) {
-    switch (keycode) {
-        case ARCANE_SFT:
-            return false;  // Ignore ALTREP keys. If this is not here, only default action will be done, since the process stuff is apparently run after the remember last key stuff, so that the key is only ever trying to repeat itself.
-    }
-
-    return true;  // Other keys can be repeated.
 }
 
 typedef struct {
