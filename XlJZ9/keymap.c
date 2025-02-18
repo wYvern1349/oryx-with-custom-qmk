@@ -532,15 +532,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         arcane_timer = timer_read();
       if (w_trigger_caps) {
         switch (keycode) {
-          case KC_A: send_string("RD"); break;
+          case KC_A: send_string("ARD"); break;
         }
         w_trigger_caps = false;
+        return false;
       }
       if (w_trigger) {
         switch (keycode) {
-          case KC_A: send_string("rd"); break;
+          case KC_A: send_string("ard"); break;
         }
         w_trigger = false;
+        return false;
       }
       }
       break;
