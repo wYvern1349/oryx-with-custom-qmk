@@ -7,11 +7,14 @@
 bool alpha_pressed = false; // variable for timer to disable arcane key functionality after no letter has been pressed for x amount of time
 bool w_trigger = false; // variable for pre-loading w-combo to achieve "wird, wurd, werd, etc"
 bool w_trigger_caps = false; // same as w_trigger but for all caps, i.e. "WIRD, WURD, WERD, etc" 
+bool spaced_l = false; // bool to recognize left arcane key was used to hit space
+bool spaced_r = false; // bool to recognize right arcane key was used to hit space
 uint16_t arcane_timer = 0;     // timer 
 
 enum custom_keycodes {
   RGB_SLD = ML_SAFE_RANGE,
-  ARCANE_SFT,
+  ARCANE_L,
+  ARCANE_R
   ST_MACRO_0,
   ST_MACRO_1,
   ST_MACRO_2,
@@ -77,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     TO(1),          KC_B,           KC_L,           KC_D,           KC_M,           KC_V,                                           KC_Y,           KC_P,           KC_O,           KC_U,           KC_Z,           KC_TRANSPARENT, 
     KC_ENTER,       KC_N,           KC_R,           KC_T,           KC_S,           KC_C,                                           KC_F,           KC_H,           KC_E,           KC_I,           KC_A,           RCTL(KC_BSPC),  
     OSL(7),         KC_X,           KC_J,           KC_MINUS,       KC_G,           KC_W,                                           ST_MACRO_0,     KC_K,           KC_SCLN,        KC_COMMA,       KC_DOT,         KC_TRANSPARENT, 
-                                                    ARCANE_SFT, OSL(3),                                         OSL(5),         KC_TRANSPARENT
+                                                    ARCANE_L,       OSL(3),                                         OSL(5),         ARCANE_R
   ),
   [1] = LAYOUT_voyager(
     KC_GRAVE,       KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                           KC_TRANSPARENT, KC_TRANSPARENT, KC_F11,         KC_F12,         KC_F5,          KC_F8,          
@@ -253,7 +256,8 @@ bool caps_word_press_user(uint16_t keycode) {
         // Keycodes that continue Caps Word, with shift applied.
         case KC_A ... KC_Z:
         case KC_MINS:
-        case ARCANE_SFT:
+        case ARCANE_R:
+        case ARCANE_L
             add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
             return true;
 
@@ -272,24 +276,33 @@ bool caps_word_press_user(uint16_t keycode) {
 bool remember_last_key_user(uint16_t keycode, keyrecord_t* record,
                             uint8_t* remembered_mods) {
     switch (keycode) {
-        case ARCANE_SFT:
+        case ARCANE_L:
+        case ARCANE_R:
             return false;  // Ignore ALTREP keys. If this is not here, only default action will be done, since the process stuff is apparently run after the remember last key stuff, so that the key is only ever trying to repeat itself.
     }
 
     return true;  // Other keys can be repeated.
 }
 
-static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
+static void process_arcane_l(uint16_t keycode, uint8_t mods) {
     switch (keycode) {
         case KC_A:
-          if (is_caps_word_on()) { //checks for caps word status
-              send_string("ND");
-          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("nd");
-          } else { //unshifted previous key
-              send_string("nd");
-          }
-         break;
+        case KC_E:
+        case KC_F:
+        case KC_H:
+        case KC_I:
+        case KC_K:
+        case KC_O:
+        case KC_P:
+        case KC_U:
+        case KC_Y:
+        case KC_Z:
+        case KC_SCLN:
+        case KC_COMMA:
+        case KC_DOT:
+          send_string(" ");
+          spaced_l = true;
+      break;
         case KC_B:
           if (is_caps_word_on()) { //checks for caps word status
               send_string("ER");
@@ -317,49 +330,13 @@ static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
               send_string("d");
           }
          break;
-        case KC_E:
-          if (is_caps_word_on()) { //checks for caps word status
-              send_string("E");
-          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("e");
-          } else { //unshifted previous key
-              send_string("e");
-          }
-         break;
-        case KC_F:
-          if (is_caps_word_on()) { //checks for caps word status
-              send_string("F");
-          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("rankfurt");
-          } else { //unshifted previous key
-              send_string("f");
-          }
-         break;
         case KC_G:
           if (is_caps_word_on()) { //checks for caps word status
-              send_string("EN");
+              send_string("G");
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("en");
+              send_string("g");
           } else { //unshifted previous key
-              send_string("en");
-          }
-         break;
-        case KC_H:
-          if (is_caps_word_on()) { //checks for caps word status
-              send_string("Y");
-          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("y");
-          } else { //unshifted previous key
-              send_string("y");
-          }
-         break;
-        case KC_I:
-          if (is_caps_word_on()) { //checks for caps word status
-              send_string("CH");
-          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("ch");
-          } else { //unshifted previous key
-              send_string("ch");
+              send_string("g");
           }
          break;
         case KC_J:
@@ -371,15 +348,6 @@ static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
               send_string("ed");
           }
          break;
-        case KC_K:
-          if (is_caps_word_on()) { //checks for caps word status
-              send_string("Y");
-          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("ap");
-          } else { //unshifted previous key
-              send_string("y");
-          }
-         break;
         case KC_L:
           if (is_caps_word_on()) { //checks for caps word status
               send_string("L");
@@ -389,7 +357,6 @@ static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
               send_string("l");
           }
          break;
-      
         case KC_M:
           if (is_caps_word_on()) { //checks for caps word status
               send_string("M");
@@ -406,24 +373,6 @@ static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
               send_string("eu");
           } else { //unshifted previous key
               send_string("n");
-          }
-         break;
-        case KC_O:
-          if (is_caps_word_on()) { //checks for caps word status
-              send_string("O");
-          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("ber");
-          } else { //unshifted previous key
-              send_string("o");
-          }
-         break;
-        case KC_P:
-          if (is_caps_word_on()) { //checks for caps word status
-              send_string("P");
-          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("ro");
-          } else { //unshifted previous key
-              send_string("p");
           }
          break;
         case KC_R:
@@ -453,15 +402,6 @@ static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
               send_string("t");
           }
          break;
-        case KC_U:
-          if (is_caps_word_on()) { //checks for caps word status
-              send_string("NI");
-          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("ni");
-          } else { //unshifted previous key
-              send_string("ni");
-          }
-         break;
         case KC_V:
           if (is_caps_word_on()) { //checks for caps word status
               send_string("ER");
@@ -487,6 +427,120 @@ static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
               send_string("pe");
           } else { //unshifted previous key
               send_string("pe");
+          }
+         break;
+        case US_ADIA:
+          if (is_caps_word_on()) { //checks for caps word status
+              send_string("TZ");
+          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
+              send_string("tz");
+          } else { //unshifted previous key
+              send_string("tz");
+          }
+         break;
+      default: set_oneshot_mods(MOD_BIT(KC_LSFT));
+    }
+}
+
+static void process_arcane_r(uint16_t keycode, uint8_t mods) {
+    switch (keycode) {
+        case KC_B:
+        case KC_C:
+        case KC_D:
+        case KC_G:
+        case KC_J:        
+        case KC_L:
+        case KC_M:
+        case KC_N:
+        case KC_R:
+        case KC_S:
+        case KC_T:
+        case KC_V:
+        case KC_W:
+        case KC_X:
+        case KC_MINUS:
+          send_string(" ");
+          spaced_r = true;
+      break;
+        case KC_A:
+          if (is_caps_word_on()) { //checks for caps word status
+              send_string("ND");
+          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
+              send_string("nd");
+          } else { //unshifted previous key
+              send_string("nd");
+          }
+         break;
+       case KC_E:
+          if (is_caps_word_on()) { //checks for caps word status
+              send_string("E");
+          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
+              send_string("e");
+          } else { //unshifted previous key
+              send_string("e");
+          }
+         break;
+        case KC_F:
+          if (is_caps_word_on()) { //checks for caps word status
+              send_string("F");
+          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
+              send_string("rankfurt");
+          } else { //unshifted previous key
+              send_string("f");
+          }
+         break;
+        case KC_H:
+          if (is_caps_word_on()) { //checks for caps word status
+              send_string("Y");
+          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
+              send_string("y");
+          } else { //unshifted previous key
+              send_string("y");
+          }
+         break;
+        case KC_I:
+          if (is_caps_word_on()) { //checks for caps word status
+              send_string("CH");
+          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
+              send_string("ch");
+          } else { //unshifted previous key
+              send_string("ch");
+          }
+         break;
+        case KC_K:
+          if (is_caps_word_on()) { //checks for caps word status
+              send_string("Y");
+          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
+              send_string("ap");
+          } else { //unshifted previous key
+              send_string("y");
+          }
+         break;
+        case KC_O:
+          if (is_caps_word_on()) { //checks for caps word status
+              send_string("O");
+          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
+              send_string("ber");
+          } else { //unshifted previous key
+              send_string("o");
+          }
+         break;
+        case KC_P:
+          if (is_caps_word_on()) { //checks for caps word status
+              send_string("P");
+          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
+              send_string("ro");
+          } else { //unshifted previous key
+              send_string("p");
+          }
+         break;
+        case KC_U:
+          if (is_caps_word_on()) { //checks for caps word status
+              send_string("NI");
+          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
+              send_string("ni");
+          } else { //unshifted previous key
+              send_string("ni");
           }
          break;
         case KC_Y:
@@ -516,7 +570,7 @@ static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
               send_string("tz");
           }
          break;
-      default: set_oneshot_mods(MOD_BIT(KC_LSFT));
+      default: send_string(" ");
     }
 }
 
@@ -526,6 +580,8 @@ void matrix_scan_user(void) { // The very important timer.
       alpha_pressed = false;
       w_trigger_caps = false;
       w_trigger = false;
+      spaced_l = false;
+      spaced_r = false;
     }
   }
 }
@@ -565,19 +621,48 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       }
       break;
-    case ARCANE_SFT: 
+    case ARCANE_L: 
                if (record->event.pressed) {
                  if (get_oneshot_mods() & MOD_MASK_SHIFT) {
                     caps_word_toggle(); //toggles on caps word if one shot shift is already active (e.g. through double-tapping the key
                } else {
                    if (alpha_pressed) {// letter was pressed within timer limits
-                      process_arcane_sft(get_last_keycode(), get_last_mods());
+                     arcane_timer = timer_read();
+                     if (spaced_r) {// opposite side arcane key was used to space, to this one needs to function as OSM shift
+                       set_oneshot_mods(MOD_BIT(KC_LSFT));
+                       spaced_r = false;
+                     } else if (spaced_l) {// this arcane key was used to space, so needs to keep being space for repeat spaces
+                       send_string(" ");
+                     } else {// no space was hit
+                      process_arcane_l(get_last_keycode(), get_last_mods());
+                     }
                    } else {//alpha timer timed out, so key functions just as a OSM shift
                       set_oneshot_mods(MOD_BIT(KC_LSFT));
                    }
                  }
                }
        break; 
+        case ARCANE_R: 
+               if (record->event.pressed) {
+                 if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+                    caps_word_toggle(); //toggles on caps word if one shot shift is already active (e.g. through double-tapping the key
+               } else {
+                   if (alpha_pressed) {// letter was pressed within timer limits
+                     arcane_timer = timer_read();
+                     if (spaced_l) {// opposite side arcane key was used to space, to this one needs to function as OSM shift
+                       set_oneshot_mods(MOD_BIT(KC_LSFT));
+                       spaced_l = false;
+                     } else if (spaced_r) {// this arcane key was used to space, so needs to keep being space for repeat spaces
+                       send_string(" ");
+                     } else {// no space was hit
+                      process_arcane_r(get_last_keycode(), get_last_mods());
+                     }
+                   } else {//alpha timer timed out, so key functions just as space
+                      send_string(" ");
+                   }
+                 }
+               }
+       break;
     case ST_MACRO_0:
     if (record->event.pressed) {
       SEND_STRING(SS_TAP(X_QUOTE) SS_DELAY(100) SS_TAP(X_SPACE));
