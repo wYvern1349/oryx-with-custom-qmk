@@ -473,11 +473,11 @@ static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
          break;
         case KC_W:
           if (is_caps_word_on()) { //checks for caps word status
-              w_trigger_caps = true; //send_string("EVER");
+              w_trigger_caps = true;
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              w_trigger = true; //send_string("ever");
+              w_trigger = true; 
           } else { //unshifted previous key
-              w_trigger = true; //send_string("ever");
+              w_trigger = true; 
           }
          break;
         case KC_X:
@@ -532,14 +532,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         arcane_timer = timer_read();
       if (w_trigger_caps) {
         switch (keycode) {
-          case KC_A: send_string("ARD"); break;
+          case KC_A: send_string("ACH"); break;
+          case KC_I: send_string("IRD"); break;
+          case KC_E: send_string("ERDE"); break;
+          case KC_U: send_string("URDE"); break;
+          case KC_O: send_string("ORD"); break;
+          case KC_H: send_string("HICH"); break;
         }
         w_trigger_caps = false;
         return false;
       }
       if (w_trigger) {
         switch (keycode) {
-          case KC_A: send_string("ard"); break;
+          case KC_A: send_string("ach"); break;
+          case KC_I: send_string("ird"); break;
+          case KC_E: send_string("erde"); break;
+          case KC_U: send_string("urde"); break;
+          case KC_O: send_string("ord"); break;
+          case KC_H: send_string("hich"); break;
         }
         w_trigger = false;
         return false;
