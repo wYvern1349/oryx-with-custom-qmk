@@ -455,11 +455,11 @@ static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
          break;
         case KC_U:
           if (is_caps_word_on()) { //checks for caps word status
-              send_string("I");
+              send_string("NI");
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
               send_string("ni");
           } else { //unshifted previous key
-              send_string("i");
+              send_string("ni");
           }
          break;
         case KC_V:
@@ -500,11 +500,20 @@ static void process_arcane_sft(uint16_t keycode, uint8_t mods) {
          break;
         case KC_Z:
           if (is_caps_word_on()) { //checks for caps word status
-              send_string("A");
+              send_string("EI");
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("a");
+              send_string("ei");
           } else { //unshifted previous key
-              send_string("a");
+              send_string("ei");
+          }
+         break;
+        case US_ADIA:
+          if (is_caps_word_on()) { //checks for caps word status
+              send_string("TZ");
+          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
+              send_string("tz");
+          } else { //unshifted previous key
+              send_string("tz");
           }
          break;
       default: set_oneshot_mods(MOD_BIT(KC_LSFT));
