@@ -284,7 +284,7 @@ bool remember_last_key_user(uint16_t keycode, keyrecord_t* record,
     return true;  // Other keys can be repeated.
 }
 
-static void process_arcane_l(uint16_t keycode, uint8_t mods) {
+static void process_arcane_l(uint16_t keycode, uint8_t mods, bool side) {
     switch (keycode) {
         case KC_A:
         case KC_E:
@@ -634,7 +634,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                      } else if (spaced_l) {// this arcane key was used to space, so needs to keep being space for repeat spaces
                        send_string(" ");
                      } else {// no space was hit
-                      process_arcane_l(get_last_keycode(), get_last_mods());
+                      process_arcane_l(get_last_keycode(), get_last_mods(), false);
                      }
                    } else {//alpha timer timed out, so key functions just as a OSM shift
                       set_oneshot_mods(MOD_BIT(KC_LSFT));
