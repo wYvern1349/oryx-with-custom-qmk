@@ -14,7 +14,7 @@ uint16_t arcane_timer = 0;     // timer
 enum custom_keycodes {
   RGB_SLD = ML_SAFE_RANGE,
   ARCANE_L,
-  ARCANE_R
+  ARCANE_R,
   ST_MACRO_0,
   ST_MACRO_1,
   ST_MACRO_2,
