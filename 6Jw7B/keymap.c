@@ -534,6 +534,12 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
 void matrix_scan_user(void) { // The very important timer.
   switch (get_last_keycode()) {
     case KC_A ... KC_Z:  
+    case KC_SCLN:
+    case KC_COMMA:
+    case KC_DOT:
+    case KC_MINUS:
+    case US_ADIA:
+    case ST_MACRO_0:
       if (last_key_manual != get_last_keycode()) {
         last_key_manual = get_last_keycode();
         alpha_pressed = true;
