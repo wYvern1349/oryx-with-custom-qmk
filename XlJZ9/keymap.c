@@ -508,14 +508,13 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
           }
          break;
         case KC_SCLN:
-         SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_COLN));
+         SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_SCLN))); break;
         case KC_COMMA:
-         SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_QUES));
+         SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_SLSH))); break;
         case KC_DOT:
-         SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_EXLM));
+         SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_1))); break;
         case KC_MINUS:
-         SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_UNDS));
-      break;
+         SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_MINUS))); break;
         case US_ADIA:
           if (is_caps_word_on()) { //checks for caps word status
               send_string("TZ");
