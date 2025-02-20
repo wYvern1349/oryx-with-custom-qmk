@@ -255,6 +255,9 @@ bool caps_word_press_user(uint16_t keycode) {
         case KC_A ... KC_Z:
         case KC_MINS:
         case ARCANE_L:
+        case US_UDIA
+        case US_ODIA
+        case US_ADIA
             add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
             return true;
 
@@ -525,6 +528,27 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
               send_string("tz");
           }
          break;
+        case US_ODIA:
+          if (is_caps_word_on()) { //checks for caps word status
+              send_string("GLICH");
+          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
+              send_string("glich");
+          } else { //unshifted previous key
+              send_string("glich");
+          }
+         break;
+        case US_UDIA:
+          if (is_caps_word_on()) { //checks for caps word status
+              send_string("BER");
+          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
+              send_string("ber");
+          } else { //unshifted previous key
+              send_string("ber");
+          }
+         break;
+      case RSFT(US_UDIA):
+      send_string("ber")
+        break;
       case ST_MACRO_0:
        SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_SPACE)); break;
       default: set_oneshot_mods(MOD_BIT(KC_LSFT));
@@ -539,6 +563,8 @@ void matrix_scan_user(void) { // The very important timer.
     case KC_DOT:
     case KC_MINUS:
     case US_ADIA:
+    case US_ODIA:
+    case US_UDIA:
     case ST_MACRO_0:
       if (last_key_manual != get_last_keycode()) {
         last_key_manual = get_last_keycode();
@@ -557,12 +583,6 @@ void matrix_scan_user(void) { // The very important timer.
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  //if (record->event.pressed) {
-  //      if (!alpha_pressed) {
-   //       alpha_pressed = true;
-    //    }
-    //    arcane_timer = timer_read();
-    //}
   switch (keycode) {
     case KC_A ... KC_Z:        
     case KC_SCLN:
