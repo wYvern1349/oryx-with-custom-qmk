@@ -525,7 +525,7 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
           }
          break;
       case ST_MACRO_0:
-       SEND_STRING(SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_SPACE)); break;
+       SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_SPACE)); break;
       default: set_oneshot_mods(MOD_BIT(KC_LSFT));
     }
 }
@@ -593,6 +593,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                  }
                }
        break; 
+    case ST_MACRO_0:
+      if (record->event.pressed) {
+        if (!alpha_pressed) {
+          alpha_pressed = true;
+        }
+        arcane_timer = timer_read();
+      }
     case ST_MACRO_0:
     if (record->event.pressed) {
       SEND_STRING(SS_TAP(X_QUOTE) SS_DELAY(100) SS_TAP(X_SPACE));
