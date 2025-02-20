@@ -541,7 +541,11 @@ void matrix_scan_user(void) { // The very important timer.
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case KC_A ... KC_Z:
+    case KC_A ... KC_Z:        
+    case KC_SCLN:
+    case KC_COMMA:
+    case KC_DOT:
+    case KC_MINUS:
     if (record->event.pressed) {
         if (!alpha_pressed) {
           alpha_pressed = true;
