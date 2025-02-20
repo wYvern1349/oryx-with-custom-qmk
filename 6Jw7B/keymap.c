@@ -255,9 +255,9 @@ bool caps_word_press_user(uint16_t keycode) {
         case KC_A ... KC_Z:
         case KC_MINS:
         case ARCANE_L:
-        case US_UDIA
-        case US_ODIA
-        case US_ADIA
+        case US_UDIA:
+        case US_ODIA:
+        case US_ADIA:
             add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
             return true;
 
@@ -547,7 +547,7 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
           }
          break;
       case RSFT(US_UDIA):
-      send_string("ber")
+      send_string("ber");
         break;
       case ST_MACRO_0:
        SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_SPACE)); break;
