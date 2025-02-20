@@ -524,6 +524,8 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
               send_string("tz");
           }
          break;
+      case ST_MACRO_0:
+       SEND_STRING(SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_SPACE)); break;
       default: set_oneshot_mods(MOD_BIT(KC_LSFT));
     }
 }
