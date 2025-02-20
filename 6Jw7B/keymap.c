@@ -8,6 +8,7 @@ bool alpha_pressed = false; // variable for timer to disable arcane key function
 bool w_trigger = false; // variable for pre-loading w-combo to achieve "wird, wurd, werd, etc"
 bool w_trigger_caps = false; // same as w_trigger but for all caps, i.e. "WIRD, WURD, WERD, etc" 
 uint16_t arcane_timer = 0;     // timer 
+uint16_t last_key_manual = 0; // for timer reset
 
 enum custom_keycodes {
   RGB_SLD = ML_SAFE_RANGE,
@@ -531,6 +532,14 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
 }
 
 void matrix_scan_user(void) { // The very important timer.
+  switch (get_last_keycode()) {
+    case KC_A ... KC_Z:  
+      if (last_key_manual != get_last_keycode()) {
+        last_key_manual = get_last_keycode();
+        alpha_pressed = true;
+        arcane_timer = timer_read();
+      }
+  }
   if (alpha_pressed) {
     if (timer_elapsed(arcane_timer) > 1000) {
       alpha_pressed = false;
@@ -542,12 +551,12 @@ void matrix_scan_user(void) { // The very important timer.
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  if (record->event.pressed) {
-        if (!alpha_pressed) {
-          alpha_pressed = true;
-        }
-        arcane_timer = timer_read();
-    }
+  //if (record->event.pressed) {
+  //      if (!alpha_pressed) {
+   //       alpha_pressed = true;
+    //    }
+    //    arcane_timer = timer_read();
+    //}
   switch (keycode) {
     case KC_A ... KC_Z:        
     case KC_SCLN:
