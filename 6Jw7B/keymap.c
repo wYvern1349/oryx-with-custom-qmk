@@ -288,11 +288,11 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
     switch (keycode) {
         case KC_A:
           if (is_caps_word_on()) { //checks for caps word status
-              send_string("ND");
+              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_A)));
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("nd");
+              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_A)));
           } else { //unshifted previous key
-              send_string("nd");
+              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) (SS_TAP(X_A)));
           }
          break;        
         case KC_B:
@@ -360,11 +360,11 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
          break;
         case KC_I:
           if (is_caps_word_on()) { //checks for caps word status
-              send_string("CH");
+              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_O)));
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("ch");
+              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_O)));
           } else { //unshifted previous key
-              send_string("ch");
+              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) (SS_TAP(X_O)));
           }
          break;
         case KC_J:
@@ -459,11 +459,11 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
          break;
         case KC_U:
           if (is_caps_word_on()) { //checks for caps word status
-              send_string("NI");
+              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_U)));
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("ni");
+              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_U)));
           } else { //unshifted previous key
-              send_string("ni");
+              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) (SS_TAP(X_U)));
           }
          break;
         case KC_V:
@@ -511,14 +511,6 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
               send_string("ei");
           }
          break;
-        case KC_SCLN:
-         SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_SCLN))); break;
-        case KC_COMMA:
-         SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_SLSH))); break;
-        case KC_DOT:
-         SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_1))); break;
-        case KC_MINUS:
-         SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_MINUS))); break;
         case US_ADIA:
           if (is_caps_word_on()) { //checks for caps word status
               send_string("TZ");
@@ -552,10 +544,6 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
 void matrix_scan_user(void) { // The very important timer.
   switch (get_last_keycode()) {
     case KC_A ... KC_Z:  
-    case KC_SCLN:
-    case KC_COMMA:
-    case KC_DOT:
-    case KC_MINUS:
     case US_ADIA:
     case US_ODIA:
     case US_UDIA:
@@ -582,10 +570,6 @@ void matrix_scan_user(void) { // The very important timer.
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case KC_A ... KC_Z:        
-    case KC_SCLN:
-    case KC_COMMA:
-    case KC_DOT:
-    case KC_MINUS:
     if (record->event.pressed) {
       if (w_trigger_caps) {
         switch (keycode) {
