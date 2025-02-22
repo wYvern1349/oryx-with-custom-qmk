@@ -81,7 +81,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRANSPARENT, KC_B,           KC_L,           KC_D,           KC_M,           KC_V,                                           KC_Y,           KC_P,           KC_O,           KC_U,           KC_Z,           KC_TRANSPARENT, 
     KC_ENTER,       KC_N,           KC_R,           KC_T,           KC_S,           KC_C,                                           KC_F,           KC_H,           KC_E,           KC_I,           KC_A,           RCTL(KC_BSPC),  
     TO(1),          KC_X,           KC_J,           KC_MINUS,       KC_G,           KC_W,                                           ST_MACRO_0,     KC_K,           KC_SCLN,        KC_COMMA,       KC_DOT,         KC_TRANSPARENT, 
-                                                    KC_TRANSPARENT,       OSL(3),                                         OSL(5),         KC_SPACE
+                                                    ARCANE_L
+p,       OSL(3),                                         OSL(5),         KC_SPACE
   ),
   [1] = LAYOUT_voyager(
     KC_GRAVE,       KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                           KC_TRANSPARENT, KC_TRANSPARENT, KC_F11,         KC_F12,         KC_F5,          KC_F8,          
@@ -468,9 +469,9 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
          break;
         case KC_V:
           if (is_caps_word_on()) { //checks for caps word status
-              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_A)));
+              SEND_STRING(SS_TAP(X_BSPC) SS_RALT(SS_TAP(X_S)));
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_A)));
+              send_string("ehreschild");
           } else { //unshifted previous key
               SEND_STRING(SS_TAP(X_BSPC) SS_RALT(SS_TAP(X_S)));
           }
@@ -511,8 +512,15 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
               send_string("ei");
           }
          break;
-      case ST_MACRO_0:
-       SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_SPACE)); break;
+      case KC_SCLN:
+        if (mods & MOD_MASK_SHIFT) {
+          SEND_STRING(SS_TAP(X_SPACE)); 
+        } else {
+          SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_SCLN))); 
+        }
+          break;
+      case ST_MACRO_0: SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_SPACE)); break;
+      case KC_COLN: SEND_STRING(SS_TAP(X_SPACE)); break;
       default: set_oneshot_mods(MOD_BIT(KC_LSFT));
     }
 }
@@ -520,6 +528,8 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
 void matrix_scan_user(void) { // The very important timer.
   switch (get_last_keycode()) {
     case KC_A ... KC_Z:  
+    case KC_SCLN:
+    case KC_COLN:
     case ST_MACRO_0:
       if (last_key_manual != get_last_keycode()) {
         last_key_manual = get_last_keycode();
