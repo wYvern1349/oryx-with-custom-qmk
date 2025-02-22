@@ -511,27 +511,6 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
               send_string("ei");
           }
          break;
-        case US_ADIA:
-          if (is_caps_word_on()) { //checks for caps word status
-              send_string("TZ");
-          } else { //unshifted previous key
-              send_string("tz");
-          }
-         break;
-        case US_ODIA:
-          if (is_caps_word_on()) { //checks for caps word status
-              send_string("GLICH");
-          } else { //unshifted previous key
-              send_string("glich");
-          }
-         break;
-        case US_UDIA:
-          if (is_caps_word_on()) { //checks for caps word status
-              send_string("BER");
-          } else { //unshifted previous key
-              send_string("ber");
-          }
-         break;
       case ST_MACRO_0:
        SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_SPACE)); break;
       default: set_oneshot_mods(MOD_BIT(KC_LSFT));
