@@ -1,8 +1,4 @@
-#define US_SS ALGR(KC_S)
 #define US_CCED ALGR(KC_COMM)
-#define US_ODIA ALGR(KC_P)
-#define US_UDIA ALGR(KC_Y)
-#define US_ADIA ALGR(KC_Q)
 #define US_EACU ALGR(KC_E)
 #define US_DEG S(ALGR(KC_SCLN))
 #define US_MICR ALGR(KC_M)
