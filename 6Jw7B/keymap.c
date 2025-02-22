@@ -468,12 +468,11 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
          break;
         case KC_V:
           if (is_caps_word_on()) { //checks for caps word status
-              send_string("ER");
+              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_A)));
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("er");
+              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_A)));
           } else { //unshifted previous key
-              send_string("er");
-          }
+              SEND_STRING(SS_TAP(X_BSPC) SS_RALT(SS_TAP(X_S)));
          break;
         case KC_W:
           if (is_caps_word_on()) { //checks for caps word status
