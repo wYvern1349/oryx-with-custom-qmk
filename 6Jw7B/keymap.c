@@ -525,26 +525,34 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
 }
 
 void matrix_scan_user(void) { // The very important timer.
-  switch (get_last_keycode()) {
-    case KC_A ... KC_Z:  
-    case KC_SCLN:
-    case KC_COLN:
-    case ST_MACRO_0:
-      if (last_key_manual != get_last_keycode()) {
-        last_key_manual = get_last_keycode();
-        alpha_pressed = true;
-        arcane_timer = timer_read();
-      }
-  }
-  if (alpha_pressed) {
-    if (timer_elapsed(arcane_timer) > 1000) {
+  if (alpha_pressed && timer_elapsed(arcane_timer) > 1000) {
       alpha_pressed = false;
       w_trigger_caps = false;
       w_trigger = false;
+  } else {
+    switch (get_last_keycode()) {
+      case KC_A ... KC_Z:  
+      case KC_SCLN:
+      case KC_COLN:
+      case ST_MACRO_0:
+        if (last_key_manual != get_last_keycode()) {
+          last_key_manual = get_last_keycode();
+          alpha_pressed = true;
+          arcane_timer = timer_read();
+        }
+      break;
+      case KC_SPACE:
+      case KC_ENTER:
+      case KC_BSPC:
+      case KC_COMMA:
+      case KC_DOT:
+      case RCTL(KC_BSPC):
+      last_key_manual = get_last_keycode();
+      alpha_pressed = false;
+      break;
     }
   }
 }
-
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
