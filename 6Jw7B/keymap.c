@@ -529,6 +529,7 @@ void matrix_scan_user(void) { // The very important timer.
       alpha_pressed = false;
       w_trigger_caps = false;
       w_trigger = false;
+      last_key_manual = KC_SPACE;
   } else {
     switch (get_last_keycode()) {
       case KC_A ... KC_Z:  
