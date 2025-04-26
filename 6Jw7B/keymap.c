@@ -264,7 +264,6 @@ bool caps_word_press_user(uint16_t keycode) {
         case KC_MINS:
         case KC_DEL:
         case KC_UNDS:
-        case KC_COMMA:
             return true;
 
         default:
@@ -519,9 +518,13 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
           break;
       case KC_COMMA:
             if (is_caps_word_on()) { //checks for caps word status
-              send_string(SS_TAP(X_BSPC) SS_TAP(X_SPACE) SS_TAP(X_BSPC));
+              SEND_STRING(SS_TAP(X_BSPC));
+              alpha_pressed = false;
+              set_oneshot_mods(MOD_BIT(KC_LSFT));
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("wtf");
+              SEND_STRING(SS_TAP(X_BSPC));
+              alpha_pressed = false;
+              set_oneshot_mods(MOD_BIT(KC_LSFT));
           } else { //unshifted previous key
               SEND_STRING(SS_TAP(X_BSPC));
               alpha_pressed = false;
