@@ -1,5 +1,5 @@
-#define US_CCED ALGR(KC_COMM)
 #define US_EACU ALGR(KC_E)
+#define US_CCED ALGR(KC_COMM)
 #define US_DEG S(ALGR(KC_SCLN))
 #define US_MICR ALGR(KC_M)
 #define US_EURO ALGR(KC_5)
