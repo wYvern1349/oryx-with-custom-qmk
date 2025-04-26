@@ -254,7 +254,6 @@ bool caps_word_press_user(uint16_t keycode) {
     switch (keycode) {
         // Keycodes that continue Caps Word, with shift applied.
         case KC_A ... KC_Z:
-        case KC_MINS:
         case ARCANE_L:
             add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
             return true;
@@ -262,8 +261,10 @@ bool caps_word_press_user(uint16_t keycode) {
         // Keycodes that continue Caps Word, without shifting.
         case KC_1 ... KC_0:
         case KC_BSPC:
+        case KC_MINS:
         case KC_DEL:
         case KC_UNDS:
+        case KC_COMMA:
             return true;
 
         default:
@@ -516,9 +517,16 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
           SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_SCLN))); 
         }
           break;
-      case KC_COMMA: SEND_STRING(SS_TAP(X_BSPC));
-        alpha_pressed = false;
-        set_oneshot_mods(MOD_BIT(KC_LSFT));
+      case KC_COMMA:
+            if (is_caps_word_on()) { //checks for caps word status
+              send_string(SS_TAP(X_BSPC) SS_TAP(KC_SPACE) SS_TAP(X_BSPC));
+          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
+              send_string("wtf");
+          } else { //unshifted previous key
+              SEND_STRING(SS_TAP(X_BSPC));
+              alpha_pressed = false;
+              set_oneshot_mods(MOD_BIT(KC_LSFT));
+          }
         break;
       default: set_oneshot_mods(MOD_BIT(KC_LSFT));
     }
