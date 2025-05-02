@@ -2,6 +2,7 @@
 #define US_CCED ALGR(KC_COMM)
 #define US_LABK S(KC_COMM)
 #define US_RABK S(KC_DOT)
+#define US_EURO ALGR(KC_5)
 #define US_LDAQ ALGR(KC_LBRC)
 #define US_RDAQ ALGR(KC_RBRC)
 #define US_SECT S(ALGR(KC_S))
