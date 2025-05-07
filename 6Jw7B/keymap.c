@@ -512,11 +512,11 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
           SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_SCLN))); 
         }
           break;
-      case KC_COMMA:
+      case KC_COMMA: //I'm using this as a "get one-shot shift to trigger within a word" key for abbreviations and the like... could wait for the timer to run out, but I lack the patience.
             if (is_caps_word_on()) { //checks for caps word status
-              SEND_STRING(SS_TAP(X_BSPC));
-              alpha_pressed = false;
-              set_oneshot_mods(MOD_BIT(KC_LSFT));
+              SEND_STRING(SS_TAP(X_BSPC)); //erases comma since I don't actually want it, just using it as a trigger for the two lines following
+              alpha_pressed = false; //basically ends the timer for the arcane functionality prematurely
+              set_oneshot_mods(MOD_BIT(KC_LSFT)); //activates one-shot shift
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
               SEND_STRING(SS_TAP(X_BSPC));
               alpha_pressed = false;
@@ -527,19 +527,17 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
               set_oneshot_mods(MOD_BIT(KC_LSFT));
           }
         break;
-      case KC_LABK:
-      SEND_STRING(SS_TAP(X_MINUS) SS_TAP(X_SPACE));break;
       default: set_oneshot_mods(MOD_BIT(KC_LSFT));
     }
 }
 
 void matrix_scan_user(void) { // The very important timer.
-  if (alpha_pressed && timer_elapsed(arcane_timer) > 1000) {
+  if (alpha_pressed && timer_elapsed(arcane_timer) > 1000) { //triggers when timer elapsed
       alpha_pressed = false;
       w_trigger_caps = false;
       w_trigger = false;
       set_last_keycode(KC_SPACE);
-  } else {
+  } else { //timer update
     switch (get_last_keycode()) {
       case KC_A ... KC_Z:  
       case KC_SCLN:
@@ -549,7 +547,7 @@ void matrix_scan_user(void) { // The very important timer.
           alpha_pressed = true;
           arcane_timer = timer_read();
         }
-      break;
+      break; //these were all the keys that keep the timer going
       case KC_SPACE:
       case KC_ENTER:
       case KC_BSPC:
@@ -557,7 +555,7 @@ void matrix_scan_user(void) { // The very important timer.
       case RCTL(KC_BSPC):
       last_key_manual = get_last_keycode();
       alpha_pressed = false;
-      break;
+      break; //these were all the keys that end the timer prematurely
     }
   }
 }
@@ -566,7 +564,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case KC_A ... KC_Z:        
     if (record->event.pressed) {
-      if (w_trigger_caps) {
+      if (w_trigger_caps) { //true if w was pressed with caps-word on, followed by arcane_l
         switch (keycode) {
           case KC_A: send_string("ACH"); break;
           case KC_I: send_string("IRD"); break;
@@ -578,7 +576,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         w_trigger_caps = false;
         return false;
       }
-      if (w_trigger) {
+      if (w_trigger) { //true if w was pressed with caps-word off, followed by arcane_l
         switch (keycode) {
           case KC_A: send_string("ach"); break;
           case KC_I: send_string("ird"); break;
