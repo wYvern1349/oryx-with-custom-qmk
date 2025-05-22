@@ -285,7 +285,7 @@ static void process_arcane_i(uint16_t keycode, uint8_t mods) {
     switch (keycode) {
 case KC_J:
       if (g_trigger){
-        SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_L);
+        SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_L));
       } else {
         g_trigger = false;
       }
