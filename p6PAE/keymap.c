@@ -72,9 +72,9 @@ enum tap_dance_codes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_voyager(
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, TO(2),          KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, TO(2),          KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
-    OSL(7),         KC_B,           KC_L,           KC_D,           KC_M,           KC_F,                                           KC_Y,           KC_P,           KC_O,           KC_U,           KC_Z,           KC_TRANSPARENT, 
-    KC_ENTER,       KC_N,           KC_R,           KC_T,           KC_S,           KC_G,                                           KC_C,           KC_H,           KC_E,           KC_I,           KC_A,           RCTL(KC_BSPC),  
-    TO(1),          KC_X,           KC_J,           OSL(5),         KC_W,           KC_V,                                           ST_MACRO_0,     KC_K,           OSL(5),         KC_COMMA,       KC_DOT,         KC_TRANSPARENT, 
+    OSL(7),         KC_B,           KC_L,           KC_D,           KC_G,           KC_W,                                           KC_Y,           KC_P,           KC_O,           KC_U,           KC_Z,           KC_TRANSPARENT, 
+    KC_ENTER,       KC_N,           KC_R,           KC_T,           KC_S,           KC_M,                                           KC_C,           KC_H,           KC_E,           KC_I,           KC_A,           RCTL(KC_BSPC),  
+    TO(1),          KC_X,           KC_J,           OSL(5),         KC_F,           KC_V,                                           ST_MACRO_0,     KC_K,           OSL(5),         KC_COMMA,       KC_DOT,         KC_TRANSPARENT, 
                                                     KC_TRANSPARENT, OSL(3),                                         OSL(4),         KC_SPACE
   ),
   [1] = LAYOUT_voyager(
@@ -573,7 +573,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     break;
     case ST_MACRO_1:
     if (record->event.pressed) {
-      SEND_STRING(SS_TAP(X_S)SS_DELAY(10)  SS_TAP(X_M));
+      SEND_STRING(SS_TAP(X_S)SS_DELAY(10)  SS_TAP(X_G));
     }
     break;
     case ST_MACRO_2:
