@@ -5,6 +5,8 @@
 #define ML_SAFE_RANGE SAFE_RANGE
 
 bool alpha_pressed = false; // variable for timer to disable arcane key functionality after no letter has been pressed for x amount of time
+bool j_trigger = false; //j pressed previously?
+bool g_trigger = false; //g pressed previously?
 uint16_t arcane_timer = 0;     // timer 
 uint16_t last_key_manual = 0; // for timer reset
 
@@ -277,6 +279,28 @@ bool remember_last_key_user(uint16_t keycode, keyrecord_t* record,
     }
 
     return true;  // Other keys can be repeated.
+}
+
+static void process_arcane_i(uint16_t keycode, uint8_t mods) {
+    switch (keycode) {
+case KC_J:
+      if (g_trigger){
+        SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_L);
+      } else {
+        g_trigger = false;
+      }
+      break;
+case KC_G:
+      if (j_trigger){
+        SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_TAP(X_L) SS_TAP(X_G));
+      } else {
+        j_trigger = false;
+      }
+      break;
+      default:
+        j_trigger = false;
+        g_trigger = false;
+    }
 }
 
 static void process_arcane_l(uint16_t keycode, uint8_t mods) {
@@ -555,6 +579,12 @@ void matrix_scan_user(void) { // The very important timer.
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+    case KC_A ... KC_Z:        
+    if (record->event.pressed) {
+      arcane_timer = timer_read();
+      process_arcane_i(get_last_keycode(), get_last_mods());
+    }
+    break;
     case ARCANE_L: 
                if (record->event.pressed) {
                  if (get_oneshot_mods() & MOD_MASK_SHIFT) {
