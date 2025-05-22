@@ -287,14 +287,14 @@ case KC_J:
       if (g_trigger){
         SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_L));
       } else {
-        g_trigger = false;
+        j_trigger = true;
       }
       break;
 case KC_G:
       if (j_trigger){
         SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_TAP(X_L) SS_TAP(X_G));
       } else {
-        j_trigger = false;
+        g_trigger = true;
       }
       break;
       default:
