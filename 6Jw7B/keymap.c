@@ -552,6 +552,8 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
 void matrix_scan_user(void) { // The very important timer.
   if (alpha_pressed && timer_elapsed(arcane_timer) > 1000) { //triggers when timer elapsed
       alpha_pressed = false;
+      j_trigger = false;
+      g_trigger = false;
       set_last_keycode(KC_SPACE);
   } else { //timer update
     switch (get_last_keycode()) {
@@ -579,10 +581,24 @@ void matrix_scan_user(void) { // The very important timer.
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case KC_A ... KC_Z:        
+    case KC_J:        
     if (record->event.pressed) {
-      arcane_timer = timer_read();
-      process_arcane_i(get_last_keycode(), get_last_mods());
+      if (g_trigger){
+          SEND_STRING(SS_TAP(X_L));
+          set_last_keycode(KC_L);
+          return false;
+      } else {
+        j_trigger = true;
+      }
+    }
+    break;
+    case K_G:        
+    if (record->event.pressed) {
+      if (j_trigger){
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_L));
+      } else {
+        g_trigger = true;
+      }
     }
     break;
     case ARCANE_L: 
