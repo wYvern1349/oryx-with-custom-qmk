@@ -760,6 +760,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         a_trigger = false;
         z_trigger = false;
       }
+      }
     break;
       case KC_N:      
         if (record->event.pressed) {
