@@ -13,6 +13,8 @@ bool n_trigger = false; //n pressed previously?
 bool x_trigger = false; //x pressed previously?
 bool a_trigger = false; //a pressed previously?
 bool z_trigger = false; //z pressed previously?
+bool reset_triggers = false;
+uint16_t trigger_timer = 0; 
 uint16_t arcane_timer = 0;     // timer 
 uint16_t last_key_manual = 0; // for timer reset
 
@@ -583,6 +585,19 @@ void matrix_scan_user(void) { // The very important timer.
   }
 }
 
+void matrix_scan_user(void) { // The very important timer.
+  if (reset_triggers && timer_elapsed(trigger_timer) > 20) { //triggers when timer elapsed
+      g_trigger = false;
+      j_trigger = false;
+      u_trigger = false;
+      b_trigger = false;
+      n_trigger = false;
+      x_trigger = false;
+      a_trigger = false;
+      z_trigger = false;
+      reset_triggers = false;
+  }
+}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
@@ -601,14 +616,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       case KC_V:
       case KC_W:
       case KC_Y:
-      g_trigger = false;
-      j_trigger = false;
-      u_trigger = false;
-      b_trigger = false;
-      n_trigger = false;
-      x_trigger = false;
-      a_trigger = false;
-      z_trigger = false;
+      trigger_timer = timer_read(); // reset timer
+      reset_triggers = true;
       break;
     case KC_J:        
     if (record->event.pressed) {
@@ -864,8 +873,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                    if (alpha_pressed) {// letter was pressed within timer limits
                      arcane_timer = timer_read(); // reset timer
                      process_arcane_l(get_last_keycode(), get_last_mods()); // call arcane code
-                      g_trigger = false;
-                      j_trigger = false;
+                        g_trigger = false;
+                        j_trigger = false;
+                        u_trigger = false;
+                        b_trigger = false;
+                        n_trigger = false;
+                        x_trigger = false;
+                        a_trigger = false;
+                        z_trigger = false;
                    } else {//alpha timer timed out, so key functions just as a OSM shift
                       set_oneshot_mods(MOD_BIT(KC_LSFT));
                    }
