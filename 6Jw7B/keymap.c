@@ -7,12 +7,14 @@
 bool alpha_pressed = false; // variable for timer to disable arcane key functionality after no letter has been pressed for x amount of time
 bool j_trigger = false; //j pressed previously?
 bool g_trigger = false; //g pressed previously?
+bool u_trigger = false; //u pressed previously?
 uint16_t arcane_timer = 0;     // timer 
 uint16_t last_key_manual = 0; // for timer reset
 
 enum custom_keycodes {
   RGB_SLD = ML_SAFE_RANGE,
   ARCANE_L,
+  U_DUMMY,
   ST_MACRO_0,
   ST_MACRO_1,
   ST_MACRO_2,
@@ -506,6 +508,15 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
           } else { //unshifted previous key
               send_string("ei");
           }
+         break;        
+      case U_DUMMY:
+          if (is_caps_word_on()) { //checks for caps word status
+              send_string("U");
+          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
+              send_string("u");
+          } else { //unshifted previous key
+              send_string("u");
+          }
          break;
       case KC_COMMA: //I'm using this as a "get one-shot shift to trigger within a word" key for abbreviations and the like... could wait for the timer to run out, but I lack the patience.
             if (is_caps_word_on()) { //checks for caps word status
@@ -531,10 +542,12 @@ void matrix_scan_user(void) { // The very important timer.
       alpha_pressed = false;
       j_trigger = false;
       g_trigger = false;
+      u_trigger = false;
       set_last_keycode(KC_SPACE);
   } else { //timer update
     switch (get_last_keycode()) {
-      case KC_A ... KC_Z:  
+      case KC_A ... KC_Z:
+      case U_DUMMY:
       case KC_SCLN:
       case KC_COMMA:
         if (last_key_manual != get_last_keycode()) {
@@ -552,6 +565,7 @@ void matrix_scan_user(void) { // The very important timer.
       alpha_pressed = false;
       j_trigger = false;
       g_trigger = false;
+      u_trigger = false;
       break; //these were all the keys that end the timer prematurely
     }
   }
@@ -575,6 +589,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       } else {
         j_trigger = true;
         g_trigger = false;
+        u_trigger = false;
       }
     }
     break;
@@ -591,6 +606,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       } else {
         g_trigger = true;
         j_trigger = false;
+        u_trigger = false;
       }
     }
     break;    
@@ -607,6 +623,33 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       } else {
         g_trigger = false;
         j_trigger = false;
+        u_trigger = false;
+      }
+    }
+    break;
+    case KC_U:    
+      if (record->event.pressed) {
+        g_trigger = false;
+        j_trigger = false;
+        u_trigger = true;
+      }
+    break;
+    case KC_O:    
+    if (record->event.pressed) {
+      if (u_trigger){
+        if (is_caps_word_on()){
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_E)) SS_LSFT(SS_TAP(X_A)));
+          u_trigger = false;
+        } else {
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_E) SS_TAP(X_A));
+          u_trigger = false;
+        }
+          set_last_keycode(U_DUMMY);
+          return false;
+      } else {
+        j_trigger = false;
+        g_trigger = false;
+        u_trigger = false;
       }
     }
     break;
@@ -622,12 +665,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       case KC_L:
       case KC_M:
       case KC_N:
-      case KC_O:
       case KC_P:
       case KC_Q:
       case KC_R:
       case KC_S:
-      case KC_U:
       case KC_V:
       case KC_W:
       case KC_X:
@@ -635,6 +676,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       case KC_Z:
       g_trigger = false;
       j_trigger = false;
+      u_trigger = false;
       break;
     case ARCANE_L: 
                if (record->event.pressed) {
