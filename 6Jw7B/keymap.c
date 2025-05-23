@@ -551,6 +551,8 @@ void matrix_scan_user(void) { // The very important timer.
       case RCTL(KC_BSPC):
       last_key_manual = get_last_keycode();
       alpha_pressed = false;
+      j_trigger = false;
+      g_trigger = false;
       break; //these were all the keys that end the timer prematurely
     }
   }
@@ -562,23 +564,79 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KC_J:        
     if (record->event.pressed) {
       if (g_trigger){
+        if (is_caps_word_on()){
+          SEND_STRING(SS_LSFT(SS_TAP(X_L)));
+          g_trigger = false;
+        } else {
           SEND_STRING(SS_TAP(X_L));
+          g_trigger = false;
+        }
           set_last_keycode(KC_L);
           return false;
       } else {
         j_trigger = true;
+        g_trigger = false;
       }
     }
     break;
     case KC_G:        
     if (record->event.pressed) {
       if (j_trigger){
+        if {is_caps_word_on()){
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_L)));
+          j_trigger = false;
+        } else {
           SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_L));
+          j_trigger = false;
+        }
       } else {
         g_trigger = true;
+        j_trigger = false;
+      }
+    }
+    break;    
+    case KC_T:        
+    if (record->event.pressed) {
+      if (j_trigger){
+        if {is_caps_word_on()){
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_G)));
+          j_trigger = false;
+        } else {
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_G));
+          j_trigger = false;
+        }
+      } else {
+        g_trigger = false;
+        j_trigger = false;
       }
     }
     break;
+      case KC_A:
+      case KC_B:
+      case KC_C:
+      case KC_D:
+      case KC_E:
+      case KC_F:
+      case KC_H:
+      case KC_I:
+      case KC_K:
+      case KC_L:
+      case KC_M:
+      case KC_N:
+      case KC_O:
+      case KC_P:
+      case KC_Q:
+      case KC_R:
+      case KC_S:
+      case KC_U:
+      case KC_V:
+      case KC_W:
+      case KC_X:
+      case KC_Y:
+      case KC_Z:
+      g_trigger = false;
+      j_trigger = false;
+      break;
     case ARCANE_L: 
                if (record->event.pressed) {
                  if (get_oneshot_mods() & MOD_MASK_SHIFT) {
@@ -587,6 +645,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                    if (alpha_pressed) {// letter was pressed within timer limits
                      arcane_timer = timer_read(); // reset timer
                      process_arcane_l(get_last_keycode(), get_last_mods()); // call arcane code
+                      g_trigger = false;
+                      j_trigger = false;
                    } else {//alpha timer timed out, so key functions just as a OSM shift
                       set_oneshot_mods(MOD_BIT(KC_LSFT));
                    }
