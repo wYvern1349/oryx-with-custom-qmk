@@ -581,7 +581,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KC_G:        
     if (record->event.pressed) {
       if (j_trigger){
-        if {is_caps_word_on()){
+        if (is_caps_word_on()){
           SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_L)));
           j_trigger = false;
         } else {
@@ -597,7 +597,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KC_T:        
     if (record->event.pressed) {
       if (j_trigger){
-        if {is_caps_word_on()){
+        if (is_caps_word_on()){
           SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_G)));
           j_trigger = false;
         } else {
