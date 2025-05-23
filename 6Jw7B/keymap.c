@@ -585,7 +585,7 @@ void matrix_scan_user(void) { // The very important timer.
   }
 }
 
-void matrix_scan_user(void) { // The very important timer.
+void matrix_scan_user_deux(void) { // The very important timer 2
   if (reset_triggers && timer_elapsed(trigger_timer) > 20) { //triggers when timer elapsed
       g_trigger = false;
       j_trigger = false;
