@@ -835,8 +835,33 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       }
     break;
-  }
   
+      case KC_C:
+      case KC_D:
+      case KC_E:
+      case KC_F:
+      case KC_H:
+      case KC_I:
+      case KC_K:
+      case KC_M:
+      case KC_P:
+      case KC_Q:
+      case KC_R:
+      case KC_S:
+      case KC_V:
+      case KC_W:
+      case KC_Y:
+      if (record->event.pressed) {
+      j_trigger = false;
+      g_trigger = false;
+      u_trigger = false;
+      b_trigger = false;
+      n_trigger = false;
+      x_trigger = false;
+      a_trigger = false;
+      z_trigger = false;
+      }
+      break;
 
     case ARCANE_L: 
                if (record->event.pressed) {
@@ -1054,37 +1079,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case RGB_SLD:
       if (record->event.pressed) {
         rgblight_mode(1);
-      }
     
       return false;
-
-
-      case KC_C:
-      case KC_D:
-      case KC_E:
-      case KC_F:
-      case KC_H:
-      case KC_I:
-      case KC_K:
-      case KC_M:
-      case KC_P:
-      case KC_Q:
-      case KC_R:
-      case KC_S:
-      case KC_V:
-      case KC_W:
-      case KC_Y:
-      j_trigger = false;
-      g_trigger = false;
-      u_trigger = false;
-      b_trigger = false;
-      n_trigger = false;
-      x_trigger = false;
-      a_trigger = false;
-      z_trigger = false;
-      break;
+        }
   return true;
-}
+}}
 
 typedef struct {
     bool is_press_action;
