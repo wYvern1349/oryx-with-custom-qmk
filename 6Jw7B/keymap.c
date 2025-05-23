@@ -586,6 +586,30 @@ void matrix_scan_user(void) { // The very important timer.
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+      case KC_C:
+      case KC_D:
+      case KC_E:
+      case KC_F:
+      case KC_H:
+      case KC_I:
+      case KC_K:
+      case KC_M:
+      case KC_P:
+      case KC_Q:
+      case KC_R:
+      case KC_S:
+      case KC_V:
+      case KC_W:
+      case KC_Y:
+      g_trigger = false;
+      j_trigger = false;
+      u_trigger = false;
+      b_trigger = false;
+      n_trigger = false;
+      x_trigger = false;
+      a_trigger = false;
+      z_trigger = false;
+      break;
     case KC_J:        
     if (record->event.pressed) {
       if (g_trigger){
@@ -832,30 +856,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       }
     break;
-      case KC_C:
-      case KC_D:
-      case KC_E:
-      case KC_F:
-      case KC_H:
-      case KC_I:
-      case KC_K:
-      case KC_M:
-      case KC_P:
-      case KC_Q:
-      case KC_R:
-      case KC_S:
-      case KC_V:
-      case KC_W:
-      case KC_Y:
-      g_trigger = false;
-      j_trigger = false;
-      u_trigger = false;
-      b_trigger = false;
-      n_trigger = false;
-      x_trigger = false;
-      a_trigger = false;
-      z_trigger = false;
-      break;
     case ARCANE_L: 
                if (record->event.pressed) {
                  if (get_oneshot_mods() & MOD_MASK_SHIFT) {
