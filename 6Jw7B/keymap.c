@@ -10,6 +10,7 @@ bool g_trigger = false; //g pressed previously?
 bool u_trigger = false; //u pressed previously?
 bool b_trigger = false; //b pressed previously?
 bool n_trigger = false; //n pressed previously?
+bool x_trigger = false; //x pressed previously?
 uint16_t arcane_timer = 0;     // timer 
 uint16_t last_key_manual = 0; // for timer reset
 
