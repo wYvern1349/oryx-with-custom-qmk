@@ -592,7 +592,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
     }
     break;
-    case K_G:        
+    case KC_G:        
     if (record->event.pressed) {
       if (j_trigger){
           SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_L));
