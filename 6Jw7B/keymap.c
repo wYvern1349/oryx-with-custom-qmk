@@ -54,7 +54,6 @@ enum custom_keycodes {
   ST_MACRO_38,
   ST_MACRO_39,
   ST_MACRO_40,
-  ST_MACRO_41,
 };
 
 
@@ -78,7 +77,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, TO(2),          KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, TO(2),          KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
     OSL(7),         KC_ENTER,       KC_L,           KC_D,           KC_M,           KC_V,                                           KC_Y,           KC_P,           KC_O,           KC_U,           KC_Z,           KC_TRANSPARENT, 
     KC_B,           KC_N,           KC_R,           KC_T,           KC_S,           KC_C,                                           KC_F,           KC_H,           KC_E,           KC_I,           KC_A,           RCTL(KC_BSPC),  
-    TO(1),          KC_X,           KC_J,           OSL(5),         KC_G,           KC_W,                                           ST_MACRO_0,     KC_K,           OSL(5),         KC_COMMA,       KC_DOT,         KC_TRANSPARENT, 
+    TO(1),          KC_X,           KC_J,           KC_G,           KC_W,           OSL(5),                                         ST_MACRO_0,     KC_K,           OSL(5),         KC_COMMA,       KC_DOT,         KC_TRANSPARENT, 
                                                     KC_TRANSPARENT, OSL(3),                                         OSL(4),         KC_SPACE
   ),
   [1] = LAYOUT_voyager(
@@ -113,8 +112,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
     KC_TRANSPARENT, KC_AT,          US_LABK,        KC_MINUS,       US_RABK,        KC_AMPR,                                        US_SECT,        KC_BSLS,        KC_LBRC,        KC_RBRC,        KC_SLASH,       KC_TRANSPARENT, 
     KC_EQUAL,       ST_MACRO_22,    KC_QUES,        KC_EXLM,        KC_TILD,        TD(DANCE_3),                                    RSFT(KC_6),     KC_PLUS,        KC_LPRN,        KC_RPRN,        KC_PERC,        KC_BSPC,        
-    KC_TRANSPARENT, KC_UNDS,        TD(DANCE_4),    KC_HASH,        ST_MACRO_23,    KC_ASTR,                                        TD(DANCE_5),    KC_COLN,        KC_LCBR,        KC_RCBR,        KC_SCLN,        KC_TRANSPARENT, 
-                                                    ST_MACRO_24,    KC_PIPE,                                        TO(0),          KC_TRANSPARENT
+    KC_TRANSPARENT, KC_ASTR,        TD(DANCE_4),    KC_HASH,        KC_UNDS,        KC_TRANSPARENT,                                 TD(DANCE_5),    KC_COLN,        KC_LCBR,        KC_RCBR,        KC_SCLN,        KC_TRANSPARENT, 
+                                                    ST_MACRO_23,    KC_PIPE,                                        TO(0),          KC_TRANSPARENT
   ),
   [6] = LAYOUT_voyager(
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
@@ -125,10 +124,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [7] = LAYOUT_voyager(
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, ST_MACRO_25,    KC_TRANSPARENT,                                 ST_MACRO_26,    ST_MACRO_27,    KC_TRANSPARENT, ST_MACRO_28,    ST_MACRO_29,    KC_TRANSPARENT, 
-    KC_TRANSPARENT, KC_TRANSPARENT, TD(DANCE_7),    TD(DANCE_8),    TD(DANCE_9),    KC_TRANSPARENT,                                 ST_MACRO_30,    ST_MACRO_31,    ST_MACRO_32,    RSFT(US_EACU),  ST_MACRO_33,    ST_MACRO_34,    
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 ST_MACRO_35,    ST_MACRO_36,    ST_MACRO_37,    ST_MACRO_38,    ST_MACRO_39,    ST_MACRO_40,    
-                                                    KC_TRANSPARENT, TO(0),                                          LSFT(US_CCED),  ST_MACRO_41
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, ST_MACRO_24,    KC_TRANSPARENT,                                 ST_MACRO_25,    ST_MACRO_26,    KC_TRANSPARENT, ST_MACRO_27,    ST_MACRO_28,    KC_TRANSPARENT, 
+    KC_TRANSPARENT, KC_TRANSPARENT, TD(DANCE_7),    TD(DANCE_8),    TD(DANCE_9),    KC_TRANSPARENT,                                 ST_MACRO_29,    ST_MACRO_30,    ST_MACRO_31,    RSFT(US_EACU),  ST_MACRO_32,    ST_MACRO_33,    
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 ST_MACRO_34,    ST_MACRO_35,    ST_MACRO_36,    ST_MACRO_37,    ST_MACRO_38,    ST_MACRO_39,    
+                                                    KC_TRANSPARENT, TO(0),                                          LSFT(US_CCED),  ST_MACRO_40
   ),
   [8] = LAYOUT_voyager(
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
@@ -162,7 +161,7 @@ void keyboard_post_init_user(void) {
 }
 
 const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
-    [0] = { {0,0,0}, {0,0,0}, {0,0,0}, {20,255,255}, {0,0,0}, {0,0,0}, {41,255,255}, {0,0,255}, {152,255,255}, {152,255,255}, {152,255,255}, {152,255,255}, {152,255,255}, {152,255,255}, {152,255,255}, {152,255,255}, {152,255,255}, {152,255,255}, {0,255,255}, {152,255,255}, {152,255,255}, {188,255,255}, {152,255,255}, {152,255,255}, {0,0,255}, {236,255,255}, {0,0,0}, {0,0,0}, {20,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {152,255,255}, {152,255,255}, {152,255,255}, {152,255,255}, {152,255,255}, {0,0,0}, {152,255,255}, {152,255,255}, {152,255,255}, {152,255,255}, {152,255,255}, {0,0,255}, {152,255,255}, {152,255,255}, {189,255,255}, {152,255,255}, {152,255,255}, {0,0,0}, {89,255,255}, {0,0,255} },
+    [0] = { {0,0,0}, {0,0,0}, {0,0,0}, {20,255,255}, {0,0,0}, {0,0,0}, {41,255,255}, {0,0,255}, {152,255,255}, {152,255,255}, {152,255,255}, {152,255,255}, {152,255,255}, {152,255,255}, {152,255,255}, {152,255,255}, {152,255,255}, {152,255,255}, {0,255,255}, {152,255,255}, {152,255,255}, {152,255,255}, {152,255,255}, {188,255,255}, {0,0,255}, {236,255,255}, {0,0,0}, {0,0,0}, {20,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {152,255,255}, {152,255,255}, {152,255,255}, {152,255,255}, {152,255,255}, {0,0,0}, {152,255,255}, {152,255,255}, {152,255,255}, {152,255,255}, {152,255,255}, {0,0,255}, {152,255,255}, {152,255,255}, {189,255,255}, {152,255,255}, {152,255,255}, {0,0,0}, {89,255,255}, {0,0,255} },
 
     [1] = { {0,255,118}, {0,255,118}, {0,255,118}, {0,255,118}, {0,255,118}, {0,255,118}, {0,255,118}, {0,255,118}, {0,245,245}, {0,255,118}, {0,255,118}, {0,255,118}, {0,255,118}, {0,245,245}, {0,245,245}, {0,245,245}, {0,255,118}, {0,255,118}, {0,255,118}, {0,255,118}, {0,255,118}, {0,255,118}, {0,255,118}, {0,255,118}, {0,255,118}, {0,255,118}, {0,255,118}, {0,0,0}, {0,0,79}, {0,0,79}, {0,0,79}, {0,0,79}, {0,255,118}, {0,255,118}, {0,255,118}, {0,255,118}, {0,255,118}, {0,0,255}, {0,255,118}, {0,255,118}, {0,255,118}, {0,255,118}, {0,255,118}, {0,0,255}, {0,255,118}, {0,255,118}, {0,255,118}, {0,255,118}, {0,255,118}, {0,0,0}, {74,255,255}, {152,255,255} },
 
@@ -172,7 +171,7 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
 
     [4] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,255}, {152,255,255}, {0,0,255}, {0,0,255}, {0,0,0}, {152,255,255}, {74,255,255}, {74,255,255}, {74,255,255}, {74,255,255}, {0,0,255}, {0,0,0}, {74,255,255}, {74,255,255}, {74,255,255}, {74,255,255}, {74,255,255}, {74,255,255}, {236,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,255}, {0,0,255}, {20,255,255}, {0,0,255}, {95,255,255}, {0,0,0}, {152,255,255}, {20,255,255}, {20,255,255}, {20,255,255}, {0,255,255}, {0,0,255}, {0,0,255}, {95,255,255}, {188,255,255}, {95,255,255}, {95,255,255}, {0,0,0}, {0,0,0}, {0,0,0} },
 
-    [5] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {181,255,255}, {188,255,255}, {188,255,255}, {181,255,255}, {181,255,255}, {181,255,255}, {0,0,0}, {181,255,255}, {181,255,255}, {181,255,255}, {181,255,255}, {0,0,0}, {188,255,255}, {188,255,255}, {181,255,255}, {188,255,255}, {181,255,255}, {0,0,0}, {181,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {188,255,255}, {188,255,255}, {181,255,255}, {181,255,255}, {181,255,255}, {0,0,0}, {181,255,255}, {181,255,255}, {181,255,255}, {181,255,255}, {181,255,255}, {0,0,255}, {181,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {0,0,0}, {152,255,255}, {0,0,0} },
+    [5] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {181,255,255}, {188,255,255}, {188,255,255}, {181,255,255}, {181,255,255}, {181,255,255}, {0,0,0}, {181,255,255}, {181,255,255}, {181,255,255}, {181,255,255}, {0,0,0}, {181,255,255}, {188,255,255}, {181,255,255}, {188,255,255}, {188,255,255}, {0,0,0}, {181,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {188,255,255}, {188,255,255}, {181,255,255}, {181,255,255}, {181,255,255}, {0,0,0}, {181,255,255}, {181,255,255}, {181,255,255}, {181,255,255}, {181,255,255}, {0,0,255}, {181,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {188,255,255}, {0,0,0}, {152,255,255}, {0,0,0} },
 
     [6] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,255}, {0,255,255}, {0,255,255}, {0,0,0}, {0,255,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,0}, {0,0,255}, {0,0,255}, {0,0,255}, {152,255,255}, {74,255,255}, {0,0,255}, {116,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} },
 
@@ -665,7 +664,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     break;
     case ST_MACRO_2:
     if (record->event.pressed) {
-      SEND_STRING(SS_TAP(X_G)SS_DELAY(100)  SS_TAP(X_S));
+      SEND_STRING(SS_TAP(X_W)SS_DELAY(10)  SS_TAP(X_S));
     }
     break;
     case ST_MACRO_3:
@@ -770,95 +769,90 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     break;
     case ST_MACRO_23:
     if (record->event.pressed) {
-      SEND_STRING(SS_TAP(X_T)SS_DELAY(10)  SS_TAP(X_W));
+      SEND_STRING(SS_TAP(X_GRAVE)SS_DELAY(10)  SS_TAP(X_SPACE));
     }
     break;
     case ST_MACRO_24:
     if (record->event.pressed) {
-      SEND_STRING(SS_TAP(X_GRAVE)SS_DELAY(10)  SS_TAP(X_SPACE));
+      SEND_STRING(SS_LSFT(SS_TAP(X_S))SS_DELAY(100)  SS_TAP(X_M));
     }
     break;
     case ST_MACRO_25:
     if (record->event.pressed) {
-      SEND_STRING(SS_LSFT(SS_TAP(X_S))SS_DELAY(100)  SS_TAP(X_M));
+      SEND_STRING(SS_RSFT(SS_TAP(X_P))SS_DELAY(100)  SS_TAP(X_H)SS_DELAY(100)  SS_TAP(X_Y));
     }
     break;
     case ST_MACRO_26:
     if (record->event.pressed) {
-      SEND_STRING(SS_RSFT(SS_TAP(X_P))SS_DELAY(100)  SS_TAP(X_H)SS_DELAY(100)  SS_TAP(X_Y));
+      SEND_STRING(SS_RSFT(SS_TAP(X_P))SS_DELAY(100)  SS_TAP(X_Y));
     }
     break;
     case ST_MACRO_27:
     if (record->event.pressed) {
-      SEND_STRING(SS_RSFT(SS_TAP(X_P))SS_DELAY(100)  SS_TAP(X_Y));
+      SEND_STRING(SS_TAP(X_GRAVE)SS_DELAY(100)  SS_RSFT(SS_TAP(X_U)));
     }
     break;
     case ST_MACRO_28:
     if (record->event.pressed) {
-      SEND_STRING(SS_TAP(X_GRAVE)SS_DELAY(100)  SS_RSFT(SS_TAP(X_U)));
+      SEND_STRING(SS_RSFT(SS_TAP(X_Z))SS_DELAY(100)  SS_TAP(X_A));
     }
     break;
     case ST_MACRO_29:
     if (record->event.pressed) {
-      SEND_STRING(SS_RSFT(SS_TAP(X_Z))SS_DELAY(100)  SS_TAP(X_A));
+      SEND_STRING(SS_RSFT(SS_TAP(X_P))SS_DELAY(100)  SS_TAP(X_F));
     }
     break;
     case ST_MACRO_30:
     if (record->event.pressed) {
-      SEND_STRING(SS_RSFT(SS_TAP(X_P))SS_DELAY(100)  SS_TAP(X_F));
+      SEND_STRING(SS_RSFT(SS_TAP(X_Q))SS_DELAY(100)  SS_TAP(X_U));
     }
     break;
     case ST_MACRO_31:
     if (record->event.pressed) {
-      SEND_STRING(SS_RSFT(SS_TAP(X_Q))SS_DELAY(100)  SS_TAP(X_U));
+      SEND_STRING(SS_TAP(X_GRAVE)SS_DELAY(100)  SS_RSFT(SS_TAP(X_E)));
     }
     break;
     case ST_MACRO_32:
     if (record->event.pressed) {
-      SEND_STRING(SS_TAP(X_GRAVE)SS_DELAY(100)  SS_RSFT(SS_TAP(X_E)));
+      SEND_STRING(SS_RSFT(SS_TAP(X_6))SS_DELAY(100)  SS_RSFT(SS_TAP(X_E)));
     }
     break;
     case ST_MACRO_33:
     if (record->event.pressed) {
-      SEND_STRING(SS_RSFT(SS_TAP(X_6))SS_DELAY(100)  SS_RSFT(SS_TAP(X_E)));
+      SEND_STRING(SS_RSFT(SS_TAP(X_6))SS_DELAY(100)  SS_RSFT(SS_TAP(X_O)));
     }
     break;
     case ST_MACRO_34:
     if (record->event.pressed) {
-      SEND_STRING(SS_RSFT(SS_TAP(X_6))SS_DELAY(100)  SS_RSFT(SS_TAP(X_O)));
+      SEND_STRING(SS_LALT(SS_TAP(X_KP_0) SS_TAP(X_KP_1) SS_TAP(X_KP_4) SS_TAP(X_KP_0) ));
     }
     break;
     case ST_MACRO_35:
     if (record->event.pressed) {
-      SEND_STRING(SS_LALT(SS_TAP(X_KP_0) SS_TAP(X_KP_1) SS_TAP(X_KP_4) SS_TAP(X_KP_0) ));
+      SEND_STRING(SS_RSFT(SS_TAP(X_6))SS_DELAY(100)  SS_RSFT(SS_TAP(X_U)));
     }
     break;
     case ST_MACRO_36:
     if (record->event.pressed) {
-      SEND_STRING(SS_RSFT(SS_TAP(X_6))SS_DELAY(100)  SS_RSFT(SS_TAP(X_U)));
+      SEND_STRING(SS_RSFT(SS_TAP(X_QUOTE))SS_DELAY(100)  SS_RSFT(SS_TAP(X_I)));
     }
     break;
     case ST_MACRO_37:
     if (record->event.pressed) {
-      SEND_STRING(SS_RSFT(SS_TAP(X_QUOTE))SS_DELAY(100)  SS_RSFT(SS_TAP(X_I)));
+      SEND_STRING(SS_RSFT(SS_TAP(X_6))SS_DELAY(100)  SS_RSFT(SS_TAP(X_I)));
     }
     break;
     case ST_MACRO_38:
     if (record->event.pressed) {
-      SEND_STRING(SS_RSFT(SS_TAP(X_6))SS_DELAY(100)  SS_RSFT(SS_TAP(X_I)));
+      SEND_STRING(SS_RSFT(SS_TAP(X_6))SS_DELAY(100)  SS_RSFT(SS_TAP(X_A)));
     }
     break;
     case ST_MACRO_39:
     if (record->event.pressed) {
-      SEND_STRING(SS_RSFT(SS_TAP(X_6))SS_DELAY(100)  SS_RSFT(SS_TAP(X_A)));
-    }
-    break;
-    case ST_MACRO_40:
-    if (record->event.pressed) {
       SEND_STRING(SS_RSFT(SS_TAP(X_QUOTE))SS_DELAY(100)  SS_RSFT(SS_TAP(X_E)));
     }
     break;
-    case ST_MACRO_41:
+    case ST_MACRO_40:
     if (record->event.pressed) {
       SEND_STRING(SS_TAP(X_GRAVE)SS_DELAY(100)  SS_RSFT(SS_TAP(X_A)));
     }
