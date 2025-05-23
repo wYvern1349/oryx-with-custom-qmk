@@ -742,6 +742,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     break;
     case KC_B:      
       if (record->event.pressed) {
+        if (j_trigger){
+        if (is_caps_word_on()){
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_L)));
+          j_trigger = false;
+        } else {
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_L));
+          j_trigger = false;
+        }
+      } else {
         g_trigger = false;
         j_trigger = false;
         u_trigger = false;
