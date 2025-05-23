@@ -697,6 +697,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         n_trigger = false;
       }
     break;
+      case KC_N:      
+        if (record->event.pressed) {
+        g_trigger = false;
+        j_trigger = false;
+        u_trigger = false;
+        b_trigger = false;
+        n_trigger = true;
+      }
+    break;
       case KC_A:
       case KC_C:
       case KC_D:
@@ -707,7 +716,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       case KC_K:
       case KC_L:
       case KC_M:
-      case KC_N:
       case KC_P:
       case KC_Q:
       case KC_R:
