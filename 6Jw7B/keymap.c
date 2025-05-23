@@ -542,6 +542,17 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
 }
 
 void matrix_scan_user(void) { // The very important timer.
+    if (reset_triggers && timer_elapsed(trigger_timer) > 20) { //triggers when timer elapsed
+      g_trigger = false;
+      j_trigger = false;
+      u_trigger = false;
+      b_trigger = false;
+      n_trigger = false;
+      x_trigger = false;
+      a_trigger = false;
+      z_trigger = false;
+      reset_triggers = false;
+    }
   if (alpha_pressed && timer_elapsed(arcane_timer) > 1000) { //triggers when timer elapsed
       alpha_pressed = false;
       j_trigger = false;
@@ -585,19 +596,7 @@ void matrix_scan_user(void) { // The very important timer.
   }
 }
 
-void matrix_scan_user_deux(void) { // The very important timer 2
-  if (reset_triggers && timer_elapsed(trigger_timer) > 20) { //triggers when timer elapsed
-      g_trigger = false;
-      j_trigger = false;
-      u_trigger = false;
-      b_trigger = false;
-      n_trigger = false;
-      x_trigger = false;
-      a_trigger = false;
-      z_trigger = false;
-      reset_triggers = false;
-  }
-}
+
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
