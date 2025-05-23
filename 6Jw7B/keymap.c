@@ -281,28 +281,6 @@ bool remember_last_key_user(uint16_t keycode, keyrecord_t* record,
     return true;  // Other keys can be repeated.
 }
 
-static void process_arcane_i(uint16_t keycode, uint8_t mods) {
-    switch (keycode) {
-case KC_J:
-      if (g_trigger){
-        SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_L));
-      } else {
-        j_trigger = true;
-      }
-      break;
-case KC_G:
-      if (j_trigger){
-        SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_TAP(X_L) SS_TAP(X_G));
-      } else {
-        g_trigger = true;
-      }
-      break;
-      default:
-        j_trigger = false;
-        g_trigger = false;
-    }
-}
-
 static void process_arcane_l(uint16_t keycode, uint8_t mods) {
     switch (keycode) {
         case KC_A:
