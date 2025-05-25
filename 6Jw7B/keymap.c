@@ -13,6 +13,10 @@ bool n_trigger = false; //n pressed previously?
 bool x_trigger = false; //x pressed previously?
 bool a_trigger = false; //a pressed previously?
 bool z_trigger = false; //z pressed previously?
+bool i_trigger = false; //i pressed previously?
+bool m_trigger = false; //m pressed previously?
+bool r_trigger = false; //r pressed previously?
+bool shift_trigger = false; //was key shifted?
 bool reset_triggers = false;
 uint16_t trigger_timer = 0; 
 uint16_t arcane_timer = 0;     // timer 
@@ -552,6 +556,10 @@ void matrix_scan_user(void) { // The very important timer.
       x_trigger = false;
       a_trigger = false;
       z_trigger = false;
+      i_trigger = false;
+      m_trigger = false;
+      r_trigger = false;
+      shift_trigger = false;
       set_last_keycode(KC_SPACE);
   } else { //timer update
     switch (get_last_keycode()) {
@@ -580,6 +588,10 @@ void matrix_scan_user(void) { // The very important timer.
       x_trigger = false;
       a_trigger = false;
       z_trigger = false;
+      i_trigger = false;
+      m_trigger = false;
+      r_trigger = false;
+      shift_trigger = false;
       break; //these were all the keys that end the timer prematurely
     }
   }
@@ -595,9 +607,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (is_caps_word_on()){
           SEND_STRING(SS_LSFT(SS_TAP(X_L)));
           g_trigger = false;
+          shift_trigger = false;
         } else {
           SEND_STRING(SS_TAP(X_L));
           g_trigger = false;
+          shift_trigger = false;
         }
           set_last_keycode(KC_L);
           return false;
@@ -605,9 +619,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
          if (is_caps_word_on()){
           SEND_STRING(SS_LSFT(SS_TAP(X_L)));
           b_trigger = false;
+          shift_trigger = false;
         } else {
           SEND_STRING(SS_TAP(X_L));
           b_trigger = false;
+          shift_trigger = false;
         }
           set_last_keycode(KC_L);
           return false;
@@ -615,9 +631,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
          if (is_caps_word_on()){
           SEND_STRING(SS_LSFT(SS_TAP(X_B)));
           n_trigger = false;
+          shift_trigger = false;
         } else {
           SEND_STRING(SS_TAP(X_B));
           n_trigger = false;
+          shift_trigger = false;
         }
           set_last_keycode(KC_B);
           return false;
@@ -630,6 +648,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         x_trigger = false;
         a_trigger = false;
         z_trigger = false;
+        i_trigger = false;
+        m_trigger = false;
+        r_trigger = false;
+        shift_trigger = false;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
       }
     }
     break;
@@ -639,6 +664,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (is_caps_word_on()){
           SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_L)));
           j_trigger = false;
+        } else if (shift_trigger){
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_L)));
+          j_trigger = false;
+          shift_trigger = false;
         } else {
           SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_L));
           j_trigger = false;
@@ -652,6 +681,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         x_trigger = false;
         a_trigger = false;
         z_trigger = false;
+        i_trigger = false;
+        m_trigger = false;
+        r_trigger = false; 
+        shift_trigger = false;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
       }
     }
     break;    
@@ -661,10 +697,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (is_caps_word_on()){
           SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_G)));
           j_trigger = false;
+         } else if (shift_trigger){
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_G)));
+          j_trigger = false;
+          shift_trigger = false;
         } else {
           SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_G));
           j_trigger = false;
         }
+      } else if (n_trigger && r_trigger)
+         if (is_caps_word_on()){
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_C)) SS_LSFT(SS_TAP(X_H)) SS_LSFT(SS_TAP(X_T)));
+          n_trigger = false;
+          r_trigger = false;
+        } else if (shift_trigger){
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_C)) SS_TAP(X_H) SS_TAP(X_T));
+          n_trigger = false;
+          r_trigger = false;
+          shift_trigger = false;
+        } else {
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_TAP(X_C) SS_TAP(X_H) SS_TAP(X_T));
+          n_trigger = false;
+          r_trigger = false;
+        }
+          set_last_keycode(KC_L);
+          return false;
       } else {
         g_trigger = false;
         j_trigger = false;
@@ -674,6 +731,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         x_trigger = false;
         a_trigger = false;
         z_trigger = false;
+        i_trigger = false;
+        m_trigger = false;
+        r_trigger = false;
+        shift_trigger = false;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
       }
     }
     break;
@@ -685,6 +749,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         b_trigger = false;
         n_trigger = false;
         x_trigger = false;
+        i_trigger = false;
+        m_trigger = false;
+        r_trigger = false;
+        shift_trigger = false;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
       }
     break;
     case KC_O:    
@@ -695,6 +766,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           u_trigger = false;
           a_trigger = false;
           z_trigger = false;
+        } else if (shift_trigger){
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_H)) SS_TAP(X_E) SS_TAP(X_A));
+          u_trigger = false;
+          a_trigger = false;
+          z_trigger = false;
+          shift_trigger = false;
         } else {
           SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_TAP(X_H) SS_TAP(X_E) SS_TAP(X_A));
           u_trigger = false;
@@ -709,6 +786,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           u_trigger = false;
           z_trigger = false;
           a_trigger = false;
+       } else if (shift_trigger){
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_Y)) SS_TAP(X_E) SS_TAP(X_A));
+          u_trigger = false;
+          a_trigger = false;
+          z_trigger = false;
+          shift_trigger = false;
         } else {
           SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_TAP(X_Y) SS_TAP(X_E) SS_TAP(X_A));
           u_trigger = false;
@@ -723,6 +806,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           u_trigger = false;
           z_trigger = false;
           a_trigger = false;
+        } else if (shift_trigger){
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_E)) SS_TAP(X_A));
+          u_trigger = false;
+          a_trigger = false;
+          z_trigger = false;
+          shift_trigger = false;
         } else {
           SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_E) SS_TAP(X_A));
           u_trigger = false;
@@ -740,6 +829,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         x_trigger = false;
         a_trigger = false;
         z_trigger = false;
+        i_trigger = false;
+        m_trigger = false;
+        r_trigger = false;
+        shift_trigger = false;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
       }
     }
     break;
@@ -749,6 +845,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (is_caps_word_on()){
           SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_L)));
           j_trigger = false;
+        } else if (shift_trigger){
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_L)));
+          j_trigger = false;
+          shift_trigger = false;  
         } else {
           SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_L));
           j_trigger = false;
@@ -762,6 +862,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         x_trigger = false;
         a_trigger = false;
         z_trigger = false;
+        i_trigger = false;
+        m_trigger = false;
+        r_trigger = false;
+        shift_trigger = false;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
       }
       }
     break;
@@ -775,6 +882,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         x_trigger = false;
         a_trigger = false;
         z_trigger = false;
+        i_trigger = false;
+        m_trigger = false;
+        r_trigger = false;
+        shift_trigger = false;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
       }
     break;
         case KC_A:
@@ -787,6 +901,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         x_trigger = false;
         a_trigger = true;
         z_trigger = false;
+        i_trigger = false;
+        m_trigger = false;
+        r_trigger = false;
+        shift_trigger = false;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
       }
     break;
     case KC_Z:
@@ -799,6 +920,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         x_trigger = false;
         a_trigger = false;
         z_trigger = true;
+        i_trigger = false;
+        m_trigger = false;
+        r_trigger = false;
+        shift_trigger = false;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
       }
     break;
     case KC_X:
@@ -811,6 +939,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         x_trigger = true;
         a_trigger = false;
         z_trigger = false;
+        i_trigger = false;
+        m_trigger = false;
+        r_trigger = false;
+        shift_trigger = false;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
       }
     break;
     case KC_L:    
@@ -819,6 +954,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (is_caps_word_on()){
           SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_R)));
           x_trigger = false;
+        } else if (shift_trigger){
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_R)));
+          x_trigger = false;
+          shift_trigger = false; 
         } else {
           SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_R));
           x_trigger = false;
@@ -832,23 +971,183 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         x_trigger = false;
         a_trigger = false;
         z_trigger = false;
+        i_trigger = false;
+        m_trigger = false;
+        r_trigger = false;
+        shift_trigger = false;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
         }
       }
     break;
-  
+        case KC_I:
+          if (record->event.pressed) {
+           g_trigger = false;
+           j_trigger = false;
+           u_trigger = false;
+           b_trigger = false;
+           n_trigger = false;
+           x_trigger = false;
+           z_trigger = false;
+           i_trigger = true;
+           m_trigger = false;
+           r_trigger = false;
+           if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+             shift_trigger = true;
+           }
+        }
+    break;
+        case KC_M:
+          if (record->event.pressed) {
+          g_trigger = false;
+          j_trigger = false;
+          u_trigger = false;
+          b_trigger = false;
+          n_trigger = false;
+          x_trigger = false;
+          a_trigger = false;
+          z_trigger = false;
+          i_trigger = false;
+          m_trigger = true;
+          r_trigger = false;
+          shift_trigger = false;
+          if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+            shift_trigger = true;
+          }
+        }
+    break;
+        case KC_R:
+          if (record->event.pressed) {
+          g_trigger = false;
+          j_trigger = false;
+          u_trigger = false;
+          b_trigger = false;
+          x_trigger = false;
+          a_trigger = false;
+          z_trigger = false;
+          i_trigger = false;
+          m_trigger = false;
+          r_trigger = true;
+          if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+            shift_trigger = true;
+            }
+          }
+    break;
+    case KC_V:
+    if (record->event.pressed) {
+      if (m_trigger){
+        if (is_caps_word_on()){
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_S)) SS_LSFT(SS_TAP(X_M)));
+          m_trigger = false;
+        } else if (shift_trigger){
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_S)) SS_TAP(X_M));
+          m_trigger = false;
+          shift_trigger = false; 
+        } else {
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_S) SS_TAP(X_M));
+          m_trigger = false;
+        }
+        set_last_keycode(KC_M);
+        return false;
+      } else {
+        g_trigger = false;
+        j_trigger = false;
+        u_trigger = false;
+        b_trigger = false;
+        n_trigger = false;
+        x_trigger = false;
+        a_trigger = false;
+        z_trigger = false;
+        i_trigger = false;
+        m_trigger = false;
+        r_trigger = false;
+        shift_trigger = false;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
+        }
+      }
+      case KC_P:
+      if (record->event.pressed) {
+      if (z_trigger){
+        if (is_caps_word_on()){
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_P)) SS_LSFT(SS_TAP(X_F)));
+          z_trigger = false;
+        } else if (shift_trigger){
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_P)) SS_TAP(X_F));
+          z_trigger = false;
+          shift_trigger = false; 
+        } else {
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_P) SS_TAP(X_F));
+          z_trigger = false;
+        }
+        set_last_keycode(KC_E);
+        return false;
+      } else {
+        g_trigger = false;
+        j_trigger = false;
+        u_trigger = false;
+        b_trigger = false;
+        n_trigger = false;
+        x_trigger = false;
+        a_trigger = false;
+        z_trigger = false;
+        i_trigger = false;
+        m_trigger = false;
+        r_trigger = false;
+        shift_trigger = false;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
+        }
+      }
+    break;
+    case KC_E:
+    if (record->event.pressed) {
+      if (a_trigger && i_trigger){
+        if (is_caps_word_on()){
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_Z)) SS_LSFT(SS_TAP(X_E)) SS_LSFT(SS_TAP(X_I)));
+          a_trigger = false;
+          i_trigger = false;
+        } else if (shift_trigger){
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_Z)) SS_TAP(X_E) SS_TAP(X_I));
+          a_trigger = false;
+          i_trigger = false;
+          shift_trigger = false;
+        } else {
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_TAP(X_Z) SS_TAP(X_E) SS_TAP(X_I));
+          a_trigger = false;
+          i_trigger = false;
+        }
+          set_last_keycode(U_DUMMY);
+          return false;
+      } else {
+        j_trigger = false;
+        g_trigger = false;
+        u_trigger = false;
+        b_trigger = false;
+        n_trigger = false;      
+        x_trigger = false;
+        a_trigger = false;
+        z_trigger = false;
+        i_trigger = false;
+        m_trigger = false;
+        r_trigger = false;
+        shift_trigger = false;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
+      }
+    }
+    break;
       case KC_C:
       case KC_D:
-      case KC_E:
       case KC_F:
       case KC_H:
-      case KC_I:
       case KC_K:
-      case KC_M:
-      case KC_P:
       case KC_Q:
-      case KC_R:
       case KC_S:
-      case KC_V:
       case KC_W:
       case KC_Y:
       if (record->event.pressed) {
@@ -860,6 +1159,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       x_trigger = false;
       a_trigger = false;
       z_trigger = false;
+      i_trigger = false;
+      m_trigger = false;
+      r_trigger = false;
+      shift_trigger = false;
       }
       break;
 
@@ -871,14 +1174,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                    if (alpha_pressed) {// letter was pressed within timer limits
                      arcane_timer = timer_read(); // reset timer
                      process_arcane_l(get_last_keycode(), get_last_mods()); // call arcane code
-                        g_trigger = false;
-                        j_trigger = false;
-                        u_trigger = false;
-                        b_trigger = false;
-                        n_trigger = false;
-                        x_trigger = false;
-                        a_trigger = false;
-                        z_trigger = false;
+                     j_trigger = false;
+                     g_trigger = false;
+                     u_trigger = false;
+                     b_trigger = false;
+                     n_trigger = false;
+                     x_trigger = false;
+                     a_trigger = false;
+                     z_trigger = false;
+                     i_trigger = false;
+                     m_trigger = false;
+                     r_trigger = false;
                    } else {//alpha timer timed out, so key functions just as a OSM shift
                       set_oneshot_mods(MOD_BIT(KC_LSFT));
                    }
