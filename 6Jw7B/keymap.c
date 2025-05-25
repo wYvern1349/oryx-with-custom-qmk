@@ -743,7 +743,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         i_trigger = false;
         m_trigger = false;
         r_trigger = false;
-        shift_trigger = false;
         if (get_oneshot_mods() & MOD_MASK_SHIFT) {
           shift_trigger = true;
         }
