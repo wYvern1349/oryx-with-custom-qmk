@@ -501,11 +501,11 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
          break;
         case KC_Z:
           if (is_caps_word_on()) { //checks for caps word status
-              send_string("EI");
+              send_string("A");
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("ei");
+              send_string("a");
           } else { //unshifted previous key
-              send_string("ei");
+              send_string("a");
           }
          break;        
       case U_DUMMY:
@@ -696,7 +696,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_G));
           j_trigger = false;
         }
-      } else if (n_trigger && r_trigger)
+      } else if (n_trigger && r_trigger){
          if (is_caps_word_on()){
           SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_C)) SS_LSFT(SS_TAP(X_H)) SS_LSFT(SS_TAP(X_T)));
           n_trigger = false;
