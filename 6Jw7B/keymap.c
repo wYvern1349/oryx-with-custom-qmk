@@ -366,11 +366,11 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
          break;
         case KC_J: //good candidate for more macro stuff, like w but without the j because j is useless lol
           if (is_caps_word_on()) { //checks for caps word status
-              send_string("ED");
+              SEND_STRING(SS_TAP(X_BSPC) SS_RALT(SS_TAP(X_S)));
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("ed");
+              send_string("");
           } else { //unshifted previous key
-              send_string("ed");
+              SEND_STRING(SS_TAP(X_BSPC) SS_RALT(SS_TAP(X_S)));
           }
          break;
         case KC_K:
