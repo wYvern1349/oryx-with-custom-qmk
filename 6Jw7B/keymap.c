@@ -1167,19 +1167,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     break;
     case KC_COMMA:
       if (record->event.pressed) {
-    j_trigger = false;
-    g_trigger = false;
-    u_trigger = false;
-    b_trigger = false;
-    n_trigger = false;
-    x_trigger = false;
-    a_trigger = false;
-    z_trigger = false;
-    i_trigger = false;
-    m_trigger = false;
-    r_trigger = false;
-    comma_trigger = true;
-    shift_trigger = false;
+        j_trigger = false;
+        g_trigger = false;
+        u_trigger = false;
+        b_trigger = false;
+        n_trigger = false;
+        x_trigger = false;
+        a_trigger = false;
+        z_trigger = false;
+        i_trigger = false;
+        m_trigger = false;
+        r_trigger = false;
+        comma_trigger = true;
+        shift_trigger = false;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
       }
     break;
       case KC_C:
