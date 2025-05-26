@@ -509,6 +509,7 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
           } else { //unshifted previous key
               send_string("a");
           }
+          set_last_keycode(KC_A);
          break;        
       case U_DUMMY:
           if (is_caps_word_on()) { //checks for caps word status
