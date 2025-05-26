@@ -1227,7 +1227,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                      i_trigger = false;
                      m_trigger = false;
                      r_trigger = false;
-                     ,_trigger = false;
+                     comma_trigger = false;
                      shift_trigger = false;
                    } else {//alpha timer timed out, so key functions just as a OSM shift
                       set_oneshot_mods(MOD_BIT(KC_LSFT));
