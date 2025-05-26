@@ -16,7 +16,7 @@ bool z_trigger = false; //z pressed previously?
 bool i_trigger = false; //i pressed previously?
 bool m_trigger = false; //m pressed previously?
 bool r_trigger = false; //r pressed previously?
-bool ,_trigger = false; //, pressed previously?
+bool comma_trigger = false; //comma pressed previously?
 bool shift_trigger = false; //was key shifted?
 bool reset_triggers = false;
 uint16_t trigger_timer = 0; 
@@ -551,7 +551,7 @@ void matrix_scan_user(void) { // The very important timer.
       i_trigger = false;
       m_trigger = false;
       r_trigger = false;
-      ,_trigger = false;
+      comma_trigger = false;
       shift_trigger = false;
       set_last_keycode(KC_SPACE);
   } else { //timer update
@@ -584,7 +584,7 @@ void matrix_scan_user(void) { // The very important timer.
       i_trigger = false;
       m_trigger = false;
       r_trigger = false;
-      ,_trigger = false;
+      comma_trigger = false;
       shift_trigger = false;
       break; //these were all the keys that end the timer prematurely
     }
@@ -645,7 +645,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         i_trigger = false;
         m_trigger = false;
         r_trigger = false;
-        ,_trigger = false;
+        comma_trigger = false;
         shift_trigger = false;
         if (get_oneshot_mods() & MOD_MASK_SHIFT) {
           shift_trigger = true;
@@ -679,7 +679,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         i_trigger = false;
         m_trigger = false;
         r_trigger = false;
-        ,_trigger = false;
+        comma_trigger = false;
         shift_trigger = false;
         if (get_oneshot_mods() & MOD_MASK_SHIFT) {
           shift_trigger = true;
@@ -730,7 +730,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         i_trigger = false;
         m_trigger = false;
         r_trigger = false;
-        ,_trigger = false;
+        comma_trigger = false;
         shift_trigger = false;
         if (get_oneshot_mods() & MOD_MASK_SHIFT) {
           shift_trigger = true;
@@ -749,7 +749,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         i_trigger = false;
         m_trigger = false;
         r_trigger = false;
-        ,_trigger = false;
+        comma_trigger = false;
         if (get_oneshot_mods() & MOD_MASK_SHIFT) {
           shift_trigger = true;
         }
@@ -829,7 +829,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         i_trigger = false;
         m_trigger = false;
         r_trigger = false;
-        ,_trigger = false;
+        comma_trigger = false;
         shift_trigger = false;
         if (get_oneshot_mods() & MOD_MASK_SHIFT) {
           shift_trigger = true;
@@ -863,7 +863,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         i_trigger = false;
         m_trigger = false;
         r_trigger = false;
-        ,_trigger = false;
+        comma_trigger = false;
         shift_trigger = false;
         if (get_oneshot_mods() & MOD_MASK_SHIFT) {
           shift_trigger = true;
@@ -884,7 +884,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         i_trigger = false;
         m_trigger = false;
         r_trigger = false;
-        ,_trigger = false;
+        comma_trigger = false;
         shift_trigger = false;
         if (get_oneshot_mods() & MOD_MASK_SHIFT) {
           shift_trigger = true;
@@ -904,7 +904,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         i_trigger = false;
         m_trigger = false;
         r_trigger = false;
-        ,_trigger = false;
+        comma_trigger = false;
         shift_trigger = false;
         if (get_oneshot_mods() & MOD_MASK_SHIFT) {
           shift_trigger = true;
@@ -924,7 +924,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         i_trigger = false;
         m_trigger = false;
         r_trigger = false;
-        ,_trigger = false;
+        comma_trigger = false;
         shift_trigger = false;
         if (get_oneshot_mods() & MOD_MASK_SHIFT) {
           shift_trigger = true;
@@ -944,7 +944,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         i_trigger = false;
         m_trigger = false;
         r_trigger = false;
-        ,_trigger = false;
+        comma_trigger = false;
         shift_trigger = false;
         if (get_oneshot_mods() & MOD_MASK_SHIFT) {
           shift_trigger = true;
@@ -977,7 +977,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         i_trigger = false;
         m_trigger = false;
         r_trigger = false;
-        ,_trigger = false;
+        comma_trigger = false;
         shift_trigger = false;
         if (get_oneshot_mods() & MOD_MASK_SHIFT) {
           shift_trigger = true;
@@ -997,7 +997,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
            i_trigger = true;
            m_trigger = false;
            r_trigger = false;
-           ,_trigger = false;
+           comma_trigger = false;
            if (get_oneshot_mods() & MOD_MASK_SHIFT) {
              shift_trigger = true;
            }
@@ -1016,7 +1016,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           i_trigger = false;
           m_trigger = true;
           r_trigger = false;
-          ,_trigger = false;
+          comma_trigger = false;
           shift_trigger = false;
           if (get_oneshot_mods() & MOD_MASK_SHIFT) {
             shift_trigger = true;
@@ -1035,7 +1035,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           i_trigger = false;
           m_trigger = false;
           r_trigger = true;
-          ,_trigger = false;
+          comma_trigger = false;
           if (get_oneshot_mods() & MOD_MASK_SHIFT) {
             shift_trigger = true;
             }
@@ -1069,7 +1069,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         i_trigger = false;
         m_trigger = false;
         r_trigger = false;
-        ,_trigger = false;
+        comma_trigger = false;
         shift_trigger = false;
         if (get_oneshot_mods() & MOD_MASK_SHIFT) {
           shift_trigger = true;
@@ -1104,7 +1104,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         i_trigger = false;
         m_trigger = false;
         r_trigger = false;
-        ,_trigger = false;
+        comma_trigger = false;
         shift_trigger = false;
         if (get_oneshot_mods() & MOD_MASK_SHIFT) {
           shift_trigger = true;
@@ -1131,17 +1131,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
           set_last_keycode(U_DUMMY);
           return false;
-      } else if (,_trigger){
+      } else if (comma_trigger){
         if (is_caps_word_on()){
           SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_H)) SS_LSFT(SS_TAP(X_E)) SS_LSFT(SS_TAP(X_Y)));
-          ,_trigger = false;
+          comma_trigger = false;
         } else if (shift_trigger){
           SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_H)) SS_TAP(X_E) SS_TAP(X_Y));
-          ,_trigger = false;
+          comma_trigger = false;
           shift_trigger = false;
         } else {
           SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_H) SS_TAP(X_E) SS_TAP(X_Y));
-          ,_trigger = false;
+          comma_trigger = false;
         }
           set_last_keycode(U_DUMMY);
           return false;
@@ -1157,7 +1157,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         i_trigger = false;
         m_trigger = false;
         r_trigger = false;
-        ,_trigger = false;
+        comma_trigger = false;
         shift_trigger = false;
         if (get_oneshot_mods() & MOD_MASK_SHIFT) {
           shift_trigger = true;
@@ -1178,7 +1178,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     i_trigger = false;
     m_trigger = false;
     r_trigger = false;
-    ,_trigger = true;
+    comma_trigger = true;
     shift_trigger = false;
       }
     break;
@@ -1202,7 +1202,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       z_trigger = false;
       i_trigger = false;
       m_trigger = false;
-      r_trigger = false;
+      r_trigger = false; 
+      comma_trigger = true;
       shift_trigger = false;
       }
       break;
