@@ -265,6 +265,7 @@ bool caps_word_press_user(uint16_t keycode) {
         case KC_MINS:
         case KC_DEL:
         case KC_UNDS:
+        ca
             return true;
 
         default:
@@ -1206,7 +1207,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       i_trigger = false;
       m_trigger = false;
       r_trigger = false; 
-      comma_trigger = true;
+      comma_trigger = false;
       shift_trigger = false;
       }
       break;
