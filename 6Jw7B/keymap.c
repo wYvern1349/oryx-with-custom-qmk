@@ -827,7 +827,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           j_trigger = false;
           shift_trigger = false;
         } else if (shift_trigger){
-          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_N)) (SS_TAP(X_B));
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_N)) SS_TAP(X_B));
           j_trigger = false;
           shift_trigger = false;
         } else {
