@@ -6,7 +6,7 @@
 
 bool alpha_pressed = false; // variable for timer to disable arcane key functionality after no letter has been pressed for x amount of time
 bool j_trigger = false; //j pressed previously?
-bool g_trigger = false; //g pressed previously?
+bool d_trigger = false; //d pressed previously?
 bool u_trigger = false; //u pressed previously?
 bool b_trigger = false; //b pressed previously?
 bool n_trigger = false; //n pressed previously?
@@ -81,7 +81,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     OSL(7),         KC_X,           KC_J,           KC_D,           KC_M,           KC_V,                                           KC_Y,           KC_P,           KC_O,           KC_U,           KC_Z,           KC_TRANSPARENT, 
     KC_ENTER,       KC_N,           KC_R,           KC_T,           KC_S,           KC_C,                                           KC_F,           KC_H,           KC_E,           KC_I,           KC_A,           RCTL(KC_BSPC),  
     TO(1),          KC_B,           KC_L,           KC_G,           KC_W,           OSL(5),                                         ST_MACRO_0,     KC_K,           OSL(5),         KC_COMMA,       KC_DOT,         TO(1),          
-                                                    KC_TRANSPARENT, OSL(3),                                         OSL(4),         KC_SPACE
+                                                    ARCANE_L, OSL(3),                                         OSL(4),         KC_SPACE
   ),
   [1] = LAYOUT_voyager(
     KC_GRAVE,       KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                           KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           KC_F5,          
@@ -322,6 +322,7 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
           } else { //unshifted previous key
               send_string("d");
           }
+          d_trigger = true;
          break;
        case KC_E:
           if (is_caps_word_on()) { //checks for caps word status
@@ -349,7 +350,6 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
           } else { //unshifted previous key
               send_string("g");
           }
-         g_trigger = true;
          break;
         case KC_H:
           if (is_caps_word_on()) { //checks for caps word status
@@ -546,7 +546,7 @@ void matrix_scan_user(void) { // The very important timer.
   if (alpha_pressed && timer_elapsed(arcane_timer) > 1000) { //triggers when timer elapsed
       alpha_pressed = false;
       j_trigger = false;
-      g_trigger = false;
+      d_trigger = false;
       u_trigger = false;
       b_trigger = false;
       n_trigger = false;
@@ -579,7 +579,7 @@ void matrix_scan_user(void) { // The very important timer.
       last_key_manual = get_last_keycode();
       alpha_pressed = false;
       j_trigger = false;
-      g_trigger = false;
+      d_trigger = false;
       u_trigger = false;
       b_trigger = false;
       n_trigger = false;
@@ -602,30 +602,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case KC_J:        
     if (record->event.pressed) {
-      if (g_trigger){
+      if (d_trigger){
         if (is_caps_word_on()){
           SEND_STRING(SS_LSFT(SS_TAP(X_L)));
-          g_trigger = false;
+          d_trigger = false;
           shift_trigger = false;
         } else {
           SEND_STRING(SS_TAP(X_L));
-          g_trigger = false;
+          d_trigger = false;
           shift_trigger = false;
         }
           set_last_keycode(KC_L);
           return false;
-        } else if (b_trigger){
-         if (is_caps_word_on()){
-          SEND_STRING(SS_LSFT(SS_TAP(X_L)));
-          b_trigger = false;
-          shift_trigger = false;
+        } else if (x_trigger){
+        if (is_caps_word_on()){
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_R)) SS_LSFT(SS_TAP(X_L)));
+          x_trigger = false;
+        } else if (shift_trigger){
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_R)) SS_TAP(X_L));
+          x_trigger = false;
+          shift_trigger = false; 
         } else {
-          SEND_STRING(SS_TAP(X_L));
-          b_trigger = false;
-          shift_trigger = false;
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_R) SS_TAP(X_L));
+          x_trigger = false;
         }
-          set_last_keycode(KC_L);
-          return false;
+        set_last_keycode(KC_L);
+        return false;
         } else if (n_trigger){
          if (is_caps_word_on()){
           SEND_STRING(SS_LSFT(SS_TAP(X_B)));
@@ -640,7 +642,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           return false;
       } else {
         j_trigger = true;
-        g_trigger = false;
+        d_trigger = false;
         u_trigger = false;
         b_trigger = false;
         n_trigger = false;      
@@ -658,7 +660,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
     }
     break;
-    case KC_G:        
+    case KC_D:        
     if (record->event.pressed) {
       if (j_trigger){
         if (is_caps_word_on()){
@@ -673,7 +675,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           j_trigger = false;
         }
       } else {
-        g_trigger = true;
+        d_trigger = true;
         j_trigger = false;
         u_trigger = false;
         b_trigger = false;
@@ -724,7 +726,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           set_last_keycode(KC_L);
           return false;
       } else {
-        g_trigger = false;
+        d_trigger = false;
         j_trigger = false;
         u_trigger = false;
         b_trigger = false;
@@ -745,7 +747,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     break;
     case KC_U:    
       if (record->event.pressed) {
-        g_trigger = false;
+        d_trigger = false;
         j_trigger = false;
         u_trigger = true;
         b_trigger = false;
@@ -828,7 +830,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           return false;
       } else {
         j_trigger = false;
-        g_trigger = false;
+        d_trigger = false;
         u_trigger = false;
         b_trigger = false;
         n_trigger = false;      
@@ -846,43 +848,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
     }
     break;
-    case KC_B:      
-      if (record->event.pressed) {
-        if (j_trigger){
-        if (is_caps_word_on()){
-          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_L)));
-          j_trigger = false;
-        } else if (shift_trigger){
-          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_L)));
-          j_trigger = false;
-          shift_trigger = false;  
-        } else {
-          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_L));
-          j_trigger = false;
-        }
-      } else {
-        g_trigger = false;
-        j_trigger = false;
-        u_trigger = false;
-        b_trigger = true;
-        n_trigger = false;
-        x_trigger = false;
-        a_trigger = false;
-        z_trigger = false;
-        i_trigger = false;
-        m_trigger = false;
-        r_trigger = false;
-        comma_trigger = false;
-        shift_trigger = false;
-        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
-          shift_trigger = true;
-        }
-      }
-      }
-    break;
       case KC_N:      
         if (record->event.pressed) {
-        g_trigger = false;
+        d_trigger = false;
         j_trigger = false;
         u_trigger = false;
         b_trigger = false;
@@ -902,7 +870,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     break;
         case KC_A:
         if (record->event.pressed) {
-        g_trigger = false;
+        d_trigger = false;
         j_trigger = false;
         u_trigger = false;
         b_trigger = false;
@@ -922,7 +890,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     break;
     case KC_Z:
         if (record->event.pressed) {
-        g_trigger = false;
+        d_trigger = false;
         j_trigger = false;
         u_trigger = false;
         b_trigger = false;
@@ -942,7 +910,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     break;
     case KC_X:
     if (record->event.pressed) {
-        g_trigger = false;
+        d_trigger = false;
         j_trigger = false;
         u_trigger = false;
         b_trigger = false;
@@ -960,43 +928,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       }
     break;
-    case KC_L:    
-      if (record->event.pressed) {
-      if (x_trigger){
-        if (is_caps_word_on()){
-          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_R)));
-          x_trigger = false;
-        } else if (shift_trigger){
-          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_R)));
-          x_trigger = false;
-          shift_trigger = false; 
-        } else {
-          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_R));
-          x_trigger = false;
-        }
-      } else {
-        g_trigger = false;
-        j_trigger = false;
-        u_trigger = false;
-        b_trigger = false;
-        n_trigger = false;
-        x_trigger = false;
-        a_trigger = false;
-        z_trigger = false;
-        i_trigger = false;
-        m_trigger = false;
-        r_trigger = false;
-        comma_trigger = false;
-        shift_trigger = false;
-        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
-          shift_trigger = true;
-        }
-        }
-      }
-    break;
         case KC_I:
           if (record->event.pressed) {
-           g_trigger = false;
+           d_trigger = false;
            j_trigger = false;
            u_trigger = false;
            b_trigger = false;
@@ -1014,7 +948,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     break;
         case KC_M:
           if (record->event.pressed) {
-          g_trigger = false;
+          d_trigger = false;
           j_trigger = false;
           u_trigger = false;
           b_trigger = false;
@@ -1034,7 +968,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     break;
         case KC_R:
           if (record->event.pressed) {
-          g_trigger = false;
+          d_trigger = false;
           j_trigger = false;
           u_trigger = false;
           b_trigger = false;
@@ -1067,7 +1001,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         set_last_keycode(KC_M);
         return false;
       } else {
-        g_trigger = false;
+        d_trigger = false;
         j_trigger = false;
         u_trigger = false;
         b_trigger = false;
@@ -1102,7 +1036,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         set_last_keycode(KC_E);
         return false;
       } else {
-        g_trigger = false;
+        d_trigger = false;
         j_trigger = false;
         u_trigger = false;
         b_trigger = false;
@@ -1156,7 +1090,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           return false;
       } else {
         j_trigger = false;
-        g_trigger = false;
+        d_trigger = false;
         u_trigger = false;
         b_trigger = false;
         n_trigger = false;      
@@ -1177,7 +1111,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KC_COMMA:
       if (record->event.pressed) {
         j_trigger = false;
-        g_trigger = false;
+        d_trigger = false;
         u_trigger = false;
         b_trigger = false;
         n_trigger = false;
@@ -1195,8 +1129,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
     break;
       case KC_C:
-      case KC_D:
+      case KC_B:
+      case KC_G:
       case KC_F:
+      case KC_L:
       case KC_H:
       case KC_K:
       case KC_Q:
@@ -1205,7 +1141,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       case KC_Y:
       if (record->event.pressed) {
       j_trigger = false;
-      g_trigger = false;
+      d_trigger = false;
       u_trigger = false;
       b_trigger = false;
       n_trigger = false;
@@ -1229,7 +1165,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                      arcane_timer = timer_read(); // reset timer
                      process_arcane_l(get_last_keycode(), get_last_mods()); // call arcane code
                      j_trigger = false;
-                     g_trigger = false;
+                     d_trigger = false;
                      u_trigger = false;
                      b_trigger = false;
                      n_trigger = false;
