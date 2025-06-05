@@ -607,32 +607,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
           set_last_keycode(KC_L);
           return false;
-        } else if (x_trigger){
+        } else if (n_trigger){
         if (is_caps_word_on()){
           SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_R)) SS_LSFT(SS_TAP(X_L)));
-          x_trigger = false;
+          n_trigger = false;
         } else if (shift_trigger){
           SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_R)) SS_TAP(X_L));
-          x_trigger = false;
+          n_trigger = false;
           shift_trigger = false; 
         } else {
           SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_R) SS_TAP(X_L));
-          x_trigger = false;
+          n_trigger = false;
         }
         set_last_keycode(KC_L);
         return false;
-        } else if (n_trigger){
-         if (is_caps_word_on()){
-          SEND_STRING(SS_LSFT(SS_TAP(X_B)));
-          n_trigger = false;
-          shift_trigger = false;
-        } else {
-          SEND_STRING(SS_TAP(X_B));
-          n_trigger = false;
-          shift_trigger = false;
-        }
-          set_last_keycode(KC_B);
-          return false;
       } else {
         j_trigger = true;
         d_trigger = false;
@@ -833,6 +821,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     break;
       case KC_N:      
         if (record->event.pressed) {
+          if (j_trigger){
+           if (is_caps_word_on()){
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_N)) SS_LSFT(SS_TAP(X_B)));
+          j_trigger = false;
+          shift_trigger = false;
+        } else if (shift_trigger){
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_N)) (SS_TAP(X_B));
+          j_trigger = false;
+          shift_trigger = false;
+        } else {
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_N) SS_TAP(X_B));
+          j_trigger = false;
+          shift_trigger = false;
+        }
+          set_last_keycode(KC_B);
+          return false;
+          } else {
         d_trigger = false;
         j_trigger = false;
         u_trigger = false;
@@ -848,6 +853,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           shift_trigger = true;
         }
       }
+    }
     break;
         case KC_A:
         if (record->event.pressed) {
