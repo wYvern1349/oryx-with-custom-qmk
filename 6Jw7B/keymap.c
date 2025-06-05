@@ -79,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     OSL(7),         KC_X,           KC_J,           KC_D,           KC_M,           KC_V,                                           KC_Y,           KC_P,           KC_O,           KC_U,           KC_Z,           KC_TRANSPARENT, 
     KC_ENTER,       KC_N,           KC_R,           KC_T,           KC_S,           KC_C,                                           KC_F,           KC_H,           KC_E,           KC_I,           KC_A,           RCTL(KC_BSPC),  
     TO(1),          KC_B,           KC_L,           KC_G,           KC_W,           OSL(5),                                         ST_MACRO_0,     KC_K,           OSL(5),         KC_COMMA,       KC_DOT,         TO(1),          
-                                                    ARCANE_L, OSL(3),                                         OSL(4),         KC_SPACE
+                                                    KC_TRANSPARENT, OSL(3),                                         OSL(4),         KC_SPACE
   ),
   [1] = LAYOUT_voyager(
     KC_GRAVE,       KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                           KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           KC_F5,          
