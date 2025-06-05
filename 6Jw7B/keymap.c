@@ -756,6 +756,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         comma_trigger = false;
         if (get_oneshot_mods() & MOD_MASK_SHIFT) {
           shift_trigger = true;
+        } else if (shift_trigger && (z_trigger || a_trigger)) {
+          shift_trigger = true;
+        } else {
+          shift_trigger = false;
         }
       }
     break;
