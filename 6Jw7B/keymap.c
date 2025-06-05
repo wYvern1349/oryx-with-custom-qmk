@@ -681,16 +681,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       } else if (n_trigger && r_trigger){
          if (is_caps_word_on()){
-          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_C)) SS_LSFT(SS_TAP(X_H)) SS_LSFT(SS_TAP(X_T)));
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_S)) SS_LSFT(SS_TAP(X_T)));
           n_trigger = false;
           r_trigger = false;
         } else if (shift_trigger){
-          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_C)) SS_TAP(X_H) SS_TAP(X_T));
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_B)) SS_TAP(X_S) SS_TAP(X_T));
           n_trigger = false;
           r_trigger = false;
           shift_trigger = false;
         } else {
-          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_TAP(X_C) SS_TAP(X_H) SS_TAP(X_T));
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_TAP(X_B) SS_TAP(X_S) SS_TAP(X_T));
           n_trigger = false;
           r_trigger = false;
         }
