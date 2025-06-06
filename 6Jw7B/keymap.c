@@ -1127,7 +1127,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                      x_trigger = false;
                      i_trigger = false;
                      r_trigger = false;
-                     umlaut_trigger = false;
                      hea_trigger = false;
                      comma_trigger = false;
                      shift_trigger = false;
