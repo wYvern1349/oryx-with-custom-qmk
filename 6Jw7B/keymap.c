@@ -466,13 +466,14 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
           }
          break;
         case KC_V:
-          if (is_caps_word_on()) { //checks for caps word status
-              SEND_STRING(SS_TAP(X_BSPC) SS_RALT(SS_TAP(X_S)));
-          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("ersion");
-          } else { //unshifted previous key
-              SEND_STRING(SS_TAP(X_BSPC) SS_RALT(SS_TAP(X_S)));
-          }
+          if (is_caps_word_on()){
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_S)) SS_LSFT(SS_TAP(X_C)) SS_LSFT(SS_TAP(X_H)));
+        } else if (mods & MOD_MASK_SHIFT){
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_B)) SS_TAP(X_S) SS_TAP(X_C) SS_TAP(X_H));
+        } else {
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_B) SS_TAP(X_S) SS_TAP(X_C) SS_TAP(X_H));
+        }
+        set_last_keycode(KC_S);
          break;
         case KC_W:
           if (is_caps_word_on()) { //checks for caps word status
@@ -867,18 +868,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
          if (record->event.pressed) {
       if (g_trigger){
         if (is_caps_word_on()){
-          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_S)) SS_LSFT(SS_TAP(X_C)) SS_LSFT(SS_TAP(X_H)));
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_S)));
           g_trigger = false;
         } else if (shift_trigger){
-          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_B)) SS_TAP(X_S) SS_TAP(X_C) SS_TAP(X_H));
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_B)) SS_TAP(X_S));
           g_trigger = false;
           shift_trigger = false; 
         } else {
-          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_B) SS_TAP(X_S) SS_TAP(X_C) SS_TAP(X_H));
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_B) SS_TAP(X_S));
           g_trigger = false;
         }
         return false;
-        set_last_keycode(KC_L);
+        set_last_keycode(KC_S);
       } else {
         d_trigger = false;
         j_trigger = false;
