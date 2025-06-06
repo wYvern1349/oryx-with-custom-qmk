@@ -292,6 +292,7 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
           } else { //unshifted previous key
               SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_A));
           }
+          umlaut_trigger = true;
          break;        
         case KC_B:
           if (is_caps_word_on()) { //checks for caps word status
@@ -365,6 +366,7 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
           } else { //unshifted previous key
               SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_O));
           }
+          umlaut_trigger = true;
          break;
         case KC_J: //good candidate for more macro stuff, like w but without the j because j is useless lol
            if (is_caps_word_on()) { //checks for caps word status
@@ -464,6 +466,7 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
           } else { //unshifted previous key
               SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_U));
           }
+          umlaut_trigger = true;
          break;
         case KC_V:
           if (is_caps_word_on()){
