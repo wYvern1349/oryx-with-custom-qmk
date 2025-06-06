@@ -902,8 +902,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_S) SS_TAP(X_M));
           d_trigger = false;
         }
-        return false;
         set_last_keycode(KC_S);
+        return false;
       } else {
         d_trigger = false;
         j_trigger = false;
