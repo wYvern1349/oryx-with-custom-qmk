@@ -5,6 +5,6 @@
 #define US_EURO ALGR(KC_5)
 #define US_LDAQ ALGR(KC_LBRC)
 #define US_RDAQ ALGR(KC_RBRC)
-#define US_SECT S(ALGR(KC_S))
 #define US_DEG S(ALGR(KC_SCLN))
 #define US_MICR ALGR(KC_M)
+#define US_SECT S(ALGR(KC_S))
