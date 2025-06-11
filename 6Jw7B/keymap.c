@@ -609,9 +609,8 @@ void matrix_scan_user(void) { // The very important timer.
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  uint8_t current_layer = get_highest_layer(layer_state);
   switch (keycode) {
-    if (current_layer == 0) { //only on layer 0
+    if (layer_state_is(0)) { //only on layer 0
     case KC_X:
       if (record->event.pressed) {
         x_trigger = true;
