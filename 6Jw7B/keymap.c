@@ -681,7 +681,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
           set_last_keycode(KC_T);
           return false;
-        else if (n_trigger && l_trigger){
+      } else if (n_trigger && l_trigger){
          if (is_caps_word_on()){
           SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_G)) SS_LSFT(SS_TAP(X_H)) SS_LSFT(SS_TAP(X_T)));
           n_trigger = false;
