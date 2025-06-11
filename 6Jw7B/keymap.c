@@ -631,7 +631,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       } 
     break;
     case KC_J:        
-    if (record->event.pressed) {
+    if (record->event.pressed && layer_state_is(0)) {
       if (umlaut_trigger) {
         if (is_caps_word_on()) { //checks for caps word status
               SEND_STRING(SS_RALT(SS_TAP(X_S)));
@@ -663,7 +663,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     break;
     case KC_D:        
-    if (record->event.pressed) {
+    if (record->event.pressed && layer_state_is(0)) {
       if (n_trigger && r_trigger){
          if (is_caps_word_on()){
           SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_D)) SS_LSFT(SS_TAP(X_I)) SS_LSFT(SS_TAP(X_G)));
@@ -719,7 +719,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     break;    
     case KC_T:        
-    if (record->event.pressed) {
+    if (record->event.pressed && layer_state_is(0)) {
       if (j_trigger){
         if (is_caps_word_on()){
           SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_G)));
@@ -770,7 +770,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     break;
     case KC_U:    
-      if (record->event.pressed) {
+      if (record->event.pressed && layer_state_is(0)) {
         d_trigger = false;
         j_trigger = false;
         u_trigger = true;
@@ -791,7 +791,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
     break;
     case KC_O:    
-    if (record->event.pressed) {
+    if (record->event.pressed && layer_state_is(0)) {
       if (u_trigger && a_trigger){ // kü
         if (is_caps_word_on()){
           SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_K)) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_U)));
@@ -844,7 +844,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     break;
       case KC_N:      
-        if (record->event.pressed) {
+        if (record->event.pressed && layer_state_is(0)) {
         d_trigger = false;
         j_trigger = false;
         u_trigger = false;
@@ -864,7 +864,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
     break;
         case KC_A:
-        if (record->event.pressed) {
+        if (record->event.pressed && layer_state_is(0)) {
         d_trigger = false;
         j_trigger = false;
         u_trigger = false;
@@ -884,7 +884,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
     break;
        case KC_I:
-          if (record->event.pressed) {
+          if (record->event.pressed && layer_state_is(0)) {
            d_trigger = false;
            j_trigger = false;
            u_trigger = false;
@@ -902,7 +902,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
     break;
         case KC_W:
-         if (record->event.pressed) {
+         if (record->event.pressed && layer_state_is(0)) {
       if (g_trigger){
         if (is_caps_word_on()){
           SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_T)) SS_LSFT(SS_TAP(X_G)));
@@ -938,7 +938,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
     break;
      case KC_F:
-         if (record->event.pressed) {
+         if (record->event.pressed && layer_state_is(0)) {
       if (d_trigger){
         if (is_caps_word_on()){
           SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_S)) SS_LSFT(SS_TAP(X_M)));
@@ -974,7 +974,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
     break;
         case KC_R:
-          if (record->event.pressed) {
+          if (record->event.pressed && layer_state_is(0)) {
             if (x_trigger) {
                if (is_caps_word_on()) { //checks for caps word status
               SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_R)) SS_LSFT(SS_TAP(X_L)));
@@ -1006,7 +1006,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           }
     break;
       case KC_E:
-    if (record->event.pressed) {
+    if (record->event.pressed && layer_state_is(0)) {
       if (a_trigger && i_trigger){
         if (is_caps_word_on()){
           SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_B)) SS_LSFT(SS_TAP(X_E)));
@@ -1059,7 +1059,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     break;
     case KC_COMMA:
-      if (record->event.pressed) {
+      if (record->event.pressed && layer_state_is(0)) {
         j_trigger = false;
         d_trigger = false;
         u_trigger = false;
@@ -1079,7 +1079,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
     break;
     case KC_G:
-    if (record->event.pressed) {
+    if (record->event.pressed && layer_state_is(0)) {
         j_trigger = false;
         d_trigger = false;
         u_trigger = false;
@@ -1099,7 +1099,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
     break;
     case KC_L:
-    if (record->event.pressed) {
+    if (record->event.pressed && layer_state_is(0)) {
         j_trigger = false;
         d_trigger = false;
         u_trigger = false;
@@ -1127,7 +1127,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       case KC_S:
       case KC_V:
       case KC_Y:
-      if (record->event.pressed) {
+      if (record->event.pressed && layer_state_is(0)) {
       j_trigger = false;
       d_trigger = false;
       u_trigger = false;
@@ -1145,7 +1145,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
 
     case ARCANE_L: 
-               if (record->event.pressed) {
+               if (record->event.pressed && layer_state_is(0)) {
                  if (get_oneshot_mods() & MOD_MASK_SHIFT) {
                     caps_word_toggle(); //toggles on caps word if one shot shift is already active (e.g. through double-tapping the key
                } else {
