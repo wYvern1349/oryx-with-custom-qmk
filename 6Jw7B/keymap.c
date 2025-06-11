@@ -55,8 +55,8 @@ enum tap_dance_codes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_voyager(
     TO(2),          KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, TO(2),          
-    OSL(7),         OSL(5),         KC_L,           KC_D,           KC_M,           KC_B,                                           KC_Y,           KC_P,           KC_O,           KC_U,           ST_MACRO_0,     KC_TRANSPARENT, 
-    KC_ENTER,       KC_N,           KC_R,           KC_T,           KC_S,           KC_C,                                           KC_F,           KC_H,           KC_E,           KC_I,           KC_A,           RCTL(KC_BSPC),  
+    OSL(7),         OSL(5),         KC_L,           KC_D,           KC_M,           KC_F,                                           KC_Y,           KC_B,           KC_O,           KC_U,           ST_MACRO_0,     KC_TRANSPARENT, 
+    KC_ENTER,       KC_N,           KC_R,           KC_T,           KC_S,           KC_C,                                           KC_P,           KC_H,           KC_E,           KC_I,           KC_A,           RCTL(KC_BSPC),  
     TO(1),          KC_X,           KC_J,           KC_G,           KC_W,           KC_V,                                           KC_Z,           KC_K,           OSL(5),         KC_COMMA,       KC_DOT,         TO(1),          
                                                     KC_TRANSPARENT, OSL(3),                                         OSL(4),         KC_SPACE
   ),
@@ -131,6 +131,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                     KC_NO,          KC_NO,                                          KC_NO,          KC_NO
   ),
 };
+
 
 
 
