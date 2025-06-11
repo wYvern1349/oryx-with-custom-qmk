@@ -610,9 +610,8 @@ void matrix_scan_user(void) { // The very important timer.
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    if (layer_state_is(0)) { //only on layer 0
     case KC_X:
-      if (record->event.pressed) {
+      if (record->event.pressed && layer_state_is(0)) {
         x_trigger = true;
         j_trigger = false;
         d_trigger = false;
@@ -1170,7 +1169,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                  }
                }
        break; 
-    }
     case ST_MACRO_0:
     if (record->event.pressed) {
       SEND_STRING(SS_TAP(X_QUOTE)SS_DELAY(5)  SS_TAP(X_SPACE));
