@@ -1103,7 +1103,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         j_trigger = false;
         d_trigger = false;
         u_trigger = false;
-        n_trigger = false;
         g_trigger = false;
         a_trigger = false;
         x_trigger = false;
