@@ -346,7 +346,7 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
           if (is_caps_word_on()) { //checks for caps word status
               send_string("G");
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("rüße");
+              SEND_STRING(SS_TAP(X_R) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_U) SS_RALT(SS_TAP(X_S)) SS_TAP(X_E));
           } else { //unshifted previous key
               send_string("g");
           }
