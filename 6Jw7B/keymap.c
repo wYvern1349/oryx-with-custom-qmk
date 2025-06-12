@@ -498,11 +498,11 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
         break;
         case KC_X:
           if (is_caps_word_on()) { //checks for caps word status
-              SEND_STRING(SS_TAP(X_BSPC) SS_RALT(SS_TAP(X_S)));
+              SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_E)) SS_LSFT(SS_TAP(X_R)) SS_LSFT(SS_TAP(X_E)));
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
               send_string("");
           } else { //unshifted previous key
-              SEND_STRING(SS_TAP(X_BSPC) SS_RALT(SS_TAP(X_S)));
+              SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_E) SS_TAP(X_R) SS_TAP(X_E));
           }
          break;
         case KC_Y:
@@ -666,16 +666,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed && layer_state_is(0)) {
       if (n_trigger && r_trigger){
          if (is_caps_word_on()){
-          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_D)) SS_LSFT(SS_TAP(X_I)) SS_LSFT(SS_TAP(X_G)));
+          //SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_C)) SS_LSFT(SS_TAP(X_H)) SS_LSFT(SS_TAP(X_T)));
           n_trigger = false;
           r_trigger = false;
         } else if (shift_trigger){
-          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_D)) SS_TAP(X_I) SS_TAP(X_G));
+          //SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_D)) SS_TAP(X_I) SS_TAP(X_G));
           n_trigger = false;
           r_trigger = false;
           shift_trigger = false;
         } else {
-          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_TAP(X_D) SS_TAP(X_I) SS_TAP(X_G));
+          //SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_TAP(X_D) SS_TAP(X_I) SS_TAP(X_G));
           n_trigger = false;
           r_trigger = false;
         }
@@ -734,16 +734,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       } else if (n_trigger && r_trigger){
          if (is_caps_word_on()){
-          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_E)) SS_LSFT(SS_TAP(X_R)) SS_LSFT(SS_TAP(X_E)));
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_C)) SS_LSFT(SS_TAP(X_H)) SS_LSFT(SS_TAP(X_T)));
           n_trigger = false;
           r_trigger = false;
         } else if (shift_trigger){
-          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_E)) SS_TAP(X_R) SS_TAP(X_E));
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_C)) SS_TAP(X_H) SS_TAP(X_T));
           n_trigger = false;
           r_trigger = false;
           shift_trigger = false;
         } else {
-          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_TAP(X_E) SS_TAP(X_R) SS_TAP(X_E));
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_TAP(X_C) SS_TAP(X_H) SS_TAP(X_T));
           n_trigger = false;
           r_trigger = false;
         }
