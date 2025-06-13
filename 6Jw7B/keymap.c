@@ -79,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     OSL(7),         OSL(5),         KC_L,           KC_D,           KC_M,           KC_F,                                           KC_Y,           KC_P,           KC_O,           KC_U,           ST_MACRO_0,     KC_TRANSPARENT, 
     KC_ENTER,       KC_N,           KC_R,           KC_T,           KC_S,           KC_C,                                           KC_B,           KC_H,           KC_E,           KC_I,           KC_A,           RCTL(KC_BSPC),  
     TO(1),          KC_X,           KC_J,           KC_G,           KC_W,           KC_V,                                           KC_Z,           KC_K,           OSL(5),         KC_COMMA,       KC_DOT,         TO(1),          
-                                                    KC_TRANSPARENT, OSL(3),                                         OSL(4),         KC_SPACE
+                                                    ARCANE_L, OSL(3),                                         OSL(4),         KC_SPACE
   ),
   [1] = LAYOUT_voyager(
     KC_GRAVE,       KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                           KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           KC_F5,          
@@ -325,11 +325,11 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
          break;
        case KC_E:
           if (is_caps_word_on()) { //checks for caps word status
-              send_string("A");
+              send_string("E");
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
               send_string("-Mail");
           } else { //unshifted previous key
-              send_string("a");
+              send_string("e");
           }
          set_last_keycode(U_DUMMY);
          break;
@@ -353,11 +353,11 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
          break;
         case KC_H:
           if (is_caps_word_on()) { //checks for caps word status
-              send_string("Y");
+              send_string("EY");
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("err");
+              send_string("ey");
           } else { //unshifted previous key
-              send_string("y");
+              send_string("ey");
           }
          break;
         case KC_I:
@@ -370,21 +370,13 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
           }
           umlaut_trigger = true;
          break;
-        case KC_J: //good candidate for more macro stuff, like w but without the j because j is useless lol
-           if (is_caps_word_on()) { //checks for caps word status
-             if (umlaut_trigger) {
-               SEND_STRING(SS_RALT(SS_TAP(X_S)));
-             } else {
-               SEND_STRING(SS_TAP(X_BSPC) SS_RALT(SS_TAP(X_S)));
-             }
+        case KC_J: 
+          if (is_caps_word_on()) { //checks for caps word status
+              SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_E)) SS_LSFT(SS_TAP(X_R)) SS_LSFT(SS_TAP(X_E)));
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("ersion");
+              send_string("");
           } else { //unshifted previous key
-             if (umlaut_trigger) {
-               SEND_STRING(SS_RALT(SS_TAP(X_S)));
-             } else {
-               SEND_STRING(SS_TAP(X_BSPC) SS_RALT(SS_TAP(X_S)));
-             }
+              SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_E) SS_TAP(X_R) SS_TAP(X_E));
           }
          break;
         case KC_K:
@@ -497,21 +489,29 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
           }
         break;
         case KC_X:
-          if (is_caps_word_on()) { //checks for caps word status
-              SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_E)) SS_LSFT(SS_TAP(X_R)) SS_LSFT(SS_TAP(X_E)));
+           if (is_caps_word_on()) { //checks for caps word status
+             if (umlaut_trigger) {
+               SEND_STRING(SS_RALT(SS_TAP(X_S)));
+             } else {
+               SEND_STRING(SS_TAP(X_BSPC) SS_RALT(SS_TAP(X_S)));
+             }
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("");
+              send_string("ersion");
           } else { //unshifted previous key
-              SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_E) SS_TAP(X_R) SS_TAP(X_E));
+             if (umlaut_trigger) {
+               SEND_STRING(SS_RALT(SS_TAP(X_S)));
+             } else {
+               SEND_STRING(SS_TAP(X_BSPC) SS_RALT(SS_TAP(X_S)));
+             }
           }
          break;
-        case KC_Y:
+          case KC_Y:
           if (is_caps_word_on()) { //checks for caps word status
-              send_string("P");
+              send_string("EA");
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("p");
+              send_string("ea");
           } else { //unshifted previous key
-              send_string("p");
+              send_string("ea");
           }
          break;
         case KC_Z:
@@ -612,6 +612,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case KC_X:
       if (record->event.pressed && layer_state_is(0)) {
+        if (umlaut_trigger) {
+        if (is_caps_word_on()) { //checks for caps word status
+              SEND_STRING(SS_RALT(SS_TAP(X_S)));
+          } else { //unshifted previous key
+              SEND_STRING(SS_RALT(SS_TAP(X_S)));
+          }
+        umlaut_trigger = false;
+        shift_trigger = false;
+        set_last_keycode(KC_E);
+        return false;
+        } else {
         x_trigger = true;
         j_trigger = false;
         d_trigger = false;
@@ -629,20 +640,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           shift_trigger = true;
         }
       } 
+      }
     break;
     case KC_J:        
     if (record->event.pressed && layer_state_is(0)) {
-      if (umlaut_trigger) {
-        if (is_caps_word_on()) { //checks for caps word status
-              SEND_STRING(SS_RALT(SS_TAP(X_S)));
-          } else { //unshifted previous key
-              SEND_STRING(SS_RALT(SS_TAP(X_S)));
-          }
-        umlaut_trigger = false;
-        shift_trigger = false;
-        set_last_keycode(KC_E);
-        return false;
-      } else {
         j_trigger = true;
         d_trigger = false;
         u_trigger = false;
@@ -660,7 +661,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           shift_trigger = true;
         }
       }
-    }
     break;
     case KC_D:        
     if (record->event.pressed && layer_state_is(0)) {
@@ -1026,14 +1026,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           return false;
       } else if (comma_trigger){
         if (is_caps_word_on()){
-          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_H)) SS_LSFT(SS_TAP(X_E)) SS_LSFT(SS_TAP(X_Y)));
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_E)) SS_LSFT(SS_TAP(X_A)));
           comma_trigger = false;
         } else if (shift_trigger){
-          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_H)) SS_TAP(X_E) SS_TAP(X_Y));
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_E) SS_TAP(X_A));
           comma_trigger = false;
           shift_trigger = false;
         } else {
-          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_H) SS_TAP(X_E) SS_TAP(X_Y));
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_E) SS_TAP(X_A));
           comma_trigger = false;
         }
           set_last_keycode(U_DUMMY);
