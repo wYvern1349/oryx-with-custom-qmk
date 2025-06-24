@@ -549,7 +549,6 @@ void matrix_scan_user(void) { // The very important timer.
       case KC_SPACE:
       case KC_ENTER:
       case KC_BSPC:
-      case KC_DOT:
       case RCTL(KC_BSPC):
       last_key_manual = get_last_keycode();
       alpha_pressed = false;
