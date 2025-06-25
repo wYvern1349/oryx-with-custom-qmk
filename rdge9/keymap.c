@@ -845,7 +845,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             dot_trigger = false;
             shift_trigger = false;
             a_trigger = false;
-            set_last_keycode(KC_D);
+            set_last_keycode(U_DUMMY);
             return false;
             } else {
            d_trigger = false;
@@ -949,7 +949,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             x_trigger = false;
             shift_trigger = false;
-            set_last_keycode(KC_D);
+            set_last_keycode(KC_N);
             return false;
             } else {
           d_trigger = false;
