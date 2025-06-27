@@ -540,6 +540,7 @@ void matrix_scan_user(void) { // The very important timer.
       case U_DUMMY:
       case KC_SCLN:
       case KC_COMMA:
+      case KC_DOT:
         if (last_key_manual != get_last_keycode()) {
           last_key_manual = get_last_keycode();
           alpha_pressed = true;
