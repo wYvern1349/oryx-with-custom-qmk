@@ -686,16 +686,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       } else if (n_trigger && r_trigger){
          if (is_caps_word_on()){
-          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_C)) SS_LSFT(SS_TAP(X_H)) SS_LSFT(SS_TAP(X_T)));
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_G)) SS_LSFT(SS_TAP(X_H)) SS_LSFT(SS_TAP(X_T)));
           n_trigger = false;
           r_trigger = false;
         } else if (shift_trigger){
-          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_C)) SS_TAP(X_H) SS_TAP(X_T));
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_G)) SS_TAP(X_H) SS_TAP(X_T));
           n_trigger = false;
           r_trigger = false;
           shift_trigger = false;
         } else {
-          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_TAP(X_C) SS_TAP(X_H) SS_TAP(X_T));
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_TAP(X_G) SS_TAP(X_H) SS_TAP(X_T));
           n_trigger = false;
           r_trigger = false;
         }
@@ -744,17 +744,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     break;
     case KC_O:    
     if (record->event.pressed && layer_state_is(0)) {
-      if (u_trigger && a_trigger){ // kü
+      if (u_trigger && a_trigger){ // ake
         if (is_caps_word_on()){
-          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_K)) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_U)));
+          SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_K)) SS_RSFT(SS_TAP(X_E)));
           u_trigger = false;
           a_trigger = false;
         } else if (shift_trigger){
-          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_K)) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_U));
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_K) SS_TAP(X_E));
           u_trigger = false;
           a_trigger = false;
         } else {
-          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_BSPC) SS_TAP(X_K) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_U));
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_K) SS_TAP(X_E));
           u_trigger = false;
           a_trigger = false;
         }
@@ -868,21 +868,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     break;
         case KC_W:
          if (record->event.pressed && layer_state_is(0)) {
-      if (g_trigger){
-        if (is_caps_word_on()){
-          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_T)) SS_LSFT(SS_TAP(X_G)));
-          g_trigger = false;
-        } else if (shift_trigger){
-          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_T)) SS_TAP(X_G));
-          g_trigger = false;
-          shift_trigger = false; 
-        } else {
-          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_T) SS_TAP(X_G));
-          g_trigger = false;
-        }
-        return false;
-        set_last_keycode(KC_L);
-      } else {
+//      if (g_trigger){
+  //      if (is_caps_word_on()){
+    //      SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_T)) SS_LSFT(SS_TAP(X_G)));
+      //    g_trigger = false;
+//        } else if (shift_trigger){
+  //        SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_T)) SS_TAP(X_G));
+    //      g_trigger = false;
+      //    shift_trigger = false; 
+        //} else {
+//          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_T) SS_TAP(X_G));
+  //        g_trigger = false;
+    //    }
+      //  return false;
+        //set_last_keycode(KC_L);
+//      } else {
         d_trigger = false;
         j_trigger = false;
         u_trigger = false;
@@ -900,7 +900,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           shift_trigger = true;
         }
         }
-      }
+//      }
     break;
      case KC_F:
          if (record->event.pressed && layer_state_is(0)) {
