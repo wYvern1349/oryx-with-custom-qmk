@@ -20,7 +20,6 @@ bool l_trigger = false; //l pressed previously?
 bool dot_trigger = false; //. pressed previously?
 bool comma_trigger = false; //comma pressed previously?
 bool shift_trigger = false; //was key shifted?
-uint16_t trigger_timer = 0; 
 uint16_t arcane_timer = 0;     // timer 
 uint16_t last_key_manual = 0; // for timer reset
 
