@@ -634,16 +634,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed && layer_state_is(0)) {
        if (g_trigger){
         if (is_caps_word_on()){
-          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_G)));
+          SEND_STRING(SS_LSFT(SS_TAP(X_T)));
           g_trigger = false;
          } else if (shift_trigger){
-          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_G)));
+          SEND_STRING(SS_TAP(X_T));
           g_trigger = false;
           shift_trigger = false;
         } else {
-          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_G));
+          SEND_STRING(SS_TAP(X_T));
           g_trigger = false;
         }
+         return false;
       } else {
         g_trigger = false;
         u_trigger = false;
