@@ -288,7 +288,6 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
           } else { //unshifted previous key
               send_string("d");
           }
-          d_trigger = true;
          break;
        case KC_E:
           if (is_caps_word_on()) { //checks for caps word status
@@ -929,7 +928,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       case KC_S:
       case KC_V:
       case KC_Y:
-      case KC_F:
       case KC_D:
       case KC_W:
       case KC_L:
