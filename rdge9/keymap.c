@@ -264,11 +264,11 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
          break;        
         case KC_B:
           if (is_caps_word_on()) { //checks for caps word status
-              send_string("BEC");
+              send_string("EC");
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("Bec");
+              send_string("ec");
           } else { //unshifted previous key
-              send_string("bec");
+              send_string("ec");
           }
          break;
         case KC_C:
