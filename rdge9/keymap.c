@@ -14,6 +14,7 @@ bool a_trigger = false; //a pressed previously?
 bool z_trigger = false; //z pressed previously?
 bool i_trigger = false; //i pressed previously?
 bool r_trigger = false; //r pressed previously?
+bool j_trigger = false; //j pressed previously?
 bool dot_trigger = false; //. pressed previously?
 bool comma_trigger = false; //comma pressed previously?
 bool shift_trigger = false; //was key shifted?
@@ -519,6 +520,7 @@ void matrix_scan_user(void) { // The very important timer.
       z_trigger = false;
       i_trigger = false;
       r_trigger = false;
+      j_trigger = false;
       dot_trigger = false;
       comma_trigger = false;
       shift_trigger = false;
@@ -549,6 +551,7 @@ void matrix_scan_user(void) { // The very important timer.
       z_trigger = false;
       i_trigger = false;
       r_trigger = false;
+      j_trigger = false;
       dot_trigger = false;
       comma_trigger = false;
       shift_trigger = false;
@@ -569,6 +572,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         a_trigger = false;
         i_trigger = false;
         r_trigger = false;
+        j_trigger = false;
         dot_trigger = false;
         comma_trigger = false;
         shift_trigger = false;
@@ -596,6 +600,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
           set_last_keycode(KC_D);
           return false;
+       } else if (j_trigger) {
+         if (is_caps_word_on()){
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_S)) SS_LSFT(SS_TAP(X_Y)));
+        } else if (shift_trigger){
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_S)) SS_TAP(X_Y));
+          shift_trigger = false;
+        } else {
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_S) SS_TAP(X_Y));
+        }
+          j_trigger = false;
+          set_last_keycode(KC_D);
+          return false;
       } else {
         g_trigger = false;
         u_trigger = false;
@@ -604,6 +620,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         z_trigger = false;
         i_trigger = false;
         r_trigger = false;
+        j_trigger = false;
         dot_trigger = false;
         comma_trigger = false;
         shift_trigger = false;
@@ -622,6 +639,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         a_trigger = false;
         i_trigger = false;
         r_trigger = false;
+        j_trigger = false;
         dot_trigger = false;
         comma_trigger = false;
         shift_trigger = false;
@@ -653,6 +671,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         z_trigger = false;
         i_trigger = false;
         r_trigger = false;
+        j_trigger = false;
         dot_trigger = false;
         comma_trigger = false;
         shift_trigger = false;
@@ -669,6 +688,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         n_trigger = false;
         i_trigger = false;
         r_trigger = false;
+        j_trigger = false;
         dot_trigger = false;
         comma_trigger = false;
         if (get_oneshot_mods() & MOD_MASK_SHIFT) {
@@ -720,6 +740,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         z_trigger = false;
         i_trigger = false;
         r_trigger = false;
+        j_trigger = false;
         dot_trigger = false;
         comma_trigger = false;
         shift_trigger = false;
@@ -738,6 +759,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         z_trigger = false;
         i_trigger = false;
         n_trigger = false;
+        j_trigger = false;
         dot_trigger = false;
         comma_trigger = false;
         shift_trigger = false;
@@ -755,6 +777,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         z_trigger = false;
         i_trigger = false;
         r_trigger = false;
+        j_trigger = false;
         dot_trigger = false;
         comma_trigger = false;
         shift_trigger = false;
@@ -785,6 +808,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
            z_trigger = false;
            i_trigger = true;
            r_trigger = false;
+           j_trigger = false;
            dot_trigger = false;
            comma_trigger = false;
            if (get_oneshot_mods() & MOD_MASK_SHIFT) {
@@ -813,6 +837,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           a_trigger = false;
           z_trigger = false;
           i_trigger = false;
+          j_trigger = false;
           n_trigger = true;
           dot_trigger = false;    
           comma_trigger = false;
@@ -863,6 +888,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         z_trigger = false;
         i_trigger = false;
         r_trigger = false;
+        j_trigger = false;
         dot_trigger = false;
         comma_trigger = false;
         shift_trigger = false;
@@ -894,6 +920,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         z_trigger = false;
         i_trigger = false;
         r_trigger = false;
+        j_trigger = false;
         dot_trigger = false;
         comma_trigger = true;
         shift_trigger = false;
@@ -911,7 +938,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         z_trigger = false;
         i_trigger = false;
         r_trigger = false;
+        j_trigger = false;
         dot_trigger = true;
+        comma_trigger = false;
+        shift_trigger = false;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
+      }
+    break;
+    case KC_J:
+    if (record->event.pressed && layer_state_is(0)) {
+        g_trigger = false;
+        u_trigger = false;
+        a_trigger = false;
+        z_trigger = false;
+        i_trigger = false;
+        r_trigger = false;
+        j_trigger = true;
+        dot_trigger = false;
         comma_trigger = false;
         shift_trigger = false;
         if (get_oneshot_mods() & MOD_MASK_SHIFT) {
@@ -922,7 +967,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       case KC_H:
       case KC_C:
       case KC_P:
-      case KC_J:
       case KC_B:
       case KC_K:
       case KC_Q:
@@ -941,6 +985,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       z_trigger = false;
       i_trigger = false;
       r_trigger = false;
+      j_trigger = false;
       dot_trigger = false;  
       comma_trigger = false;
       shift_trigger = false;
