@@ -28,6 +28,7 @@ enum custom_keycodes {
   ARCANE_L,
   U_DUMMY,
   Y_DUMMY,
+  APOSTROPHE_DUMMY,
   ST_MACRO_0,
   ST_MACRO_1,
   ST_MACRO_2,
@@ -550,6 +551,15 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
               send_string("y");
           }
          break;
+      case APOSTROPHE_DUMMY:
+          if (is_caps_word_on()) { //checks for caps word status
+              send_string("'");
+          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
+              send_string("'");
+          } else { //unshifted previous key
+              send_string("'");
+          }
+         break;
       case KC_COMMA: //I'm using this as a "get one-shot shift to trigger within a word" key for abbreviations and the like... could wait for the timer to run out, but I lack the patience.
             if (is_caps_word_on()) { //checks for caps word status
               SEND_STRING(SS_TAP(X_BSPC)); //erases comma since I don't actually want it, just using it as a trigger for the two lines following
@@ -1023,6 +1033,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           y_trigger = false;
           i_trigger = false;
         }
+          set_last_keycode(APOSTROPHE_DUMMY);
           return false;
       } else if (comma_trigger){
         if (is_caps_word_on()){
