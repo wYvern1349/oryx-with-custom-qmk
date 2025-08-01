@@ -643,14 +643,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return false;
       } else if (comma_trigger) {
          if (is_caps_word_on()){
-          SEND_STRING(SS_TAP(X_DOT));
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_DOT));
           comma_trigger = false;
         } else if (shift_trigger){
-          SEND_STRING(SS_TAP(X_DOT));
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_DOT));
           comma_trigger = false;
           shift_trigger = false;
         } else {
-          SEND_STRING(SS_TAP(X_DOT));
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_DOT));
           comma_trigger = false;
         }
         return false;   
