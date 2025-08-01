@@ -845,7 +845,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
     break;
         case KC_A:
-        if (record->event.pressed && layer_state_is(0)) {
+          if (record->event.pressed && layer_state_is(0)) {
+            if (comma_trigger) {
+               if (is_caps_word_on()) { //checks for caps word status
+              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_A)));
+            } else if (shift_trigger) { 
+              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_A)));
+            } else { //unshifted previous key
+              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_A));
+            }
+            comma_trigger = false;
+            shift_trigger = false;
+            a_trigger = false;
+            set_last_keycode(U_DUMMY);
+            return false;
+            } else {
         g_trigger = false;
         u_trigger = false;
         n_trigger = false;
@@ -862,6 +876,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           shift_trigger = true;
         }
       }
+    }
     break;
        case KC_I:
           if (record->event.pressed && layer_state_is(0)) {
