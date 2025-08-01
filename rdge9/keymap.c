@@ -1114,7 +1114,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
     break;
     case KC_W:
-    if (record->event.pressed && layer_state_is(0)) {
       if (record->event.pressed && layer_state_is(0)) {
        if (g_trigger){
         if (is_caps_word_on()){
