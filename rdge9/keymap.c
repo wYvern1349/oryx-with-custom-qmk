@@ -715,12 +715,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           return false;
        } else if (j_trigger) {
          if (is_caps_word_on()){
-          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_S)) SS_LSFT(SS_TAP(X_Y)));
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_D)) SS_LSFT(SS_TAP(X_G)));
         } else if (shift_trigger){
-          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_S)) SS_TAP(X_Y));
+          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_D)) SS_TAP(X_G));
           shift_trigger = false;
         } else {
-          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_S) SS_TAP(X_Y));
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_D) SS_TAP(X_G));
         }
           j_trigger = false;
           set_last_keycode(KC_D);
