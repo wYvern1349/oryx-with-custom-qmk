@@ -476,23 +476,22 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
             }
           } else {
             if (is_caps_word_on()) { //checks for caps word status
-              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_A)));
+              SEND_STRING(SS_RSFT(SS_TAP(X_I)));
             } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_A)));
+              SEND_STRING(SS_TAP(X_I));
             } else { //unshifted previous key
-              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_A));
+              SEND_STRING(SS_TAP(X_I));
             }
           }
           break;
         case KC_V:
-          if (is_caps_word_on()){
-          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_S)) SS_LSFT(SS_TAP(X_M)));
-        } else if (mods & MOD_MASK_SHIFT){
-          SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_S)) SS_TAP(X_M));
-        } else {
-          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_S) SS_TAP(X_M));
-        }
-        set_last_keycode(KC_S);
+          if (is_caps_word_on()) { //checks for caps word status
+              SEND_STRING(SS_TAP(X_BSPC) SS_RALT(SS_TAP(X_S)));
+          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
+              SEND_STRING(SS_TAP(X_BSPC) SS_RALT(SS_TAP(X_S)));
+          } else { //unshifted previous key
+              SEND_STRING(SS_TAP(X_BSPC) SS_RALT(SS_TAP(X_S)));
+          }
          break;
         case KC_W:
           if (is_caps_word_on()) { //checks for caps word status
@@ -1174,6 +1173,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     break;
     case KC_Y:
       if (record->event.pressed && layer_state_is(0)) {
+        if (comma_trigger) { // ä
+          if (is_caps_word_on()){
+          SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_A)));
+          comma_trigger = false;
+        } else if (shift_trigger){
+          SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_A)));
+          comma_trigger = false;
+          shift_trigger = false;
+        } else {
+          SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_A));
+          comma_trigger = false;
+        }
+          set_last_keycode(DUMMY_U);
+          return false;
+        } else {
         g_trigger = false;
         u_trigger = false;
         a_trigger = false;
@@ -1190,13 +1204,48 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           shift_trigger = true;
         }
       }
+      }
+    break;
+    case KC_S:
+    if (record->event.pressed && layer_state_is(0)) {
+        if (z_trigger) { // sm
+          if (is_caps_word_on()){
+          SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_S)) SS_RSFT(SS_TAP(X_M)));
+          z_trigger = false;
+        } else if (shift_trigger){
+          SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_S)) SS_TAP(X_M));
+          z_trigger = false;
+          shift_trigger = false;
+        } else {
+          SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_S)) SS_TAP(X_M));
+          z_trigger = false;
+        }
+          set_last_keycode(KC_S);
+          return false;
+        } else {
+        g_trigger = false;
+        u_trigger = false;
+        a_trigger = false;
+        z_trigger = false;
+        i_trigger = false;
+        r_trigger = false;
+        j_trigger = false;
+        w_trigger = false;
+        y_trigger = false;
+        dot_trigger = false;
+        comma_trigger = false;
+        shift_trigger = false;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
+      }
+      }
     break;
       case KC_C:
       case KC_P:
       case KC_B:
       case KC_K:
       case KC_Q:
-      case KC_S:
       case KC_V:
       case KC_D:
       case KC_L:
