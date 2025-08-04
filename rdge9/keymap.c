@@ -1185,7 +1185,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_A));
           comma_trigger = false;
         }
-          set_last_keycode(DUMMY_U);
+          set_last_keycode(U_DUMMY);
           return false;
         } else {
         g_trigger = false;
