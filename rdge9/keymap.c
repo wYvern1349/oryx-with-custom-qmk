@@ -1217,7 +1217,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           z_trigger = false;
           shift_trigger = false;
         } else {
-          SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_S)) SS_TAP(X_M));
+          SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_S) SS_TAP(X_M));
           z_trigger = false;
         }
           set_last_keycode(KC_S);
