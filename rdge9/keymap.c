@@ -520,7 +520,6 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
             } else { //unshifted previous key
               SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_O));
             }
-          }
           break;
           y_trigger = false;
          break;
