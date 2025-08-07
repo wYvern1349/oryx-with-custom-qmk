@@ -378,7 +378,7 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
               SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_K)) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_O) SS_TAP(X_N) SS_TAP(X_N));
           } else { //unshifted previous key
-              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_K)) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_O) SS_TAP(X_N) SS_TAP(X_N));
+              SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_K) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_O) SS_TAP(X_N) SS_TAP(X_N));
           }
           j_trigger = false;
          break;
@@ -476,11 +476,11 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
             }
           } else {
             if (is_caps_word_on()) { //checks for caps word status
-              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_O)));
+              SEND_STRING(SS_RSFT(SS_TAP(X_I)));
             } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_O)));
+              SEND_STRING(SS_RSFT(SS_TAP(X_I)));
             } else { //unshifted previous key
-              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_O));
+              SEND_STRING(SS_TAP(X_I));
             }
           }
           break;
@@ -514,12 +514,14 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
          break;
           case KC_Y:
           if (is_caps_word_on()) { //checks for caps word status
-              SEND_STRING(SS_TAP(X_DOT));
-          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              SEND_STRING(SS_TAP(X_DOT));
-          } else { //unshifted previous key
-              SEND_STRING(SS_TAP(X_DOT));
+              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_O)));
+            } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
+              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_O)));
+            } else { //unshifted previous key
+              SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_O));
+            }
           }
+          break;
           y_trigger = false;
          break;
         case KC_Z:
