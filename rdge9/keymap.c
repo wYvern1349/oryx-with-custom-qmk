@@ -520,9 +520,8 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
             } else { //unshifted previous key
               SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_O));
             }
-          break;
           y_trigger = false;
-         break;
+          break;
         case KC_Z:
           if (is_caps_word_on()) { //checks for caps word status
               SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_R)) SS_LSFT(SS_TAP(X_Z)));
