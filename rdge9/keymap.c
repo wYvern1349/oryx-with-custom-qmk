@@ -319,7 +319,7 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
           if (is_caps_word_on()) { //checks for caps word status
               send_string("E");
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("-Mail ");
+              send_string("-Mail");
           } else { //unshifted previous key
               send_string("e");
           }
@@ -366,7 +366,7 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
           if (is_caps_word_on()) { //checks for caps word status
               SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_E)) SS_LSFT(SS_TAP(X_O)));
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_E)) SS_LSFT(SS_TAP(X_O)));
+              SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_E)) SS_TAP(X_O));
           } else { //unshifted previous key
               SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_E) SS_TAP(X_O));
           }
@@ -450,7 +450,7 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
           if (is_caps_word_on()) { //checks for caps word status
               send_string("S");
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_H)) SS_TAP(X_E) SS_TAP(X_R) SS_TAP(X_R) SS_TAP(X_SPACE));
+              SEND_STRING(SS_TAP(X_BSPC) SS_LSFT(SS_TAP(X_H)) SS_TAP(X_E) SS_TAP(X_R) SS_TAP(X_R));
               set_oneshot_mods(MOD_BIT(KC_LSFT));
           } else { //unshifted previous key
               send_string("s");
@@ -960,6 +960,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
            j_trigger = false;
            dot_trigger = false;
            comma_trigger = false;
+           shift_trigger = false;
            if (get_oneshot_mods() & MOD_MASK_SHIFT) {
              shift_trigger = true;
            }
