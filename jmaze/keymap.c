@@ -1128,6 +1128,37 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       }
     break; 
+     case KC_I:
+      if (record->event.pressed && layer_state_is(0)) {
+        if (dot_trigger){
+          if (is_caps_word_on()){
+            SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_O)));
+          } else if (shift_trigger){
+            SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_O)));
+          } else {
+            SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_O));
+          }
+            dot_trigger = false;
+            shift_trigger = false;
+            set_last_keycode(KC_I);
+            return false;
+        } else {
+          shift_trigger = false;
+          dot_trigger = false;
+          b_trigger = false;
+          c_trigger = false;
+          g_trigger = false;
+          l_trigger = false;
+          s_trigger = false;
+          u_trigger = false;
+          y_trigger = false;
+          z_trigger = false;
+          if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+            shift_trigger = true;
+          }
+        }
+      }
+    break; 
     case KC_L:
       if (record->event.pressed && layer_state_is(0)) {
         shift_trigger = false;
@@ -1158,6 +1189,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             u_trigger = false;
             shift_trigger = false;
             set_last_keycode(KC_A);
+            return false;
+        } else if (dot_trigger){
+          if (is_caps_word_on()){
+            SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_A)));
+          } else if (shift_trigger){
+            SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_A)));
+          } else {
+            SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_A));
+          }
+            dot_trigger = false;
+            shift_trigger = false;
+            set_last_keycode(KC_O);
             return false;
         } else {
           shift_trigger = false;
@@ -1209,18 +1252,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     break; 
     case KC_U:
       if (record->event.pressed && layer_state_is(0)) {
-        shift_trigger = false;
-        dot_trigger = false;
-        b_trigger = false;
-        c_trigger = false;
-        g_trigger = false;
-        l_trigger = false;
-        s_trigger = false;
-        u_trigger = true;
-        y_trigger = false;
-        z_trigger = false;
-        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
-          shift_trigger = true;
+        if (dot_trigger){
+          if (is_caps_word_on()){
+            SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_U)));
+          } else if (shift_trigger){
+            SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_RSFT(SS_TAP(X_U)));
+          } else {
+            SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_QUOTE)) SS_TAP(X_U));
+          }
+            dot_trigger = false;
+            shift_trigger = false;
+            set_last_keycode(KC_Z);
+            return false;
+        } else {
+          shift_trigger = false;
+          dot_trigger = false;
+          b_trigger = false;
+          c_trigger = false;
+          g_trigger = false;
+          l_trigger = false;
+          s_trigger = false;
+          u_trigger = true;
+          y_trigger = false;
+          z_trigger = false;
+          if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+            shift_trigger = true;
+          }
         }
       }
     break; 
@@ -1334,8 +1391,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                    }
                  }
               break; 
-    case raeihtsraiths:
-          if (record->event.pressed && layer_state_is(0)) {
+    case KC_A:
+    case KC_E:
+    case KC_J:  
+    case KC_K:
+    case KC_M:
+    case KC_N:
+    case KC_P:
+    case KC_Q:
+    case KC_R:
+    case KC_T:
+    case KC_V:
+    case KC_X:      
+      if (record->event.pressed && layer_state_is(0)) {
         shift_trigger = false;
         dot_trigger = false;
         b_trigger = false;
