@@ -886,27 +886,471 @@ static void process_arcane_j(uint16_t keycode, uint8_t mods) {
               SEND_STRING(SS_TAP(X_U));
           }
          break;  
-        case KC_COMMA: //I'm using this as a "get one-shot shift to trigger within a word" key for abbreviations and the like... could wait for the timer to run out, but I lack the patience.
-            if (is_caps_word_on()) { //checks for caps word status
-              SEND_STRING(SS_TAP(X_BSPC)); //erases comma since I don't actually want it, just using it as a trigger for the two lines following
-              alpha_pressed = false; //basically ends the timer for the arcane functionality prematurely
-              set_oneshot_mods(MOD_BIT(KC_LSFT)); //activates one-shot shift
-          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              SEND_STRING(SS_TAP(X_BSPC));
-              alpha_pressed = false;
-              set_oneshot_mods(MOD_BIT(KC_LSFT));
-          } else { //unshifted previous key
-              SEND_STRING(SS_TAP(X_BSPC));
-              alpha_pressed = false;
-              set_oneshot_mods(MOD_BIT(KC_LSFT));
-          }
-        break;
-      default: set_oneshot_mods(MOD_BIT(KC_LSFT));
-    }
+       default: 
+         SEND_STRING(SS_TAP(X_J));
+         set_last_keycode(KC_J);
+      }
 }
+
+void matrix_scan_user(void) { // The very important timer.
+  if (alpha_pressed && timer_elapsed(arcane_timer) > 1000) { //triggers when timer elapsed
+      alpha_pressed = false;
+      shift_trigger = false; 
+      dot_trigger = false;
+      b_trigger = false;
+      c_trigger = false;
+      g_trigger = false;
+      l_trigger = false;
+      s_trigger = false;
+      u_trigger = false;
+      y_trigger = false;
+      z_trigger = false;
+      set_last_keycode(KC_SPACE);
+  } else { //timer update
+    switch (get_last_keycode()) {
+      case KC_A ... KC_Z:
+      case KC_SCLN:
+      case KC_COMMA:
+      case KC_DOT:
+        if (last_key_manual != get_last_keycode()) {
+          last_key_manual = get_last_keycode();
+          alpha_pressed = true;
+          arcane_timer = timer_read();
+        }
+      break; //these were all the keys that keep the timer going
+      case KC_SPACE:
+      case KC_ENTER:
+      case KC_BSPC:
+      case RCTL(KC_BSPC):
+      last_key_manual = get_last_keycode();
+      alpha_pressed = false;
+      shift_trigger = false; 
+      dot_trigger = false;
+      b_trigger = false;
+      c_trigger = false;
+      g_trigger = false;
+      l_trigger = false;
+      s_trigger = false;
+      u_trigger = false;
+      y_trigger = false;
+      z_trigger = false;
+      break; //these were all the keys that end the timer prematurely
+    }
+  }
+}
+
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+    case KC_DOT:
+      if (record->event.pressed && layer_state_is(0)) {
+        shift_trigger = false;
+        dot_trigger = true;
+        b_trigger = false;
+        c_trigger = false;
+        g_trigger = false;
+        l_trigger = false;
+        s_trigger = false;
+        u_trigger = false;
+        y_trigger = false;
+        z_trigger = false;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
+      }
+    break; 
+    case KC_B:
+      if (record->event.pressed && layer_state_is(0)) {
+        shift_trigger = false;
+        dot_trigger = false;
+        b_trigger = true;
+        c_trigger = false;
+        g_trigger = false;
+        l_trigger = false;
+        s_trigger = false;
+        u_trigger = false;
+        y_trigger = false;
+        z_trigger = false;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
+      }
+    break; 
+    case KC_C:
+      if (record->event.pressed && layer_state_is(0)) {
+        shift_trigger = false;
+        dot_trigger = false;
+        b_trigger = false;
+        c_trigger = true;
+        g_trigger = false;
+        l_trigger = false;
+        s_trigger = false;
+        u_trigger = false;
+        y_trigger = false;
+        z_trigger = false;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
+      }
+    break; 
+    case KC_D:
+      if (record->event.pressed && layer_state_is(0)) {
+        if (c_trigger){
+          if (is_caps_word_on()){
+            SEND_STRING(SS_LSFT(SS_TAP(X_T)));
+          } else if (shift_trigger){
+            SEND_STRING(SS_TAP(X_T));
+          } else {
+            SEND_STRING(SS_TAP(X_T));
+          }
+            c_trigger = false;
+            shift_trigger = false;
+            set_last_keycode(KC_T);
+            return false;
+        } else {
+          shift_trigger = false;
+          dot_trigger = false;
+          b_trigger = false;
+          c_trigger = false;
+          g_trigger = false;
+          l_trigger = false;
+          s_trigger = false;
+          u_trigger = false;
+          y_trigger = false;
+          z_trigger = false;
+          if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+            shift_trigger = true;
+          }
+        }
+      }
+    break; 
+    case KC_F:
+      if (record->event.pressed && layer_state_is(0)) {
+        if (g_trigger){
+          if (is_caps_word_on()){
+            SEND_STRING(SS_LSFT(SS_TAP(X_G)));
+          } else if (shift_trigger){
+            SEND_STRING(SS_TAP(X_G));
+          } else {
+            SEND_STRING(SS_TAP(X_G));
+          }
+            g_trigger = false;
+            shift_trigger = false;
+            set_last_keycode(KC_G);
+            return false;
+        } else {
+          shift_trigger = false;
+          dot_trigger = false;
+          b_trigger = false;
+          c_trigger = false;
+          g_trigger = false;
+          l_trigger = false;
+          s_trigger = false;
+          u_trigger = false;
+          y_trigger = false;
+          z_trigger = false;
+          if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+            shift_trigger = true;
+          }
+        }
+      }
+    break; 
+    case KC_G:
+      if (record->event.pressed && layer_state_is(0)) {
+        if (s_trigger){
+          if (is_caps_word_on()){
+            SEND_STRING(SS_LSFT(SS_TAP(X_M)));
+          } else if (shift_trigger){
+            SEND_STRING(SS_TAP(X_M));
+          } else {
+            SEND_STRING(SS_TAP(X_M));
+          }
+            s_trigger = false;
+            shift_trigger = false;
+            set_last_keycode(KC_M);
+            return false;
+        } else {
+          shift_trigger = false;
+          dot_trigger = false;
+          b_trigger = false;
+          c_trigger = false;
+          g_trigger = true;
+          l_trigger = false;
+          s_trigger = false;
+          u_trigger = false;
+          y_trigger = false;
+          z_trigger = false;
+          if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+            shift_trigger = true;
+          }
+        }
+      }
+    break; 
+    case KC_H:
+      if (record->event.pressed && layer_state_is(0)) {
+        if (l_trigger){
+          if (is_caps_word_on()){
+            SEND_STRING(SS_LSFT(SS_TAP(X_L)));
+          } else if (shift_trigger){
+            SEND_STRING(SS_TAP(X_L));
+          } else {
+            SEND_STRING(SS_TAP(X_L));
+          }
+            l_trigger = false;
+            shift_trigger = false;
+            set_last_keycode(KC_L);
+            return false;
+        } else if (y_trigger){
+          if (is_caps_word_on()){
+            SEND_STRING(SS_TAP(X_BSPC) SS_RALT(SS_TAP(X_S)));
+          } else if (shift_trigger){
+            SEND_STRING(SS_TAP(X_BSPC) SS_RALT(SS_TAP(X_S)));
+          } else {
+            SEND_STRING(SS_TAP(X_BSPC) SS_RALT(SS_TAP(X_S)));
+          }
+            y_trigger = false;
+            shift_trigger = false;
+            return false;
+        } else {
+          shift_trigger = false;
+          dot_trigger = false;
+          b_trigger = false;
+          c_trigger = false;
+          g_trigger = false;
+          l_trigger = false;
+          s_trigger = false;
+          u_trigger = false;
+          y_trigger = false;
+          z_trigger = false;
+          if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+            shift_trigger = true;
+          }
+        }
+      }
+    break; 
+    case KC_L:
+      if (record->event.pressed && layer_state_is(0)) {
+        shift_trigger = false;
+        dot_trigger = false;
+        b_trigger = false;
+        c_trigger = false;
+        g_trigger = false;
+        l_trigger = true;
+        s_trigger = false;
+        u_trigger = false;
+        y_trigger = false;
+        z_trigger = false;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
+      }
+    break; 
+    case KC_O:
+      if (record->event.pressed && layer_state_is(0)) {
+        if (u_trigger){
+          if (is_caps_word_on()){
+            SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_E)) SS_RSFT(SS_TAP(X_A)));
+          } else if (shift_trigger){
+            SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_E)) SS_TAP(X_A));
+          } else {
+            SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_E) SS_TAP(X_A));
+          }
+            u_trigger = false;
+            shift_trigger = false;
+            set_last_keycode(KC_A);
+            return false;
+        } else {
+          shift_trigger = false;
+          dot_trigger = false;
+          b_trigger = false;
+          c_trigger = false;
+          g_trigger = false;
+          l_trigger = false;
+          s_trigger = false;
+          u_trigger = false;
+          y_trigger = false;
+          z_trigger = false;
+          if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+            shift_trigger = true;
+          }
+        }
+      }
+    break; 
+    case KC_S:
+      if (record->event.pressed && layer_state_is(0)) {
+        if (z_trigger){
+          if (is_caps_word_on()){
+            SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_R)) SS_RSFT(SS_TAP(X_Z)));
+          } else if (shift_trigger){
+            SEND_STRING(SS_TAP(X_BSPC) SS_RSFT(SS_TAP(X_R)) SS_TAP(X_Z));
+          } else {
+            SEND_STRING(SS_TAP(X_BSPC) SS_TAP(X_R) SS_TAP(X_Z));
+          }
+            z_trigger = false;
+            shift_trigger = false;
+            set_last_keycode(KC_Z);
+            return false;
+        } else {
+          shift_trigger = false;
+          dot_trigger = false;
+          b_trigger = false;
+          c_trigger = false;
+          g_trigger = false;
+          l_trigger = false;
+          s_trigger = true;
+          u_trigger = false;
+          y_trigger = false;
+          z_trigger = false;
+          if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+            shift_trigger = true;
+          }
+        }
+      }
+    break; 
+    case KC_U:
+      if (record->event.pressed && layer_state_is(0)) {
+        shift_trigger = false;
+        dot_trigger = false;
+        b_trigger = false;
+        c_trigger = false;
+        g_trigger = false;
+        l_trigger = false;
+        s_trigger = false;
+        u_trigger = true;
+        y_trigger = false;
+        z_trigger = false;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
+      }
+    break; 
+    case KC_W:
+      if (record->event.pressed && layer_state_is(0)) {
+        if (b_trigger){
+          if (is_caps_word_on()){
+            SEND_STRING(SS_LSFT(SS_TAP(X_T)));
+          } else if (shift_trigger){
+            SEND_STRING(SS_TAP(X_T));
+          } else {
+            SEND_STRING(SS_TAP(X_T));
+          }
+            b_trigger = false;
+            shift_trigger = false;
+            set_last_keycode(KC_T);
+            return false;
+        } else {
+          shift_trigger = false;
+          dot_trigger = false;
+          b_trigger = false;
+          c_trigger = false;
+          g_trigger = false;
+          l_trigger = false;
+          s_trigger = false;
+          u_trigger = false;
+          y_trigger = false;
+          z_trigger = false;
+          if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+            shift_trigger = true;
+          }
+        }
+      }
+    break; 
+    case KC_Y:
+      if (record->event.pressed && layer_state_is(0)) {
+        shift_trigger = false;
+        dot_trigger = false;
+        b_trigger = false;
+        c_trigger = false;
+        g_trigger = false;
+        l_trigger = false;
+        s_trigger = false;
+        u_trigger = false;
+        y_trigger = true;
+        z_trigger = false;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
+      }
+    break; 
+    case KC_Z:
+      if (record->event.pressed && layer_state_is(0)) {
+        shift_trigger = false;
+        dot_trigger = false;
+        b_trigger = false;
+        c_trigger = false;
+        g_trigger = false;
+        l_trigger = false;
+        s_trigger = false;
+        u_trigger = false;
+        y_trigger = false;
+        z_trigger = true;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
+      }
+    break; 
+    case ARCANE_L: 
+               if (record->event.pressed && layer_state_is(0)) {
+                 if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+                    caps_word_toggle(); //toggles on caps word if one shot shift is already active (e.g. through double-tapping the key
+               } else {
+                   if (alpha_pressed) {// letter was pressed within timer limits
+                     arcane_timer = timer_read(); // reset timer
+                     process_arcane_l(get_last_keycode(), get_last_mods()); // call arcane code
+                     shift_trigger = false;
+                     dot_trigger = false;
+                     b_trigger = false;
+                     c_trigger = false;
+                     g_trigger = false;
+                     l_trigger = false;
+                     s_trigger = false;
+                     u_trigger = false;
+                     y_trigger = false;
+                     z_trigger = false;
+                   } else {//alpha timer timed out, so key functions just as a OSM shift
+                      set_oneshot_mods(MOD_BIT(KC_LSFT));
+                   }
+                 }
+               }
+             break; 
+        case ARCANE_J: 
+               if (record->event.pressed && layer_state_is(0)) {
+                   if (alpha_pressed) {// letter was pressed within timer limits
+                     arcane_timer = timer_read(); // reset timer
+                     process_arcane_j(get_last_keycode(), get_last_mods()); // call arcane code
+                     shift_trigger = false;
+                     dot_trigger = false;
+                     b_trigger = false;
+                     c_trigger = false;
+                     g_trigger = false;
+                     l_trigger = false;
+                     s_trigger = false;
+                     u_trigger = false;
+                     y_trigger = false;
+                     z_trigger = false;
+                   } else {//alpha timer timed out, so key functions just as a J
+                     SEND_STRING(SS_TAP(X_J));
+                     set_last_keycode(KC_J);
+                   }
+                 }
+              break; 
+    case raeihtsraiths:
+          if (record->event.pressed && layer_state_is(0)) {
+        shift_trigger = false;
+        dot_trigger = false;
+        b_trigger = false;
+        c_trigger = false;
+        g_trigger = false;
+        l_trigger = false;
+        s_trigger = false;
+        u_trigger = false;
+        y_trigger = false;
+        z_trigger = false;
+        if (get_oneshot_mods() & MOD_MASK_SHIFT) {
+          shift_trigger = true;
+        }
+      }
+    break; 
     case ST_MACRO_0:
     if (record->event.pressed) {
       SEND_STRING(SS_TAP(X_QUOTE)SS_DELAY(10)  SS_TAP(X_SPACE));
