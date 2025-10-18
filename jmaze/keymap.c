@@ -1020,7 +1020,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           case KC_C:
           if (is_caps_word_on()){
             SEND_STRING(SS_LSFT(SS_TAP(X_T)));
-          } else if (last_mods_manual & MOD_MASK_SHIFT){
+          } else if (last_mod_manual & MOD_MASK_SHIFT){
             SEND_STRING(SS_TAP(X_T));
           } else {
             SEND_STRING(SS_TAP(X_T));
@@ -1033,7 +1033,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           case KC_F:
           if (is_caps_word_on()){
             SEND_STRING(SS_LSFT(SS_TAP(X_S)));
-          } else if (last_mods_manual & MOD_MASK_SHIFT){
+          } else if (last_mod_manual & MOD_MASK_SHIFT){
             SEND_STRING(SS_TAP(X_S));
           } else {
             SEND_STRING(SS_TAP(X_S));
