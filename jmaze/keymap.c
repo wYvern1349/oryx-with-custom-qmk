@@ -1018,13 +1018,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed && layer_state_is(0)) {
         switch (last_key_manual){
           case KC_C:
-          //if (is_caps_word_on()){
-          //  SEND_STRING(SS_LSFT(SS_TAP(X_T)));
-          //} else if (last_mod_manual & MOD_MASK_SHIFT){
-          //  SEND_STRING(SS_TAP(X_T));
-          //} else {
+          if (is_caps_word_on()){
+            SEND_STRING(SS_LSFT(SS_TAP(X_T)));
+          } else if (last_mod_manual & MOD_MASK_SHIFT){
+            SEND_STRING(SS_TAP(X_D));
+          } else {
             SEND_STRING(SS_TAP(X_T));
-          //}
+          }
             c_trigger = false;
             shift_trigger = false;
             set_last_keycode(KC_T);
