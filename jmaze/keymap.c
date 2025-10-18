@@ -845,12 +845,12 @@ static void process_arcane_j(uint16_t keycode, uint8_t mods) {
          break;
         case KC_P:
           if (is_caps_word_on()) { //checks for caps word status
-              send_string("F");
+              send_string("T");
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
               send_string("rof.");
               //set_oneshot_mods(MOD_BIT(KC_LSFT));
           } else { //unshifted previous key
-              send_string("f");
+              send_string("t");
           }
          break;
         case KC_S:
@@ -1166,6 +1166,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           }
         }
       break;
+    case KC_Z:
+      if (record->event.pressed && layer_state_is(0)) {
+        switch (last_key_manual){
+          case KC_P:
+            if (is_caps_word_on()){
+              SEND_STRING(SS_LSFT(SS_TAP(X_F)));
+            } else if (last_mod_manual & MOD_MASK_SHIFT){
+              SEND_STRING(SS_TAP(X_F));
+            } else {
+              SEND_STRING(SS_TAP(X_F));
+            }
+              set_last_keycode(KC_F);
+              return false;
+            break;
+          default:
+            return true;
+            break;
+          }
+        }
+      break; 
     case ARCANE_L: 
       if (record->event.pressed && layer_state_is(0)) {
         if (get_oneshot_mods() & MOD_MASK_SHIFT) {
