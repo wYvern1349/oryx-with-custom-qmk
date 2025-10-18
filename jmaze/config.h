@@ -8,7 +8,7 @@
 #define RGB_MATRIX_TIMEOUT 300000
 
 #define USB_SUSPEND_WAKEUP_DELAY 0
-#define SERIAL_NUMBER "jmaze/AznoKZ"
+#define SERIAL_NUMBER "jmaze/LvpGmA"
 #define LAYER_STATE_16BIT
 
 #define RGB_MATRIX_STARTUP_SPD 60
