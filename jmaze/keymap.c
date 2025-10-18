@@ -580,11 +580,11 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
          break;
         case KC_H:
           if (is_caps_word_on()) { //checks for caps word status
-              SEND_STRING(SS_LSFT(SS_TAP(X_T)));
+              SEND_STRING(SS_LSFT(SS_TAP(X_W)));
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              SEND_STRING(SS_LSFT(SS_TAP(X_T)));
+              SEND_STRING(SS_LSFT(SS_TAP(X_W)));
           } else { //unshifted previous key
-              SEND_STRING(SS_TAP(X_T));
+              SEND_STRING(SS_TAP(X_W));
           }
          break;
         case KC_I:
@@ -809,11 +809,11 @@ static void process_arcane_j(uint16_t keycode, uint8_t mods) {
          break;
         case KC_H:
           if (is_caps_word_on()) { //checks for caps word status
-              SEND_STRING(SS_LSFT(SS_TAP(X_W)));
+              SEND_STRING(SS_LSFT(SS_TAP(X_T)));
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
               SEND_STRING(SS_LSFT(SS_TAP(X_H)) SS_TAP(X_E) SS_TAP(X_R) SS_TAP(X_R));
           } else { //unshifted previous key
-              SEND_STRING(SS_TAP(X_W));
+              SEND_STRING(SS_TAP(X_T));
           }
          break;
         case KC_K:
