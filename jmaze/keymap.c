@@ -61,8 +61,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESCAPE,      KC_LEFT_SHIFT,  KC_LEFT_CTRL,   KC_LEFT_ALT,    KC_TAB,         KC_LEFT_GUI,                                    KC_RIGHT_GUI,   KC_RIGHT_ALT,   KC_LEFT_ALT,    KC_RIGHT_CTRL,  KC_RIGHT_SHIFT, KC_Q,           
     OSL(6),         OSL(1),         KC_F,           KC_C,           KC_D,           KC_K,                                           KC_X,           KC_L,           KC_O,           KC_U,           KC_DOT,         ST_MACRO_0,     
     KC_ENTER,       KC_N,           KC_S,           KC_T,           KC_H,           KC_G,                                           KC_Z,           KC_R,           KC_E,           KC_I,           KC_A,           RCTL(KC_BSPC),  
-    TO(2),          KC_Y,           KC_M,           KC_B,           KC_W,           KC_P,                                           OSL(1),         ARCANE_J,       OSL(6),         KC_COMMA,       KC_V,           KC_BSPC,        
-                                                    ARCANE_L,       OSL(5),                                         OSL(4),         KC_SPACE
+    TO(2),          KC_Y,           KC_M,           KC_B,           KC_W,           KC_P,                                           OSL(1),         KC_TRANSPARENT,       OSL(6),         KC_COMMA,       KC_V,           KC_BSPC,        
+                                                    KC_TRANSPARENT,       OSL(5),                                         OSL(4),         KC_SPACE
   ),
   [1] = LAYOUT_voyager(
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_Q,           
@@ -791,11 +791,11 @@ static void process_arcane_j(uint16_t keycode, uint8_t mods) {
          break;
         case KC_F:
           if (is_caps_word_on()) { //checks for caps word status
-              send_string("Y");
+              send_string("S");
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("y");
+              send_string("s");
            } else { //unshifted previous key
-              send_string("y");
+              send_string("s");
           }
          break;
         case KC_G:
@@ -827,11 +827,11 @@ static void process_arcane_j(uint16_t keycode, uint8_t mods) {
          break;
         case KC_M:
           if (is_caps_word_on()) { //checks for caps word status
-              send_string("S");
+              send_string("Y");
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
               send_string("itglied");
           } else { //unshifted previous key
-              send_string("s");
+              send_string("y");
           }
          break;
         case KC_N:
@@ -947,20 +947,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
               set_last_keycode(KC_T);
               return false;
             break;
-          case KC_F:
-            if (is_caps_word_on()){
-              SEND_STRING(SS_LSFT(SS_TAP(X_S)));
-            } else if (last_mod_manual & MOD_MASK_SHIFT){
-              SEND_STRING(SS_TAP(X_S));
-            } else {
-              SEND_STRING(SS_TAP(X_S));
-            }
-              set_last_keycode(KC_S);
-              return false;
-            break;
-          default:
-            return true;
-            break;
           }
         }
       break; 
@@ -1016,6 +1002,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
               SEND_STRING(SS_TAP(X_L));
             }
               set_last_keycode(KC_L);
+              return false;
+            break;
+          case KC_M:
+            if (is_caps_word_on()){
+              SEND_STRING(SS_LSFT(SS_TAP(X_S)));
+            } else if (last_mod_manual & MOD_MASK_SHIFT){
+              SEND_STRING(SS_TAP(X_S));
+            } else {
+              SEND_STRING(SS_TAP(X_S));
+            }
+              set_last_keycode(KC_S);
               return false;
             break;
           case KC_Y:
