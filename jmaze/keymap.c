@@ -773,11 +773,11 @@ static void process_arcane_j(uint16_t keycode, uint8_t mods) {
     switch (keycode) {
         case KC_A:
           if (is_caps_word_on()) { //checks for caps word status
-              SEND_STRING(SS_RSFT(SS_TAP(X_J)));
+              SEND_STRING(SS_RSFT(SS_TAP(X_A)));
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              SEND_STRING(SS_RSFT(SS_TAP(X_J)));
+              SEND_STRING(SS_TAP(X_A));
           } else { //unshifted previous key
-              SEND_STRING(SS_TAP(X_J));
+              SEND_STRING(SS_TAP(X_A));
           }
           break;        
         case KC_B:
@@ -899,9 +899,16 @@ static void process_arcane_j(uint16_t keycode, uint8_t mods) {
           }
          break;  
        default: 
-         SEND_STRING(SS_TAP(X_J));
-         set_last_keycode(KC_J);
+         if (is_caps_word_on()) { //checks for caps word status
+              SEND_STRING(SS_RSFT(SS_TAP(X_J)));
+          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
+              SEND_STRING(SS_TAP(X_J));
+          } else { //unshifted previous key
+              SEND_STRING(SS_TAP(X_J));        
+          }
+         break; 
       }
+  set_last_keycode(KC_J);
 }
 
 void matrix_scan_user(void) { // The very important timer.
@@ -1007,10 +1014,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     break; 
     case KC_D:
       if (record->event.pressed && layer_state_is(0)) {
-        if (c_trigger){
+        switch (get_last_keycode()){
+          case KC_C:
           if (is_caps_word_on()){
             SEND_STRING(SS_LSFT(SS_TAP(X_T)));
-          } else if (shift_trigger){
+          } else if (get_last_mods() & MOD_MASK_SHIFT){
             SEND_STRING(SS_TAP(X_T));
           } else {
             SEND_STRING(SS_TAP(X_T));
@@ -1019,7 +1027,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             shift_trigger = false;
             set_last_keycode(KC_T);
             return false;
-        } else {
+          break;
+          case KC_F:
+          if (is_caps_word_on()){
+            SEND_STRING(SS_LSFT(SS_TAP(X_S)));
+          } else if (get_last_mods() & MOD_MASK_SHIFT){
+            SEND_STRING(SS_TAP(X_S));
+          } else {
+            SEND_STRING(SS_TAP(X_S));
+          }
+            c_trigger = false;
+            shift_trigger = false;
+            set_last_keycode(KC_S);
+            return false;
+          break;
+          default:
           shift_trigger = false;
           dot_trigger = false;
           b_trigger = false;
@@ -1033,6 +1055,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           if (get_oneshot_mods() & MOD_MASK_SHIFT) {
             shift_trigger = true;
           }
+          break;
         }
       }
     break; 
