@@ -526,11 +526,11 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
           break;        
         case KC_B:
           if (is_caps_word_on()) { //checks for caps word status
-              send_string("B");
+              send_string("T");
           } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("b");
+              send_string("t");
           } else { //unshifted previous key
-              send_string("b");
+              send_string("t");
           }
          break;
         case KC_C:
@@ -762,15 +762,6 @@ static void process_arcane_l(uint16_t keycode, uint8_t mods) {
 
 static void process_arcane_j(uint16_t keycode, uint8_t mods) {
     switch (keycode) {
-        case KC_B:
-          if (is_caps_word_on()) { //checks for caps word status
-              send_string("T");
-          } else if (mods & MOD_MASK_SHIFT) { //checks for shift mod of previous key, which is also true of caps word shifted keys, but this is only run if is_caps_word_on() returned false
-              send_string("t");
-          } else { //unshifted previous key
-              send_string("t");
-          }
-         break;
         case KC_C:
           if (is_caps_word_on()) { //checks for caps word status
               send_string("Y");
@@ -1093,7 +1084,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
           }
         }
-      break;      
+      break;
+    case KC_P:
+      if (record->event.pressed && layer_state_is(0)) {
+        switch (last_key_manual){
+          case KC_B:
+            if (is_caps_word_on()){
+              SEND_STRING(SS_RSFT(SS_TAP(X_B)));
+            } else if (last_mod_manual & MOD_MASK_SHIFT){
+              SEND_STRING(SS_TAP(X_B));
+            } else {
+              SEND_STRING(SS_TAP(X_B));
+            }
+              set_last_keycode(KC_B);
+              return false;
+            break;
+          default:
+            return true;
+            break;
+          }
+        }
+      break;
     case KC_S:
       if (record->event.pressed && layer_state_is(0)) {
         switch (last_key_manual){
